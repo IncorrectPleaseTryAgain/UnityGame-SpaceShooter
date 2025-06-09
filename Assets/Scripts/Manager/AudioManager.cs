@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     public float PlayEnemySFX(List<AudioClip> clips) { return Play(ENEMY_AUDIO_SOURCE, clips); }
     public float PlayPlayerSFX(List<AudioClip> clips) { return Play(PLAYER_AUDIO_SOURCE, clips); }
     public float PlayProjectileSFX(List<AudioClip> clips) { return Play(PROJECTILE_AUDIO_SOURCE, clips); }
-    public void PlaySoundQueue(AudioClip clip) { Play(SOUND_QUEUE_AUDIO_SOURCE, clip); }
+    public void PlaySFX(AudioClip clip) { Play(SOUND_QUEUE_AUDIO_SOURCE, clip); }
 
     private void Awake()
     {

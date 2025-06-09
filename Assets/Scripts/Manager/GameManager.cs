@@ -8,7 +8,8 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private List<GameObject> interactableEnemyPrefabs;
+    [SerializeField] private List<GameObject> staticEnemyPrefabs;
     [SerializeField] private List<GameObject> enemySpawners;
     [SerializeField] private TMP_Text roundText;
     [SerializeField] private TMP_Text clockText;
@@ -16,12 +17,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip roundBegin;
     [SerializeField] private AudioSource musicSource;
 
+    [SerializeField] private int staticEnemySpawnRate = 30;
+    [SerializeField] private int staticEnemySpawnPosOffset = 5;
+
     private int currentRound;
     private int numEnemies;
 
-    //public TimeSpan timeElapsed { get; private set; }
     private TimeSpan timeSpan;
-    private Stopwatch stopwatch;
+    private Stopwatch roundStopWatch;
     private string time;
 
     private float musicTimer;
@@ -52,26 +55,28 @@ public class GameManager : MonoBehaviour
 
         playerIsAlive = true;
 
-        stopwatch = new Stopwatch();
-        stopwatch.Start();
+        roundStopWatch = new Stopwatch();
+        roundStopWatch.Start();
 
         StateManager.instance.UpdateGameState(GameStates.RoundStart);
     }
     void Update()
     {
         PlayMusic();
-        if (playerIsAlive)
+        if (playerIsAlive && !IsPaused)
         {
-            if (!IsPaused)
-            {
-                // Timer
-                timeSpan = stopwatch.Elapsed;
-                time = (timeSpan.Hours > 0) ? String.Format("{0:00}:{1:00}:{2:00}.{3:00}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10)
-                                             : String.Format("{0:00}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
-                clockText.text = time;
-            }
+            UpdateRoundTime();
         }
     }
+
+    private void UpdateRoundTime()
+    {
+        timeSpan = roundStopWatch.Elapsed;
+        time = (timeSpan.Hours > 0) ? String.Format("{0:00}:{1:00}:{2:00}.{3:00}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10)
+                                        : String.Format("{0:00}:{1:00}.{2:00}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
+        clockText.text = time;
+    }
+
     private void PlayMusic()
     {
         if (musicTimer <= 0f)
@@ -102,12 +107,20 @@ public class GameManager : MonoBehaviour
             case GameStates.EnemyDeath:
                 EnemyDeathHandler();
                 break;
+            case GameStates.GamePause:
+                GamePauseHandler();
+                break;
+            case GameStates.GameResume:
+                GameResumeHandler();
+                break;
         }
     }
 
+    private void GamePauseHandler() { roundStopWatch.Stop(); }
+    private void GameResumeHandler() { roundStopWatch.Start(); }
     private void RoundStartHandler()
     {
-        AudioManager.instance.PlaySoundQueue(roundBegin);
+        AudioManager.instance.PlaySFX(roundBegin);
 
         currentRound++;
         roundText.text = currentRound.ToString();
@@ -115,11 +128,30 @@ public class GameManager : MonoBehaviour
         numEnemies = currentRound;
         for (int i = 0; i < numEnemies; i++)
         {
-            int randomEnemyType = UnityEngine.Random.Range(0, enemyPrefabs.Count);
+            int randomEnemyType = UnityEngine.Random.Range(0, interactableEnemyPrefabs.Count);
             int randomEnemySpawner = UnityEngine.Random.Range(0, enemySpawners.Count);
 
-            enemySpawners[randomEnemySpawner].GetComponent<EnemySpawnerLogic>().SpawnEnemy(enemyPrefabs[randomEnemyType]);
+            enemySpawners[randomEnemySpawner].GetComponent<EnemySpawnerLogic>().SpawnEnemy(interactableEnemyPrefabs[randomEnemyType]);
         }
+
+        Invoke("SpawnStaticEnemy", staticEnemySpawnRate);
+    }
+
+    private void SpawnStaticEnemy()
+    {
+        UnityEngine.Debug.Log("Static Enemy Spawned");
+        int randomEnemyType = UnityEngine.Random.Range(0, interactableEnemyPrefabs.Count);
+
+        GameObject enemy = staticEnemyPrefabs[randomEnemyType];
+
+        float spawnPos_X = UnityEngine.Random.Range(player.transform.position.x - staticEnemySpawnPosOffset, player.transform.position.x + staticEnemySpawnPosOffset);
+        float spawnPos_Y = UnityEngine.Random.Range(player.transform.position.y - staticEnemySpawnPosOffset, player.transform.position.y - staticEnemySpawnPosOffset);
+
+        enemy.transform.position = new Vector2(spawnPos_X, spawnPos_Y); ;
+        Instantiate(enemy);
+
+        if (playerIsAlive && !IsPaused) { Invoke("SpawnStaticEnemy", staticEnemySpawnRate); }
+        
     }
 
     private void EnemyDeathHandler()

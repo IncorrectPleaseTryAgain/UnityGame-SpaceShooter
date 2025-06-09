@@ -7,9 +7,10 @@ public class CreditsManager : MonoBehaviour
 {
     // Input
     public InputActionAsset InputActions;
-    private InputAction cancelAction;
-    private void OnEnable() { InputActions.FindActionMap("UI").Enable(); }
-    private void OnDisable() { InputActions.FindActionMap("UI").Disable(); }
+    private InputAction escapeAction;
+    private InputAction moveAction;
+    private void OnEnable() { InputActions.FindActionMap("Player").Enable(); }
+    private void OnDisable() { InputActions.FindActionMap("Player").Disable(); }
 
     // Credits
     private RectTransform creditsTransform;
@@ -22,6 +23,7 @@ public class CreditsManager : MonoBehaviour
     {
         // Variables
         public float defaultSpeed;
+        public float speedModifier;
 
         // Getters
         public float getDefaultSpeed() { return defaultSpeed; }
@@ -33,7 +35,8 @@ public class CreditsManager : MonoBehaviour
     private void Awake()
     {
         creditsTransform = credits.GetComponent<RectTransform>();
-        cancelAction = InputSystem.actions.FindAction("Cancel");
+        escapeAction = InputSystem.actions.FindAction("Escape");
+        moveAction = InputSystem.actions.FindAction("Move");
     }
 
     private void Start() { currentScrollSpeed = properties.getDefaultSpeed(); }
@@ -42,8 +45,21 @@ public class CreditsManager : MonoBehaviour
     {
         creditsTransform.position += Vector3.up * (Time.deltaTime * currentScrollSpeed);
 
-        if (cancelAction.WasReleasedThisFrame()) { Cancel(); }
+        if (escapeAction.WasReleasedThisFrame()) { Cancel(); }
+
+        if(moveAction.WasPressedThisFrame()) { AddSpeedModifier(true); }
+        if(moveAction.WasReleasedThisFrame()) { AddSpeedModifier(false); }
     }
 
     private void Cancel() { StateManager.instance.UpdateGameState(GameStates.SceneMainMenu); }
+
+    private void AddSpeedModifier(bool add) 
+    {
+        if (add)
+        {
+            Vector2 dir = moveAction.ReadValue<Vector2>();
+            currentScrollSpeed *= (dir.x > 0f || dir.y > 0f) ? properties.speedModifier : (-1f * properties.speedModifier);
+        }
+        else { currentScrollSpeed = properties.defaultSpeed; }
+    }
 }

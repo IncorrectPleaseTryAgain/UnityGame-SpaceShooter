@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3422179546078669070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 341711684509715593}
+  - component: {fileID: 3268869702186680080}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &341711684509715593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3422179546078669070}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3268869702186680080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3422179546078669070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e111f87999a18641b281481deddc272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  interactableEnemyPrefabs:
+  - {fileID: 1122936249608745283, guid: fbf3e76c58470ed47b293bebdbb2bf2d, type: 3}
+  staticEnemyPrefabs:
+  - {fileID: 1135030188007361417, guid: 9617dfbfe541e47468a9f5aee51efd8f, type: 3}
+  enemySpawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  roundText: {fileID: 0}
+  clockText: {fileID: 0}
+  backgroundMusic:
+  - {fileID: 8300000, guid: 564d6b70a738d33469b9d2886a2aaee8, type: 3}
+  - {fileID: 8300000, guid: c046b86aabb8f4748968e43cb32a09ac, type: 3}
+  - {fileID: 8300000, guid: f2f3ca621df5ae746885c27238e47536, type: 3}
+  - {fileID: 8300000, guid: 7223cb79d32150443a5cac2c7d2ccb49, type: 3}
+  - {fileID: 8300000, guid: 3081d6164964cda4e861355920bf61ae, type: 3}
+  roundBegin: {fileID: 8300000, guid: 8a57a4a7be65bbb47a3f846635d8e60f, type: 3}
+  musicSource: {fileID: 0}
+  staticEnemySpawnRate: 30
+  staticEnemySpawnPosOffset: 5
+  _isPaused: 0

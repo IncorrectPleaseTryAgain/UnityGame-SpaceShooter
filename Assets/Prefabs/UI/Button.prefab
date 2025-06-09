@@ -276,4 +276,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointerEnterSFX: {fileID: 8300000, guid: eebb59196c511b346b1462c2847a71cf, type: 3}
+  clickSFX: {fileID: 8300000, guid: 2567ce9e6788b4e4fbb3c00425790701, type: 3}
   onClickState: 0

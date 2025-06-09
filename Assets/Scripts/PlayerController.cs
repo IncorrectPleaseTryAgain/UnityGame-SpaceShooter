@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
     [Serializable]
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     private InputAction pauseAction;
     private InputAction moveAction;
+    private PlayerInput input;
 
     [SerializeField] private bool _isMoving = false;
     public bool IsMoving
@@ -76,11 +78,12 @@ public class PlayerController : MonoBehaviour
         StateManager.OnGameStateChanged += OnGameStateChangedHandler;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        input = GetComponent<PlayerInput>();
     }
 
     private void Start() 
     { 
-        pauseAction = InputSystem.actions.FindAction("Pause");
+        pauseAction = InputSystem.actions.FindAction("Escape");
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
@@ -105,20 +108,21 @@ public class PlayerController : MonoBehaviour
         IsPaused = true;
         if (!properties.pauseMenu.activeSelf) { properties.pauseMenu.SetActive(true); }
         if (properties.deathScreen.activeSelf) { properties.deathScreen.SetActive(false); }
-        AudioManager.instance.PlaySoundQueue(properties.pauseMenuOpen);
+        AudioManager.instance.PlaySFX(properties.pauseMenuOpen);
     }
     private void GameResumeHandler()
     {
         IsPaused = false;
         if (properties.pauseMenu.activeSelf) { properties.pauseMenu.SetActive(false); }
         if (properties.deathScreen.activeSelf) { properties.deathScreen.SetActive(false); }
-        AudioManager.instance.PlaySoundQueue(properties.pauseMenuClose);
+        AudioManager.instance.PlaySFX(properties.pauseMenuClose);
     }
     private void PlayerDeathHandler()
     {
         AudioManager.instance.PlayPlayerSFX(properties.deathSFX);
         if (properties.pauseMenu.activeSelf) { properties.pauseMenu.SetActive(false); }
         if (!properties.deathScreen.activeSelf) { properties.deathScreen.SetActive(true); }
+        input.actions.Disable();
 
         anim.SetBool("isAlive", IsAlive);
     }
@@ -127,8 +131,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (pauseAction.WasReleasedThisFrame()) { TogglePause(); }
-
         if (IsAlive)
         {
             RotateToMousePosition();
@@ -148,6 +150,10 @@ public class PlayerController : MonoBehaviour
             moveInput = moveAction.ReadValue<Vector2>();
             IsMoving = moveInput != Vector2.zero;
         }
+    }
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if (context.performed) { TogglePause(); }
     }
     private void RotateToMousePosition()
     {
