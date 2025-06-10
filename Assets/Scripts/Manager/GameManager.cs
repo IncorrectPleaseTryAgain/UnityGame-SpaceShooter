@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         roundStopWatch.Start();
 
         StateManager.instance.UpdateGameState(GameStates.RoundStart);
+        Invoke(nameof(SpawnStaticEnemy), staticEnemySpawnRate);
     }
     void Update()
     {
@@ -133,13 +134,11 @@ public class GameManager : MonoBehaviour
 
             enemySpawners[randomEnemySpawner].GetComponent<EnemySpawnerLogic>().SpawnEnemy(interactableEnemyPrefabs[randomEnemyType]);
         }
-
-        Invoke("SpawnStaticEnemy", staticEnemySpawnRate);
     }
 
     private void SpawnStaticEnemy()
     {
-        UnityEngine.Debug.Log("Static Enemy Spawned");
+        //UnityEngine.Debug.Log("Static Enemy Spawned");
         int randomEnemyType = UnityEngine.Random.Range(0, interactableEnemyPrefabs.Count);
 
         GameObject enemy = staticEnemyPrefabs[randomEnemyType];
@@ -150,8 +149,7 @@ public class GameManager : MonoBehaviour
         enemy.transform.position = new Vector2(spawnPos_X, spawnPos_Y); ;
         Instantiate(enemy);
 
-        if (playerIsAlive && !IsPaused) { Invoke("SpawnStaticEnemy", staticEnemySpawnRate); }
-        
+        if (playerIsAlive) { Invoke(nameof(SpawnStaticEnemy), staticEnemySpawnRate); }
     }
 
     private void EnemyDeathHandler()

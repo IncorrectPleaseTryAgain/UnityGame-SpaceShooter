@@ -8,7 +8,6 @@ public class AsteroidLogic : MonoBehaviour
 {
     private const string TAG_PLAYER = "Player";
     private const string TAG_PROJECTILE = "Projectile";
-    private const float MIN_AFFECTED_GRAVITY_SCALE = 10f;
 
     [Serializable]
     private struct Properties
@@ -31,7 +30,9 @@ public class AsteroidLogic : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator anim;
-    [SerializeField] private List<Target> targets;
+    //[SerializeField] private List<Target> targets;
+    [SerializeField] private PlayerController player;
+    private float playerGravityScale;
 
     // Velocity before paused
     private Vector2 previousVelocity;
@@ -40,6 +41,11 @@ public class AsteroidLogic : MonoBehaviour
     // Attack delay
     private float timerCount;
     private bool isTimerOn = false;
+
+    private Vector2 forceTowardsPlayer;
+    private Vector2 direction;
+    private float distance;
+    [SerializeField] private float MIN_FORCE = 1;
 
     [SerializeField] private bool _isPaused = false;
     public bool IsPaused
@@ -60,19 +66,19 @@ public class AsteroidLogic : MonoBehaviour
         }
     }
 
-    [Serializable]
-    struct Target
-    {
-        public GameObject obj;
-        public float gravityScale;
-        internal Target(GameObject obj, float gScale, float dist)
-        {
-            this.obj = obj;
-            this.gravityScale = gScale;
-        }
-    }
-    private Vector2 targetDirection;
-    private float gravityScale;
+    //[Serializable]
+    //struct Target
+    //{
+    //    public GameObject obj;
+    //    public float gravityScale;
+    //    internal Target(GameObject obj, float gScale, float dist)
+    //    {
+    //        this.obj = obj;
+    //        this.gravityScale = gScale;
+    //    }
+    //}
+    //private Vector2 targetDirection;
+    //private float gravityScale;
 
 
     private void Awake()
@@ -121,13 +127,12 @@ public class AsteroidLogic : MonoBehaviour
         positionIndicatorLogic = Instantiate(properties.positionIndicatorPrefab).GetComponent<PositionIndicatorLogic>();
         positionIndicatorLogic.SetFollowTarget(this.gameObject);
 
-        // Add Player
-        Target player = new() { obj = GameObject.FindGameObjectWithTag(TAG_PLAYER) };
-        if(player.obj != null )
+        do
         {
-            player.gravityScale = player.obj.GetComponent<PlayerController>().GetGravityScale();
-            targets.Add(player);
-        }
+            player = GameObject.FindWithTag(TAG_PLAYER).GetComponent<PlayerController>();
+            playerGravityScale = player.GetGravityScale();
+        } while (!player);
+        
     }
 
     private void Update()
@@ -137,29 +142,15 @@ public class AsteroidLogic : MonoBehaviour
             timerCount -= Time.deltaTime;
             if (timerCount <= 0f) { isTimerOn = false; }
         }
-        else
-        {
-            if (targets.Count > 0)
-            {
-                gravityScale = 0;
-                for (int i = 0; i < targets.Count; i++)
-                {
-                    targetDirection = new Vector2((targetDirection.x + (targets[i].obj.transform.position.x - transform.position.x) * targets[i].gravityScale),
-                                                (targetDirection.y + (targets[i].obj.transform.position.y - transform.position.y) * targets[i].gravityScale));
-
-                    float distanceFromEnemy = GetDistanceFromEnemy(targets[i].obj);
-                    gravityScale += (targets[i].gravityScale / (distanceFromEnemy + 1f)) + MIN_AFFECTED_GRAVITY_SCALE;
-                }
-
-                MathF.Abs(gravityScale);
-                targetDirection = targetDirection.normalized;
-            }
-        }
+        else { PursuePlayer(); }
     }
-    private float GetDistanceFromEnemy(GameObject closestTarget)
+
+    private void PursuePlayer()
     {
-        return MathF.Sqrt(MathF.Pow((closestTarget.transform.position.x - transform.position.x), 2) +
-            MathF.Pow((closestTarget.transform.position.y - transform.position.y), 2));
+        direction = player.transform.position - transform.position;
+        distance = direction.magnitude;
+
+        forceTowardsPlayer = direction.normalized * ((playerGravityScale / (distance + 1f)) + MIN_FORCE);
     }
 
     private void FixedUpdate()
@@ -168,7 +159,7 @@ public class AsteroidLogic : MonoBehaviour
         {
             if (!isTimerOn)
             {
-                rb.AddForce(targetDirection * gravityScale);
+                rb.AddForce(forceTowardsPlayer);
                 rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, properties.maxSpeed);
             }
         }

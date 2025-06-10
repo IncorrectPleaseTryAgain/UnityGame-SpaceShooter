@@ -5874,6 +5874,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1644925341}
     - target: {fileID: 3268869702186680080, guid: 18c51fcfb983be34cb5945dc3d6c8e59, type: 3}
+      propertyPath: staticEnemySpawnRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268869702186680080, guid: 18c51fcfb983be34cb5945dc3d6c8e59, type: 3}
+      propertyPath: staticEnemySpawnPosOffset
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268869702186680080, guid: 18c51fcfb983be34cb5945dc3d6c8e59, type: 3}
       propertyPath: 'enemySpawners.Array.data[0]'
       value: 
       objectReference: {fileID: 185482327}
@@ -6097,6 +6105,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5143634761218880191, guid: cf7aa55c889bd5b40a470f7ba3c88827, type: 3}
+      propertyPath: properties.maxSpeed
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5143634761218880191, guid: cf7aa55c889bd5b40a470f7ba3c88827, type: 3}
       propertyPath: properties.pauseMenu
       value: 
       objectReference: {fileID: 1984321926}
@@ -6104,6 +6116,10 @@ PrefabInstance:
       propertyPath: properties.deathScreen
       value: 
       objectReference: {fileID: 1080787621}
+    - target: {fileID: 5143634761218880191, guid: cf7aa55c889bd5b40a470f7ba3c88827, type: 3}
+      propertyPath: properties.acceleration
+      value: 2.15
+      objectReference: {fileID: 0}
     - target: {fileID: 6145245633792126304, guid: cf7aa55c889bd5b40a470f7ba3c88827, type: 3}
       propertyPath: m_DefaultActionMap
       value: Player

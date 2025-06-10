@@ -439,12 +439,13 @@ MonoBehaviour:
     immense gravitational pull.  \r\n\r\n  \r\n\r\nGalactic efforts are being made
     to stop the space shooter! The galactic organization has unanimously decided
     to commence what they call phase 1! Phase1 entails the organization using the
-    galactic neutron impulse cannon to shoot planet sized asteroids towards the space
-    shooter, but will they succeed?  \r\n\r\n  \r\n\n\nDeveloped using unity v6000.1.5f1 
-    \r\n\r\n  \rGame designer  \r\n\rMichael steenkamp  \r\n\r\nGame developer  
-    \r\n\rMichael steenkamp  \r\n\r\nGraphic designer  \r\nMichael steenkamp \r\n\r\nAudio
-    designer  \r\nMichael steenkamp  \r\nAudio samples collected from pixabay  \r\nAudio
-    samples modified with twistedwave  \r\r\n\r\nRelease v1.0.3  \r"
+    galactic neutron impulse cannon (gnic) to shoot planet sized asteroids towards
+    the space shooter, but will they succeed?  \r\n\r\n  \r\n\n\nDeveloped using
+    unity v6000.1.5f1  \r\n\r\n  \rGame designer  \r\n\rMichael steenkamp  \r\n\r\nGame
+    developer   \r\n\rMichael steenkamp  \r\n\r\nGraphic designer  \r\nMichael steenkamp
+    \r\n\r\nAudio designer  \r\nMichael steenkamp  \r\nAudio samples collected from
+    pixabay  \r\nAudio samples modified with twistedwave  \r\r\n\r\nRelease v1.0.3 
+    \r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 030822baf8fa6e643a66205d81a02723, type: 2}
   m_sharedMaterial: {fileID: 173413410818551769, guid: 030822baf8fa6e643a66205d81a02723, type: 2}
