@@ -7,7 +7,8 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerInput))]
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(HealthLogic))]
+public class PlayerController : MonoBehaviour, IHealthResponder
 {
     [Serializable]
     private struct Properties
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour
         public string name;
         public string description;
 
-        public float health;
+        public float maxHealth;
         public float maxSpeed;
         public float acceleration;
         public float gravityScale;
@@ -31,10 +32,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Properties properties;
 
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private HealthLogic health;
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject projectileSpawner;
     [SerializeField] private CinemachineImpulseSource impulseSource;
+
+    
 
     private Vector2 moveInput;
 
@@ -79,6 +83,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
+        health = GetComponent<HealthLogic>();
+        health.SetMaxHealth(properties.maxHealth);
     }
 
     private void Start() 
@@ -89,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnGameStateChangedHandler(GameStates state)
     {
-        Debug.Log("PlayerController GSC: " + state);
+        //Debug.Log("PlayerController GSC: " + state);
         switch (state)
         {
             case GameStates.GamePause:
@@ -180,25 +186,25 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsPaused && IsAlive)
         {
-            properties.health -= damage;
-            IsAlive = properties.health > 0;
-            if (IsAlive)
-            {
-                impulseSource.GenerateImpulseWithForce(1f);
-            }
-            else 
-            {
-                StateManager.instance.UpdateGameState(GameStates.PlayerDeath);
-            }
+            health.ApplyDamage(damage);
+            impulseSource.GenerateImpulseWithForce(1f);
+            IsAlive = health.IsAlive();
+            if (!IsAlive) { StateManager.instance.UpdateGameState(GameStates.PlayerDeath); }
         }
     }
     public float GetGravityScale() { return properties.gravityScale; }
     private void TogglePause()
     {
-        Debug.Log("Toggle Pause");
+        //Debug.Log("Toggle Pause");
         IsPaused = !IsPaused;
         if (IsPaused) { StateManager.instance.UpdateGameState(GameStates.GamePause); }
         else { StateManager.instance.UpdateGameState(GameStates.GameResume); }
     }
 
+    public void DeathHandler()
+    {
+        //Debug.Log("PlayerController OnDeath");
+        IsAlive = false;
+        StateManager.instance.UpdateGameState(GameStates.PlayerDeath);
+    }
 }

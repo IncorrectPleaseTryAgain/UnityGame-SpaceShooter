@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 5867909186876838330}
   - component: {fileID: 5292368557197727991}
   - component: {fileID: 5143634761218880191}
+  - component: {fileID: 8697514414020182772}
   m_Layer: 6
   m_Name: Ship-Earth
   m_TagString: Player
@@ -480,9 +481,9 @@ MonoBehaviour:
   properties:
     name: 
     description: 
-    health: 100
-    maxSpeed: 12
-    acceleration: 2
+    maxHealth: 100
+    maxSpeed: 13
+    acceleration: 2.15
     gravityScale: 25
     deathSFX:
     - {fileID: 8300000, guid: 32e433c6a080a874d8eb7384f5034a82, type: 3}
@@ -491,6 +492,7 @@ MonoBehaviour:
     pauseMenuOpen: {fileID: 8300000, guid: df8ceb397b532014fb3658484c66085f, type: 3}
     pauseMenuClose: {fileID: 8300000, guid: 0aca5358eb32a2f4faa0a5e9ca575436, type: 3}
   rb: {fileID: 7115031859043062829}
+  health: {fileID: 8697514414020182772}
   anim: {fileID: 5867909186876838330}
   projectilePrefab: {fileID: 2877719493017311949, guid: 8a26c8fec7681ba43af4ac6d6299dbb3, type: 3}
   projectileSpawner: {fileID: 4227733817726329156}
@@ -498,3 +500,19 @@ MonoBehaviour:
   _isMoving: 0
   _isAlive: 1
   _isPaused: 0
+--- !u!114 &8697514414020182772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6679867296392054386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663130a0ae9f4f8448ec619532e3f16f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  isAlive: 0
+  healthBar: {fileID: 0}

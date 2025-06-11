@@ -68,6 +68,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3081d6164964cda4e861355920bf61ae, type: 3}
   roundBegin: {fileID: 8300000, guid: 8a57a4a7be65bbb47a3f846635d8e60f, type: 3}
   musicSource: {fileID: 0}
-  staticEnemySpawnRate: 30
-  staticEnemySpawnPosOffset: 5
+  staticEnemySpawnRate: 7
+  staticEnemySpawnPosOffset: 10
   _isPaused: 0

@@ -1,1 +1,1 @@
-{"bestRound":5,"bestTime":"01:27.32","newRecord":true}
+{"bestRound":1,"bestTime":"00:09.71","newRecord":true}

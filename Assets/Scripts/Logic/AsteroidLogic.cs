@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent (typeof(Animator))]
-public class AsteroidLogic : MonoBehaviour
+[RequireComponent (typeof(HealthLogic))]
+public class AsteroidLogic : MonoBehaviour, IHealthResponder
 {
     private const string TAG_PLAYER = "Player";
     private const string TAG_PROJECTILE = "Projectile";
@@ -15,13 +16,13 @@ public class AsteroidLogic : MonoBehaviour
         public string name; 
         public string description;
 
-        public float health;
+        public float maxHealth;
         public float damage;
         public float maxSpeed;
 
         public float attackDelayTimer;
 
-        public GameObject positionIndicatorPrefab;
+        public PositionIndicatorLogic positionIndicator;
 
         public List<AudioClip> deathSFX;
         public List<AudioClip> playerHitSFX;
@@ -30,13 +31,12 @@ public class AsteroidLogic : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator anim;
-    //[SerializeField] private List<Target> targets;
+    [SerializeField] private HealthLogic health;
     [SerializeField] private PlayerController player;
     private float playerGravityScale;
 
     // Velocity before paused
     private Vector2 previousVelocity;
-    private PositionIndicatorLogic positionIndicatorLogic;
 
     // Attack delay
     private float timerCount;
@@ -66,26 +66,13 @@ public class AsteroidLogic : MonoBehaviour
         }
     }
 
-    //[Serializable]
-    //struct Target
-    //{
-    //    public GameObject obj;
-    //    public float gravityScale;
-    //    internal Target(GameObject obj, float gScale, float dist)
-    //    {
-    //        this.obj = obj;
-    //        this.gravityScale = gScale;
-    //    }
-    //}
-    //private Vector2 targetDirection;
-    //private float gravityScale;
-
-
     private void Awake()
     {
         StateManager.OnGameStateChanged += OnGameStateChangedHandler;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        health = GetComponent<HealthLogic>();
+        health.SetMaxHealth(properties.maxHealth);
     }
     private void OnDestroy() { StateManager.OnGameStateChanged -= OnGameStateChangedHandler; }
 
@@ -124,15 +111,14 @@ public class AsteroidLogic : MonoBehaviour
     private void Start()
     {        
         // Create Position Indicator
-        positionIndicatorLogic = Instantiate(properties.positionIndicatorPrefab).GetComponent<PositionIndicatorLogic>();
-        positionIndicatorLogic.SetFollowTarget(this.gameObject);
+        properties.positionIndicator = Instantiate(properties.positionIndicator).GetComponent<PositionIndicatorLogic>();
+        properties.positionIndicator.SetFollowTarget(this.gameObject);
 
         do
         {
             player = GameObject.FindWithTag(TAG_PLAYER).GetComponent<PlayerController>();
             playerGravityScale = player.GetGravityScale();
         } while (!player);
-        
     }
 
     private void Update()
@@ -193,23 +179,23 @@ public class AsteroidLogic : MonoBehaviour
         }
     }
 
-    void OnBecameInvisible() { if (positionIndicatorLogic) { positionIndicatorLogic.SetActive(true); } }
-    void OnBecameVisible() { if (positionIndicatorLogic) { positionIndicatorLogic.SetActive(false); } }
+    void OnBecameInvisible() { if (properties.positionIndicator) { properties.positionIndicator.SetActive(true); } }
+    void OnBecameVisible() { if (properties.positionIndicator) { properties.positionIndicator.SetActive(false); } }
 
     public void ApplyDamage(float damage)
     {
         if (IsAlive)
         {
-            properties.health -= damage;
-            IsAlive = properties.health > 0;
+            health.ApplyDamage(damage);
+            IsAlive = health.IsAlive();
 
             if (!IsAlive) { DeathHandler(); }
         }
     }
 
-    private void DeathHandler()
+    public void DeathHandler()
     {
-        if (positionIndicatorLogic.gameObject) { Destroy(positionIndicatorLogic.gameObject); }
+        if (properties.positionIndicator.gameObject) { Destroy(properties.positionIndicator.gameObject); }
         AudioManager.instance.PlayEnemySFX(properties.deathSFX);
         StateManager.instance.UpdateGameState(GameStates.EnemyDeath);
     }

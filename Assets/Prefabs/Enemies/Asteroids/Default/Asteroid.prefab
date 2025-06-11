@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7050981745975407992}
   - component: {fileID: 8787904822394796681}
   - component: {fileID: 5277605811278559217}
+  - component: {fileID: -3051400301859772248}
   m_Layer: 8
   m_Name: Asteroid
   m_TagString: Asteroid
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1122936249608745283}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.486973, y: -25.04552, z: 0}
+  m_LocalPosition: {x: 24.103966, y: 14.954479, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -153,7 +154,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.6
 --- !u!114 &8787904822394796681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,17 +170,18 @@ MonoBehaviour:
   properties:
     name: Asteroid v1
     description: Low GS & Mid Speed & Low Damage
-    health: 100
+    maxHealth: 100
     damage: 20
     maxSpeed: 15
     attackDelayTimer: 0.5
-    positionIndicatorPrefab: {fileID: 8562890078247038420, guid: 3a4befbf413f19c44a511430f2584ca4, type: 3}
+    positionIndicator: {fileID: 8861064248721631289, guid: 3a4befbf413f19c44a511430f2584ca4, type: 3}
     deathSFX:
     - {fileID: 8300000, guid: ecb5019272a5bd74d9e0aa176628ef96, type: 3}
     playerHitSFX:
     - {fileID: 8300000, guid: 6291301fe137c4b46ba2477598aa624b, type: 3}
   rb: {fileID: 4178667535721077406}
   anim: {fileID: 5277605811278559217}
+  health: {fileID: 0}
   player: {fileID: 0}
   MIN_FORCE: 15
   _isPaused: 0
@@ -206,3 +208,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3051400301859772248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122936249608745283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663130a0ae9f4f8448ec619532e3f16f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  isAlive: 0
+  healthBar: {fileID: 0}
