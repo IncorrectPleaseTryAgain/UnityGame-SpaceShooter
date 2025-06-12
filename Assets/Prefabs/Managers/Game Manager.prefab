@@ -70,4 +70,6 @@ MonoBehaviour:
   musicSource: {fileID: 0}
   staticEnemySpawnRate: 7
   staticEnemySpawnPosOffset: 10
+  currentRound: 0
+  numEnemies: 0
   _isPaused: 0

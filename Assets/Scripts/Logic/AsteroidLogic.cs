@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent (typeof(Animator))]
@@ -34,6 +35,7 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
     [SerializeField] private HealthLogic health;
     [SerializeField] private PlayerController player;
     private float playerGravityScale;
+    private bool isPlayerAlive = true;
 
     // Velocity before paused
     private Vector2 previousVelocity;
@@ -47,23 +49,14 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
     private float distance;
     [SerializeField] private float MIN_FORCE = 1;
 
+    [SerializeField] private GameObject healthPickup;
+    [SerializeField] private int healthPickupSpawnRate;
+
     [SerializeField] private bool _isPaused = false;
     public bool IsPaused
     {
         get { return _isPaused; }
         private set { _isPaused = value; }
-    }
-
-    [SerializeField]
-    bool _isAlive = true;
-    public bool IsAlive
-    {
-        get { return _isAlive; }
-        private set
-        {
-            _isAlive = value;
-            anim.SetBool("isAlive", value);
-        }
     }
 
     private void Awake()
@@ -104,7 +97,7 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
     }
     private void PlayerDeathHandler()
     {
-        IsAlive = false;
+        isPlayerAlive = false;
         DeathHandler();
     }
 
@@ -172,7 +165,7 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
                 if (collision.gameObject.TryGetComponent<ProjectileLogic>(out ProjectileLogic projectile))
                 {
                     projectile.PlayHitSFX();
-                    ApplyDamage(projectile.GetDamage());
+                    health.ApplyDamage(projectile.GetDamage());
                     Destroy(collision.gameObject);
                 }
             }
@@ -182,23 +175,27 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
     void OnBecameInvisible() { if (properties.positionIndicator) { properties.positionIndicator.SetActive(true); } }
     void OnBecameVisible() { if (properties.positionIndicator) { properties.positionIndicator.SetActive(false); } }
 
-    public void ApplyDamage(float damage)
-    {
-        if (IsAlive)
-        {
-            health.ApplyDamage(damage);
-            IsAlive = health.IsAlive();
-
-            if (!IsAlive) { DeathHandler(); }
-        }
-    }
-
     public void DeathHandler()
     {
+        //Debug.Log("Asteroid Death Handler");
         if (properties.positionIndicator.gameObject) { Destroy(properties.positionIndicator.gameObject); }
-        AudioManager.instance.PlayEnemySFX(properties.deathSFX);
+        if (isPlayerAlive)
+        {
+            AudioManager.instance.PlayEnemySFX(properties.deathSFX);
+            SpawnHealthPickup();
+        }
+        anim.SetBool("isAlive", false);
+
         StateManager.instance.UpdateGameState(GameStates.EnemyDeath);
     }
 
-    public void AnimEventHandlerDeath() { Destroy(this.gameObject); }
+    private void SpawnHealthPickup()
+    {
+        if (healthPickup != null)
+        {
+            int num = UnityEngine.Random.Range(0, 100);
+
+            if (num < healthPickupSpawnRate) { Instantiate(healthPickup, transform.position, transform.rotation); }
+        }
+    }
 }

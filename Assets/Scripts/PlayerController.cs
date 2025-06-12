@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour, IHealthResponder
 
         public AudioClip pauseMenuOpen;
         public AudioClip pauseMenuClose;
+
+        public GameObject hitMarker;
     }
     [SerializeField] private Properties properties;
 
@@ -37,13 +39,25 @@ public class PlayerController : MonoBehaviour, IHealthResponder
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject projectileSpawner;
     [SerializeField] private CinemachineImpulseSource impulseSource;
+    [SerializeField] private float hitImpulseAmount;
+    [SerializeField] private CustomTrigger pickupTrigger;
 
-    
+
+
 
     private Vector2 moveInput;
 
     private InputAction pauseAction;
     private InputAction moveAction;
+    private InputAction sprintAction;
+    [SerializeField] private StaminaBarLogic staminaBar;
+    [SerializeField] private float sprintMultiplier = 1.5f;
+    [SerializeField] private float sprintCooldown = 2.0f;
+    [SerializeField] private float sprintDuration = .5f;
+
+    private float sprintTimer = 0.0f;
+
+
     private PlayerInput input;
 
     [SerializeField] private bool _isMoving = false;
@@ -55,6 +69,19 @@ public class PlayerController : MonoBehaviour, IHealthResponder
             if (_isMoving != value)
             {
                 _isMoving = value;
+            }
+        }
+    }
+
+    [SerializeField] private bool _isSprinting = false;
+    public bool IsSprinting
+    {
+        get { return _isSprinting; }
+        private set
+        {
+            if (_isSprinting != value)
+            {
+                _isSprinting = value;
             }
         }
     }
@@ -85,12 +112,17 @@ public class PlayerController : MonoBehaviour, IHealthResponder
         input = GetComponent<PlayerInput>();
         health = GetComponent<HealthLogic>();
         health.SetMaxHealth(properties.maxHealth);
+
+        pickupTrigger.TriggerEnter += OnPickupTriggerEnterHandler;
+        staminaBar.SetMaxStamina(sprintCooldown);
+        staminaBar.SetStamina(sprintCooldown - sprintTimer);
     }
 
     private void Start() 
     { 
         pauseAction = InputSystem.actions.FindAction("Escape");
         moveAction = InputSystem.actions.FindAction("Move");
+        sprintAction = InputSystem.actions.FindAction("Sprint");
     }
 
     private void OnGameStateChangedHandler(GameStates state)
@@ -146,9 +178,45 @@ public class PlayerController : MonoBehaviour, IHealthResponder
     {
         if (IsAlive && !IsPaused)
         {
-            rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity + (moveInput * properties.acceleration), properties.maxSpeed);
+            sprintTimer = Mathf.Clamp(sprintTimer - Time.fixedDeltaTime, 0, sprintCooldown);
+            staminaBar.SetStamina(sprintCooldown - sprintTimer);
+
+            if (IsSprinting)
+            {
+                if (sprintTimer <= 0.0f)
+                {
+                    IsSprinting = false;
+                    sprintTimer = sprintCooldown;
+                }
+
+                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity + (moveInput * properties.acceleration * sprintMultiplier), properties.maxSpeed * sprintMultiplier);
+            }
+            else
+            {
+                rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity + (moveInput * properties.acceleration), properties.maxSpeed);
+            }
         }
     }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (!IsPaused && IsAlive)
+        {
+            if (context.performed)
+            {
+                if (sprintTimer <= 0.0f)
+                {
+                    IsSprinting = true;
+                    sprintTimer = sprintDuration;
+                }
+            }
+            else if (context.canceled && sprintTimer > 0.0f)
+            {
+                IsSprinting = false;
+            }
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!IsPaused && IsAlive)
@@ -187,9 +255,10 @@ public class PlayerController : MonoBehaviour, IHealthResponder
         if (!IsPaused && IsAlive)
         {
             health.ApplyDamage(damage);
-            impulseSource.GenerateImpulseWithForce(1f);
             IsAlive = health.IsAlive();
             if (!IsAlive) { StateManager.instance.UpdateGameState(GameStates.PlayerDeath); }
+            impulseSource.GenerateImpulseWithForce(hitImpulseAmount);
+            Instantiate(properties.hitMarker, new(transform.position.x, transform.position.y, -1), Quaternion.identity);
         }
     }
     public float GetGravityScale() { return properties.gravityScale; }
@@ -206,5 +275,15 @@ public class PlayerController : MonoBehaviour, IHealthResponder
         //Debug.Log("PlayerController OnDeath");
         IsAlive = false;
         StateManager.instance.UpdateGameState(GameStates.PlayerDeath);
+    }
+
+    private void OnPickupTriggerEnterHandler(Collider2D collision)
+    {
+        if (collision.CompareTag("Pickup"))
+        {
+            HealthPickupLogic healthPickup = collision.GetComponentInParent<HealthPickupLogic>();
+            health.ApplyHealth(healthPickup.GetHealthAmount());
+            Destroy(collision.gameObject.transform.parent.gameObject);
+        }
     }
 }

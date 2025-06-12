@@ -9,8 +9,6 @@ public class CreditsManager : MonoBehaviour
     public InputActionAsset InputActions;
     private InputAction escapeAction;
     private InputAction moveAction;
-    private void OnEnable() { InputActions.FindActionMap("Player").Enable(); }
-    private void OnDisable() { InputActions.FindActionMap("Player").Disable(); }
 
     // Credits
     private RectTransform creditsTransform;

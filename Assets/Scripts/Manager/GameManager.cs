@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int staticEnemySpawnRate = 30;
     [SerializeField] private int staticEnemySpawnPosOffset = 5;
 
-    private int currentRound;
-    private int numEnemies;
+    [SerializeField] private int currentRound;
+    [SerializeField] private int numEnemies;
 
     private TimeSpan timeSpan;
     private Stopwatch roundStopWatch;
@@ -58,8 +58,8 @@ public class GameManager : MonoBehaviour
         roundStopWatch = new Stopwatch();
         roundStopWatch.Start();
 
-        StateManager.instance.UpdateGameState(GameStates.RoundStart);
         Invoke(nameof(SpawnStaticEnemy), staticEnemySpawnRate);
+        StateManager.instance.UpdateGameState(GameStates.RoundStart);
     }
     void Update()
     {
@@ -125,8 +125,9 @@ public class GameManager : MonoBehaviour
 
         currentRound++;
         roundText.text = currentRound.ToString();
-
         numEnemies = currentRound;
+        //UnityEngine.Debug.Log("Round Start: " + numEnemies);
+
         for (int i = 0; i < numEnemies; i++)
         {
             int randomEnemyType = UnityEngine.Random.Range(0, interactableEnemyPrefabs.Count);
@@ -155,7 +156,7 @@ public class GameManager : MonoBehaviour
     private void EnemyDeathHandler()
     {
         if (playerIsAlive)
-        { 
+        {
             numEnemies--;
             if (numEnemies <= 0) { StateManager.instance.UpdateGameState(GameStates.RoundStart); }
         }

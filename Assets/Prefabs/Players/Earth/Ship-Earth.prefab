@@ -44,6 +44,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c74756e23c139041846f20421b1f78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4712311542543087740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7849144438643173583}
+  - component: {fileID: 3587521361365360729}
+  - component: {fileID: 3590190538557787046}
+  m_Layer: 6
+  m_Name: Pickup Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7849144438643173583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712311542543087740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4739602853028163543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3587521361365360729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712311542543087740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e155d1b1a65e1874a9702ac95ab43c63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &3590190538557787046
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4712311542543087740}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.6
 --- !u!1 &6679867296392054386
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,6 +163,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7562415547079354646}
+  - {fileID: 7849144438643173583}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3379539405853658007
@@ -291,7 +373,19 @@ MonoBehaviour:
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Keyboard/2]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5143634761218880191}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
   - m_PersistentCalls:
@@ -491,13 +585,20 @@ MonoBehaviour:
     deathScreen: {fileID: 0}
     pauseMenuOpen: {fileID: 8300000, guid: df8ceb397b532014fb3658484c66085f, type: 3}
     pauseMenuClose: {fileID: 8300000, guid: 0aca5358eb32a2f4faa0a5e9ca575436, type: 3}
+    hitMarker: {fileID: 6411766180897644394, guid: 2c2c3a40376cf3f458835497893c7f70, type: 3}
   rb: {fileID: 7115031859043062829}
   health: {fileID: 8697514414020182772}
   anim: {fileID: 5867909186876838330}
   projectilePrefab: {fileID: 2877719493017311949, guid: 8a26c8fec7681ba43af4ac6d6299dbb3, type: 3}
   projectileSpawner: {fileID: 4227733817726329156}
   impulseSource: {fileID: 5292368557197727991}
+  hitImpulseAmount: 0.2
+  pickupTrigger: {fileID: 3587521361365360729}
+  sprintMultiplier: 2
+  sprintCooldown: 2
+  sprintDuration: 0.5
   _isMoving: 0
+  _isSprinting: 0
   _isAlive: 1
   _isPaused: 0
 --- !u!114 &8697514414020182772

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Asteroid
   - Projectile
+  - Pickup
+  - Black Hole Resistant
   layers:
   - Default
   - TransparentFX

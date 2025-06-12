@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8787904822394796681}
   - component: {fileID: 5277605811278559217}
   - component: {fileID: -3051400301859772248}
+  - component: {fileID: 5799721037807288544}
   m_Layer: 8
   m_Name: Asteroid
   m_TagString: Asteroid
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1122936249608745283}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.103966, y: 14.954479, z: 0}
+  m_LocalPosition: {x: 1.4241534, y: -48.604958, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -184,8 +185,9 @@ MonoBehaviour:
   health: {fileID: 0}
   player: {fileID: 0}
   MIN_FORCE: 15
+  healthPickup: {fileID: 8157305123570885119, guid: b805d85976a313444ba9dde72029fbb1, type: 3}
+  healthPickupSpawnRate: 100
   _isPaused: 0
-  _isAlive: 1
 --- !u!95 &5277605811278559217
 Animator:
   serializedVersion: 7
@@ -224,3 +226,15 @@ MonoBehaviour:
   currentHealth: 0
   isAlive: 0
   healthBar: {fileID: 0}
+--- !u!114 &5799721037807288544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122936249608745283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d044dec396b0e82439d7bccd05cba779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
