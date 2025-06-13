@@ -1967,7 +1967,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Release v1.0.3
+  m_text: Release v1.0.3.1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 70dcd512310e74748975d397e4de3856, type: 2}
   m_sharedMaterial: {fileID: 173413410818551769, guid: 70dcd512310e74748975d397e4de3856, type: 2}
@@ -3719,6 +3719,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 5371304985259655847, guid: 9a4a0ec755f90a846a260a6466e92451, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -25670035567801572, guid: bf4c9d38845d5124486f0ae9374e54a6, type: 2}
+    - target: {fileID: 7344942420568601580, guid: 9a4a0ec755f90a846a260a6466e92451, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -25670035567801572, guid: bf4c9d38845d5124486f0ae9374e54a6, type: 2}
+    - target: {fileID: 8746118123990674852, guid: 9a4a0ec755f90a846a260a6466e92451, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -25670035567801572, guid: bf4c9d38845d5124486f0ae9374e54a6, type: 2}
+    - target: {fileID: 8822402092625283291, guid: 9a4a0ec755f90a846a260a6466e92451, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -25670035567801572, guid: bf4c9d38845d5124486f0ae9374e54a6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
