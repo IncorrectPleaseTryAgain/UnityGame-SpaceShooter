@@ -1,0 +1,2 @@
+- Settings Button Change Scene
+- New Save Button Creates a new save file

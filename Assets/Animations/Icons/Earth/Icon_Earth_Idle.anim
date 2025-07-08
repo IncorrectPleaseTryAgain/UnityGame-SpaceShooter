@@ -8,7 +8,7 @@ AnimationClip:
   m_PrefabAsset: {fileID: 0}
   m_Name: Icon_Earth_Idle
   serializedVersion: 7
-  m_Legacy: 0
+  m_Legacy: 1
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
@@ -61,32 +61,8 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    pptrCurveMapping:
-    - {fileID: -2114373064, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: 79261511, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -797584658, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: 1216131779, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -770049219, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -673670748, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -676082761, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -1074466282, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -119610697, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: 1233216846, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: 1185361902, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -1178348050, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: -1888953470, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: 1028996653, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
-    - {fileID: 2073304162, guid: 119acd597daf7704ba4913fc2a71b293, type: 3}
+    genericBindings: []
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

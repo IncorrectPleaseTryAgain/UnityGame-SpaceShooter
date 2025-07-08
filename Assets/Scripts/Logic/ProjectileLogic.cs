@@ -39,10 +39,10 @@ public class ProjectileLogic : MonoBehaviour
     {
         rb.linearVelocity = velocity;
         rb.linearVelocity += new Vector2(transform.up.x * properties.speed, transform.up.y * properties.speed);
-        PlayShotSFX();
+        //PlayShotSFX();
     }
 
-    private void PlayShotSFX() { AudioManager.instance.PlayProjectileSFX(properties.shotSFX); }
+    //private void PlayShotSFX() { AudioManager.instance.PlayProjectileSFX(properties.shotSFX); }
     public float GetDamage() { return properties.damage; }
-    public void PlayHitSFX() { AudioManager.instance.PlayProjectileSFX(properties.hitSFX); }
+    //public void PlayHitSFX() { AudioManager.instance.PlayProjectileSFX(properties.hitSFX); }
 }

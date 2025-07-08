@@ -153,7 +153,7 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
                 if (collision.gameObject.TryGetComponent<PlayerController>(out PlayerController component))
                 {
                     component.ApplyDamage(properties.damage);
-                    AudioManager.instance.PlayPlayerSFX(properties.playerHitSFX);
+                    //AudioManager.instance.PlayPlayerSFX(properties.playerHitSFX);
 
                     // Set and activate attack delay timer
                     timerCount = properties.attackDelayTimer;
@@ -164,7 +164,7 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
             {
                 if (collision.gameObject.TryGetComponent<ProjectileLogic>(out ProjectileLogic projectile))
                 {
-                    projectile.PlayHitSFX();
+                    //projectile.PlayHitSFX();
                     health.ApplyDamage(projectile.GetDamage());
                     Destroy(collision.gameObject);
                 }
@@ -181,7 +181,7 @@ public class AsteroidLogic : MonoBehaviour, IHealthResponder
         if (properties.positionIndicator.gameObject) { Destroy(properties.positionIndicator.gameObject); }
         if (isPlayerAlive)
         {
-            AudioManager.instance.PlayEnemySFX(properties.deathSFX);
+            //AudioManager.instance.PlayEnemySFX(properties.deathSFX);
             SpawnHealthPickup();
         }
         anim.SetBool("isAlive", false);

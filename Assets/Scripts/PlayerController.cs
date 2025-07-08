@@ -146,18 +146,18 @@ public class PlayerController : MonoBehaviour, IHealthResponder
         IsPaused = true;
         if (!properties.pauseMenu.activeSelf) { properties.pauseMenu.SetActive(true); }
         if (properties.deathScreen.activeSelf) { properties.deathScreen.SetActive(false); }
-        AudioManager.instance.PlaySFX(properties.pauseMenuOpen);
+        //AudioManager.instance.PlaySFX(properties.pauseMenuOpen);
     }
     private void GameResumeHandler()
     {
         IsPaused = false;
         if (properties.pauseMenu.activeSelf) { properties.pauseMenu.SetActive(false); }
         if (properties.deathScreen.activeSelf) { properties.deathScreen.SetActive(false); }
-        AudioManager.instance.PlaySFX(properties.pauseMenuClose);
+        //AudioManager.instance.PlaySFX(properties.pauseMenuClose);
     }
     private void PlayerDeathHandler()
     {
-        AudioManager.instance.PlayPlayerSFX(properties.deathSFX);
+        //AudioManager.instance.PlayPlayerSFX(properties.deathSFX);
         if (properties.pauseMenu.activeSelf) { properties.pauseMenu.SetActive(false); }
         if (!properties.deathScreen.activeSelf) { properties.deathScreen.SetActive(true); }
         input.actions.Disable();

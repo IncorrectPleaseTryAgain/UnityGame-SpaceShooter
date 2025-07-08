@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.qiaozhilei.easy-text-effects": "https://github.com/LeiQiaoZhi/Easy-Text-Effects-for-Unity.git",
-    "com.unity.2d.animation": "10.2.0",
+    "com.unity.2d.animation": "11.0.0",
     "com.unity.2d.aseprite": "1.2.5",
     "com.unity.2d.psdimporter": "10.1.1",
     "com.unity.2d.sprite": "1.0.0",
-    "com.unity.2d.spriteshape": "10.1.0",
+    "com.unity.2d.spriteshape": "11.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.2d.tilemap.extras": "4.3.1",
     "com.unity.cinemachine": "3.1.3",

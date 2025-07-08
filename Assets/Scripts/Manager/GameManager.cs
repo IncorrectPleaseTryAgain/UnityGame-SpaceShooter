@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
     private void GameResumeHandler() { roundStopWatch.Start(); }
     private void RoundStartHandler()
     {
-        AudioManager.instance.PlaySFX(roundBegin);
+        //AudioManager.instance.PlaySFX(roundBegin);
 
         currentRound++;
         roundText.text = currentRound.ToString();
