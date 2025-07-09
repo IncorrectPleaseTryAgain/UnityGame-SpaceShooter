@@ -9,6 +9,7 @@ public class AnimationEventTransmitter : MonoBehaviour
         
         if (receiver != null)
         {
+            LogSystem.Instance.Log($"Transmitting Anim Event: '{eventName}'", LogType.Info, _logTag);
             receiver.OnAnimationEvent(eventName);
         }
         else

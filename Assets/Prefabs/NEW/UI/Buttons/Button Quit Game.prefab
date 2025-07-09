@@ -148,9 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 8
   scene: 0
-  overlay: 0
-  chapter: 0
-  level: 0
 --- !u!1 &8310246753807546635
 GameObject:
   m_ObjectHideFlags: 0

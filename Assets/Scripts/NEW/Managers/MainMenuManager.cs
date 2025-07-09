@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,13 +26,13 @@ public class MainMenuManager : MonoBehaviour
     private void OnDestroy()
     {
         ButtonLogic.OnButtonAction -= HandleButtonAction;
-        MainMenuCanvasLogic.OnTitleAnimationFinished -= MainMenuTitleAnimationFinishedHandler;
+        MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete -= MainMenuCanvasHeaderOnAnimationCompleteHandler;
     }
 
     private void Awake()
     {
         ButtonLogic.OnButtonAction += HandleButtonAction;
-        MainMenuCanvasLogic.OnTitleAnimationFinished += MainMenuTitleAnimationFinishedHandler;
+        MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete += MainMenuCanvasHeaderOnAnimationCompleteHandler;
         Systems.OnAllSystemsInitialized += AllSystemsInitializedHandler;
 
         InitializeSystems();
@@ -55,23 +53,17 @@ public class MainMenuManager : MonoBehaviour
         {
             if (continueAction.WasPressedThisFrame())
             {
-                ContinueToMainMenu();
+                Continue();
             }
         }
     }
-    void ContinueToMainMenu()
+    void Continue()
     {
-        AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
-        if (!_mainMenuCanvas)
-        {
-            LogSystem.Instance.Log("Main menu object is not assigned in the MainMenuManager.", LogType.Error, _logTag);
-            throw new NullReferenceException("_mainMenu");
-        }
+        LogSystem.Instance.Log("Continue...", LogType.Info, _logTag);
 
         continueAction = null;
-
-        _mainMenuCanvas.GetComponentInChildren<MainMenuCanvasLogic>().Continue();
-        Instantiate(_mainMenuCanvas);
+        AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
+        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().Continue();
     }
 
     void HandleButtonAction(Actions action)
@@ -145,8 +137,9 @@ public class MainMenuManager : MonoBehaviour
         return obj;
     }
 
-    void MainMenuTitleAnimationFinishedHandler()
+    void MainMenuCanvasHeaderOnAnimationCompleteHandler()
     {
+        LogSystem.Instance.Log("Enabling Continue Action", LogType.Info, _logTag);
         _playerInput.SwitchCurrentActionMap("Initializer");
         continueAction = _playerInput.actions["Continue"];
     }

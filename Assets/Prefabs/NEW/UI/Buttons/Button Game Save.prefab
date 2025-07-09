@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6027994175283485424}
   - component: {fileID: 2456565005183349356}
   - component: {fileID: 4328583734738902079}
-  - component: {fileID: 9146461383993474773}
   m_Layer: 5
   m_Name: Button Game Save
   m_TagString: Untagged
@@ -150,9 +149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 0
   scene: 0
-  overlay: 0
-  chapter: 0
-  level: 0
 --- !u!114 &4328583734738902079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,23 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6cecf6f1c2bcd448b48a6e3f95ae45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!111 &9146461383993474773
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376433517681340916}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 0f493c74ea9049049bebf8f0685708a0, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 0f493c74ea9049049bebf8f0685708a0, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &7353739332811182885
 GameObject:
   m_ObjectHideFlags: 0

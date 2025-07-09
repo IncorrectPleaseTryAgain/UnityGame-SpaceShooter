@@ -70,14 +70,17 @@ public class AudioSystem : Singleton<AudioSystem>, ISystem
 
     public void SetMixerMasterVolume(float volume)
     {
+        volume = volume <= 0 ? 0.0000001f : volume;
         audioMixer.SetFloat(MIXER_MASTER_VOLUME_KEY, Mathf.Log10(volume) * 20f);
     }
     public void SetMixerMusicVolume(float volume)
     {
+        volume = volume <= 0 ? 0.0000001f : volume;
         audioMixer.SetFloat(MIXER_MUSIC_VOLUME_KEY, Mathf.Log10(volume) * 20f);
     }
     public void SetMixerSfxVolume(float volume)
     {
+        volume = volume <= 0 ? 0.0000001f : volume;
         audioMixer.SetFloat(MIXER_SFX_VOLUME_KEY, Mathf.Log10(volume) * 20f);
     }
 
