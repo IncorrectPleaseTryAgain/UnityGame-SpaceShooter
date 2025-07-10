@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,23 +14,15 @@ public class SettingsManager : MonoBehaviour
     [Header("Video")]
     [SerializeField] Toggle _fullscreenToggle;
     [SerializeField] TMP_Dropdown _resolutionDropdown;
-    const string _fullscreenKey = "Fullscreen";
-    const string _resolutionKey = "Resolution";
 
     [Header("Controls")]
     [SerializeField] Button _keybindForward;
     [SerializeField] Button _keybindBackward;
     [SerializeField] Button _keybindLeft;
     [SerializeField] Button _keybindRight;
-    const string _keybindForwardKey = "fowards";
-    const string _keybindBackwardKey = "backwards";
-    const string _keybindLeftKey = "left";
-    const string _keybindRightKey = "right";
 
     [SerializeField] Button _keybindAttack;
     [SerializeField] Button _keybindAbility;
-    const string _keybindAttackKey = "attack";
-    const string _keybindAbilityKey = "ability";
 
     bool audioSettingsChanged = false;
     bool videoSettingsChanged = false;
@@ -40,45 +31,24 @@ public class SettingsManager : MonoBehaviour
     private void OnEnable()
     {
         ButtonLogic.OnButtonAction += HandleButtonAction;
+        AddListeners();
     }
-
     private void OnDisable()
     {
         ButtonLogic.OnButtonAction -= HandleButtonAction;
+        RemoveListeners();
     }
-
-    private void OnDestroy()
+    private void Awake()
     {
-        TerminateListeners();
+        gameObject.SetActive(false); // Start with settings menu hidden
+        LoadSettings();
+        _resolutionDropdown.ClearOptions();
+        _resolutionDropdown.AddOptions(VideoSystem.Instance.GetResolutionOptions());
     }
 
-    private void TerminateListeners()
-    {
-        // Audio
-        _audioMasterSlider.onValueChanged.RemoveAllListeners();
-        _audioMusicSlider.onValueChanged.RemoveAllListeners();
-        _audioSFXSlider.onValueChanged.RemoveAllListeners();
-
-        // Video
-        _fullscreenToggle.onValueChanged.RemoveAllListeners();
-        _resolutionDropdown.onValueChanged.RemoveAllListeners();
-
-        // Controls
-        _keybindForward.onClick.RemoveAllListeners();
-        _keybindBackward.onClick.RemoveAllListeners();
-        _keybindLeft.onClick.RemoveAllListeners();
-        _keybindRight.onClick.RemoveAllListeners();
-        _keybindAttack.onClick.RemoveAllListeners();
-        _keybindAbility.onClick.RemoveAllListeners();
-    }
-
-    private void Start()
-    {
-        InitializeAudioSettings();
-        InitializeVideoSettings();
-        InitializeControlsSettings();
-    }
-
+    /*
+     * Button Logic
+     */
     void HandleButtonAction(Actions action)
     {
         switch (action)
@@ -104,61 +74,84 @@ public class SettingsManager : MonoBehaviour
 
         }
     }
-
-    private void OpenSettingsHandler()
+    void OpenSettingsHandler() { }
+    void CloseSettingsHandler() { ReloadSettings(); }
+    void SaveSettingsHandler() { SaveSettings(); }
+    void ResetSettingsAudioHandler()
     {
-        LogSystem.Instance.Log("Opening settings menu.", LogType.Todo, _logTag);
+        AudioSystem.Instance.Reset();
+        _audioMasterSlider.value = AudioSystem.Instance.defaultVolume;
+        _audioMusicSlider.value = AudioSystem.Instance.defaultVolume;
+        _audioSFXSlider.value = AudioSystem.Instance.defaultVolume;
     }
-
-    private void CloseSettingsHandler()
+    void ResetSettingsVideoHandler()
     {
-        LogSystem.Instance.Log("Closing settings menu.", LogType.Todo, _logTag);
+        VideoSystem.Instance.Reset();
+        _fullscreenToggle.isOn = VideoSystem.Instance.defaultFullscreen;
+        _resolutionDropdown.value = GetResolutionDropdownIndex(VideoSystem.Instance.defaultResolutionWidth, VideoSystem.Instance.defaultResolutionHeight);
     }
+    void ResetSettingsControlsHandler() { }
 
-    private void SaveSettingsHandler()
+    /*
+     * Settings Methods
+     */
+    void LoadSettings()
     {
-        LogSystem.Instance.Log("Saving settings.", LogType.Todo, _logTag);
+        LogSystem.Instance.Log("Loading settings...", LogType.Todo, _logTag);
+        // Load Audio Settings
+        LoadAudioSettings();
+        // Load Video Settings
+        LoadVideoSettings();
     }
-
-    private void ResetSettingsAudioHandler()
+    void ReloadSettings()
     {
-        LogSystem.Instance.Log("Resetting audio settings to default.", LogType.Todo, _logTag);
+        LogSystem.Instance.Log("Reloading settings...", LogType.Todo, _logTag);
+        // Reload Audio Settings
+        if (audioSettingsChanged)
+        {
+            audioSettingsChanged = false;
+            AudioSystem.Instance.InitializeAudio();
+            LoadAudioSettings();
+        }
+
+        LogSystem.Instance.Log("Video Settings Changed: " + videoSettingsChanged, LogType.Todo, _logTag);
+
+        // Reload Video Settings
+        if (videoSettingsChanged)
+        {
+            videoSettingsChanged = false;
+            VideoSystem.Instance.InitializeVideo();
+            LoadVideoSettings();
+        }
     }
-
-    private void ResetSettingsControlsHandler()
+    void SaveSettings()
     {
-        LogSystem.Instance.Log("Resetting control settings to default.", LogType.Todo, _logTag);
-    }
+        LogSystem.Instance.Log("Saving settings...", LogType.Todo, _logTag);
+        // Save Audio Settings
+        if (audioSettingsChanged)
+        {
+            audioSettingsChanged = false;
+            AudioSystem.Instance.SaveAudioSettings();
+        }
+        // Save Video Settings
+        if (videoSettingsChanged)
+        {
+            videoSettingsChanged = false;
+            VideoSystem.Instance.SaveVideoSettings();
+        }
 
-    private void ResetSettingsVideoHandler()
-    {
-        LogSystem.Instance.Log("Resetting video settings to default.", LogType.Todo, _logTag);
+        SaveSystem.Instance.SavePlayerData();
     }
 
 
     /*
      * Audio Settings Methods
      */
-    void InitializeAudioSettings()
+    void LoadAudioSettings()
     {
-        if (_audioMasterSlider)
-        {
-            _audioMasterSlider.value = AudioSystem.Instance.GetMixerMasterVolume();
-            _audioMasterSlider.onValueChanged.AddListener(AudioMasterSliderValueChangedHandler);
-        }
-        else { LogSystem.Instance.Log("_audioMasterSlider null reference", LogType.Error, _logTag); }
-        if (_audioMusicSlider)
-        {
-            _audioMusicSlider.value = AudioSystem.Instance.GetMixerMusicVolume();
-            _audioMusicSlider.onValueChanged.AddListener(AudioMusicSliderValueChangedHandler);
-        }
-        else { LogSystem.Instance.Log("_audioMusicSlider null reference", LogType.Error, _logTag); }
-        if (_audioSFXSlider)
-        {
-            _audioSFXSlider.value = AudioSystem.Instance.GetMixerSfxVolume();
-            _audioSFXSlider.onValueChanged.AddListener(AudioSfxSliderValueChangedHandler);
-        }
-        else { LogSystem.Instance.Log("_audioSFXSlider null reference", LogType.Error, _logTag); }
+        _audioMasterSlider.value = AudioSystem.Instance.GetMixerMasterVolume();
+        _audioMusicSlider.value = AudioSystem.Instance.GetMixerMusicVolume();
+        _audioSFXSlider.value = AudioSystem.Instance.GetMixerSfxVolume();
     }
     void AudioMasterSliderValueChangedHandler(float value)
     {
@@ -176,65 +169,68 @@ public class SettingsManager : MonoBehaviour
         AudioSystem.Instance.SetMixerSfxVolume(value);
     }
 
+
     /*
      * Video Settings Methods
      */
-    void InitializeVideoSettings()
+    void LoadVideoSettings()
     {
-        if (_fullscreenToggle)
-        {
-            _fullscreenToggle.isOn = VideoSystem.Instance.GetIsFullscreen();
-            _fullscreenToggle.onValueChanged.AddListener(FullscreeenToggleValueChangedHandler);
-        }
-        else { LogSystem.Instance.Log("_fullscreenToggle null reference", LogType.Error, _logTag); }
-        if (_resolutionDropdown)
-        {
-            // Add resolution options
-            _resolutionDropdown.ClearOptions();
-            _resolutionDropdown.AddOptions(VideoSystem.Instance.GetResolutionOptions());
-
-            // Set value
-            _resolutionDropdown.value = _resolutionDropdown.options.FindIndex(option => option.text == $"{Screen.currentResolution.width} x {Screen.currentResolution.height}");
-            _resolutionDropdown.onValueChanged.AddListener(ResolutionDropdownValueChangedHandler);
-        }
-        else { LogSystem.Instance.Log("_resolutionDropdown null reference", LogType.Error, _logTag); }
+        _fullscreenToggle.isOn = VideoSystem.Instance.fullscreen;
+        _resolutionDropdown.value = GetResolutionDropdownIndex(VideoSystem.Instance.resolutionWidth, VideoSystem.Instance.resolutionHeight);
+    
+        LogSystem.Instance.Log($"Loaded Video Settings: {VideoSystem.Instance.resolutionWidth} x {VideoSystem.Instance.resolutionHeight} Dropdown Value: {_resolutionDropdown.value}, Fullscreen: {VideoSystem.Instance.fullscreen}", LogType.Info, _logTag);
     }
     void FullscreeenToggleValueChangedHandler(bool value)
     {
         videoSettingsChanged = true;
-        VideoSystem.Instance.SetIsFullscreen(value);
+        VideoSystem.Instance.SetFullscreen(value);
     }
     void ResolutionDropdownValueChangedHandler(int index)
     {
         videoSettingsChanged = true;
         VideoSystem.Instance.SetResolution(index);
     }
-
-
-    /*
-     * Controls Settings Methods
-     */
-    private void InitializeControlsSettings()
+    int GetResolutionDropdownIndex(int width, int height)
     {
-        LogSystem.Instance.Log("Implement initialize controls settings", LogType.Todo, _logTag);
+        return _resolutionDropdown.options.FindIndex(option => option.text == $"{width}x{height}");
     }
 
-    public void SaveSettings()
-    {
-        if(audioSettingsChanged)
-        {
-            audioSettingsChanged = false;
-            AudioSystem.Instance.SaveAudioSettings();
-        }
-        if(videoSettingsChanged)
-        {
-            videoSettingsChanged = false;
-            VideoSystem.Instance.SaveVideoSettings();
-        }
-        if(controlsSettingsChanged)
-        {
-            controlsSettingsChanged = false;
 
-        }
+
+
+
+
+    void AddListeners()
+    {
+        // Audio
+        _audioMasterSlider.onValueChanged.AddListener(AudioMasterSliderValueChangedHandler);
+        _audioMusicSlider.onValueChanged.AddListener(AudioMusicSliderValueChangedHandler);
+        _audioSFXSlider.onValueChanged.AddListener(AudioSfxSliderValueChangedHandler);
+
+        // Video
+        _fullscreenToggle.onValueChanged.AddListener(FullscreeenToggleValueChangedHandler);
+        _resolutionDropdown.onValueChanged.AddListener(ResolutionDropdownValueChangedHandler);
+
+        // Controls
+
+    }
+    void RemoveListeners()
+    {
+        // Audio
+        _audioMasterSlider.onValueChanged.RemoveAllListeners();
+        _audioMusicSlider.onValueChanged.RemoveAllListeners();
+        _audioSFXSlider.onValueChanged.RemoveAllListeners();
+
+        // Video
+        _fullscreenToggle.onValueChanged.RemoveAllListeners();
+        _resolutionDropdown.onValueChanged.RemoveAllListeners();
+
+        // Controls
+        _keybindForward.onClick.RemoveAllListeners();
+        _keybindBackward.onClick.RemoveAllListeners();
+        _keybindLeft.onClick.RemoveAllListeners();
+        _keybindRight.onClick.RemoveAllListeners();
+        _keybindAttack.onClick.RemoveAllListeners();
+        _keybindAbility.onClick.RemoveAllListeners();
     }
 }

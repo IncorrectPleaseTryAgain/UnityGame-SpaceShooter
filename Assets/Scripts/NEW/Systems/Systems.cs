@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Systems : PersistentSingleton<Systems>
 {
+    const string _logTag = "Systems";
     [Header("Systems")]
     [SerializeField] LogSystem _logSystem;
     [SerializeField] SaveSystem _saveSystem;
@@ -13,31 +14,18 @@ public class Systems : PersistentSingleton<Systems>
     [SerializeField] VideoSystem _videoSystem;
 
     int systemsInitialized = 0;
-    const int NUMBER_OF_SYSTEMS = 6;
+    const int NUMBER_OF_SYSTEMS = 6; // 6 systems
 
-    public static event Action OnAllSystemsInitialized;
-    //bool initializationComplete = false;
+    public static event Action OnSystemsFinishedInitialization;
 
     private void OnEnable()
     {
-        LogSystem.OnSystemInitialized += RegisterInitialized;
-        SaveSystem.OnSystemInitialized += RegisterInitialized;
-        SceneSystem.OnSystemInitialized += RegisterInitialized;
-        StateSystem.OnSystemInitialized += RegisterInitialized;
-        AudioSystem.OnSystemInitialized += RegisterInitialized;
-        VideoSystem.OnSystemInitialized += RegisterInitialized;
+        AddEventListeners();
     }
-
     private void OnDisable()
     {
-        LogSystem.OnSystemInitialized -= RegisterInitialized;
-        SaveSystem.OnSystemInitialized -= RegisterInitialized;
-        SceneSystem.OnSystemInitialized -= RegisterInitialized;
-        StateSystem.OnSystemInitialized -= RegisterInitialized;
-        AudioSystem.OnSystemInitialized -= RegisterInitialized;
-        VideoSystem.OnSystemInitialized -= RegisterInitialized;
+        RemoveEventListeners();
     }
-
     public void Initialize()
     {
         Debug.Log("Initializing Systems...");
@@ -48,18 +36,42 @@ public class Systems : PersistentSingleton<Systems>
         StartCoroutine(_stateSystem.Initialize());
         StartCoroutine(_audioSystem.Initialize());
         StartCoroutine(_videoSystem.Initialize());
-
-        CallAllCrossDependentInitializationMethods();
     }
     void CallAllCrossDependentInitializationMethods()
     {
-        _audioSystem.InitializeVolume(); // Cross Dependent with Save System
+        LogSystem.Instance.Log("Calling All Cross-Dependent Initialization Methods", LogType.Info, _logTag);
+
+        _audioSystem.InitializeAudio(); // Cross Dependent with Save System
+        _videoSystem.InitializeVideo(); // Cross Dependent with Save System
+
+        RemoveEventListeners();
+        OnSystemsFinishedInitialization?.Invoke();
     }
 
     public void RegisterInitialized()
     {
         systemsInitialized++;
-        Debug.Log("Initialzed System | Progress: " + ((systemsInitialized * 100) / NUMBER_OF_SYSTEMS) + "%");
-        if (systemsInitialized == NUMBER_OF_SYSTEMS) { OnAllSystemsInitialized.Invoke(); }
+        LogSystem.Instance.Log("Initialzed System | Progress: " + ((systemsInitialized * 100) / NUMBER_OF_SYSTEMS) + "%", LogType.Info, _logTag);
+        if (systemsInitialized == NUMBER_OF_SYSTEMS) { CallAllCrossDependentInitializationMethods(); }
+    }
+
+
+    void AddEventListeners()
+    {
+        LogSystem.OnSystemInitialized += RegisterInitialized;
+        SaveSystem.OnSystemInitialized += RegisterInitialized;
+        SceneSystem.OnSystemInitialized += RegisterInitialized;
+        StateSystem.OnSystemInitialized += RegisterInitialized;
+        AudioSystem.OnSystemInitialized += RegisterInitialized;
+        VideoSystem.OnSystemInitialized += RegisterInitialized;
+    }
+    void RemoveEventListeners()
+    {
+        LogSystem.OnSystemInitialized -= RegisterInitialized;
+        SaveSystem.OnSystemInitialized -= RegisterInitialized;
+        SceneSystem.OnSystemInitialized -= RegisterInitialized;
+        StateSystem.OnSystemInitialized -= RegisterInitialized;
+        AudioSystem.OnSystemInitialized -= RegisterInitialized;
+        VideoSystem.OnSystemInitialized -= RegisterInitialized;
     }
 }

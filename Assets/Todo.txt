@@ -1,2 +1,3 @@
-- Settings Button Change Scene
-- New Save Button Creates a new save file
+- Settings: Video settings getting index of dropdown
+			Make sure values are saveed correctly - width to width and height to height
+			Check the text format of the dropdown values

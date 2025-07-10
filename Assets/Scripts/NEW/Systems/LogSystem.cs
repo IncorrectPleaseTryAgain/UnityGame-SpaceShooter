@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 public enum LogType
 {
+    None,
     Info,
     Warning,
     Error,
@@ -57,6 +58,28 @@ public class LogSystem : Singleton<LogSystem>, ISystem
                 break;
             default:
                 Log("Invalid log type specified.", LogType.Error, "LogSystem");
+                break;
+        }
+    }
+
+    public void DisableLog(LogType type)
+    {
+        switch(type)
+        {
+            case LogType.Info:
+                _InfoEnabled = false;
+                break;
+            case LogType.Warning:
+                _WarningEnabled = false;
+                break;
+            case LogType.Error:
+                _ErrorEnabled = false;
+                break;
+            case LogType.Todo:
+                _TodoEnabled = false;
+                break;
+            default:
+                _globalLogEnabled = false;
                 break;
         }
     }

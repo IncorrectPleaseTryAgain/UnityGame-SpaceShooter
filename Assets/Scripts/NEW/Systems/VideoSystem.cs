@@ -8,64 +8,58 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
 {
     const string _logTag = "VideoSystem";
 
-    // Video Settings
-    int resolutionWidth;
-    int resolutionHeight;
-    bool fullscreen;
+    // Default Video Settings
+    public int defaultResolutionWidth { get; private set; } = 1920;
+    public int defaultResolutionHeight { get; private set; } = 1080;
+    public bool defaultFullscreen { get; private set; } = true;
 
-    const int defaultResolutionWidth = 1920;
-    const int defaultResolutionHeight = 1080;
-    const int defaultFullscreen = 1;
+    // Current Video Settings
+    public int resolutionWidth { get; private set; } = 1920;
+    public int resolutionHeight { get; private set; } = 1080;
+    public bool fullscreen { get; private set; } = true;
 
-    List<string> resolutionOptions = new List<string>();
+    public List<string> resolutionOptions { get; private set; } = new List<string>();
 
     public static event Action OnSystemInitialized;
 
+    // Initialize System
     public IEnumerator Initialize()
     {
         LogSystem.Instance.Log("Initializing VideoSystem", LogType.Info, _logTag);
 
         if(VideoSystem.Instance == null) { yield return null; }
 
+        // Initialize resolution options
         var resolutions = Screen.resolutions;
         foreach (var res in resolutions)
         {
             resolutionOptions.Add($"{res.width} x {res.height}");
         }
-        resolutionWidth = SaveSystem.Instance.GetResolutionWidth(defaultResolutionWidth);
-        resolutionHeight = SaveSystem.Instance.GetResolutionHeight(defaultResolutionHeight);
-
-        fullscreen = SaveSystem.Instance.GetIsFullscreen(defaultFullscreen);
-
-        Screen.SetResolution(resolutionWidth, resolutionHeight, fullscreen);
 
         OnSystemInitialized?.Invoke();
     }
-
-    public List<string> GetResolutionOptions()
+    // Initialize Video
+    public void InitializeVideo()
     {
-        return resolutionOptions;
+        fullscreen = SaveSystem.Instance.GetFullscreen(defaultFullscreen ? 1 : 0);
+        resolutionWidth = SaveSystem.Instance.GetResolutionWidth(defaultResolutionWidth);
+        resolutionHeight = SaveSystem.Instance.GetResolutionHeight(defaultResolutionHeight);
+        Screen.SetResolution(resolutionWidth, resolutionHeight, fullscreen);
+
+        LogSystem.Instance.Log($"Video Settings Initialized: {resolutionWidth} x {resolutionHeight}, Fullscreen: {fullscreen}", LogType.Info, _logTag);
+    }
+    public void Reset()
+    {
+        fullscreen = defaultFullscreen;
+        resolutionWidth = defaultResolutionWidth;
+        resolutionHeight = defaultResolutionHeight;
+        Screen.SetResolution(defaultResolutionWidth, defaultResolutionHeight, defaultFullscreen);
     }
 
-    public void SetIsFullscreen(bool value)
-    {
-        fullscreen = value;
-    }
-
-    public bool GetIsFullscreen() {  return fullscreen; }
-
-    public void SetResolution(int index)
-    {
-        int width = GetWidthResolutionOption(index);
-        int height = GetHeightResolutionOption(index);
-        if(width == 0|| height == 0)
-        {
-            LogSystem.Instance.Log("Failed getting width or height in SetResolution()", LogType.Error, _logTag);
-            return;
-        }
-        Screen.SetResolution(width, height, fullscreen);
-    }
-
+    /*
+     * Video Methods
+     */
+    // Getters
     private int GetHeightResolutionOption(int index)
     {
         string res = resolutionOptions[index];
@@ -81,7 +75,6 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
         }
         return 0;
     }
-
     private int GetWidthResolutionOption(int index)
     {
         string res = resolutionOptions[index];
@@ -99,10 +92,30 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
 
         return 0;
     }
-
+    public List<string> GetResolutionOptions()
+    {
+        return resolutionOptions;
+    }
+    public void SetFullscreen(bool isFullscreen)
+    {
+        fullscreen = isFullscreen;
+        Screen.fullScreen = fullscreen;
+    }
+    // Setters
+    public void SetResolution(int dropdownIndex)
+    {
+        resolutionWidth = GetWidthResolutionOption(dropdownIndex);
+        resolutionHeight = GetHeightResolutionOption(dropdownIndex);
+        Screen.SetResolution(resolutionWidth, resolutionHeight, Screen.fullScreen);
+    }
+    /*
+     * Save
+     */
     public void SaveVideoSettings()
     {
         SaveSystem.Instance.SaveVideoSettings(resolutionWidth, resolutionHeight, fullscreen ? 1 : 0);
+
+        LogSystem.Instance.Log($"Video Settings Saved: {resolutionWidth} x {resolutionHeight}, Fullscreen: {fullscreen}", LogType.Info, _logTag);
     }
 
 }

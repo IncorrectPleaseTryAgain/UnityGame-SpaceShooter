@@ -1,8 +1,5 @@
-using TMPro;
-using DG.Tweening;
 using UnityEngine;
-using EasyTextEffects;
-using System;
+
 
 public class MainMenuCanvasLogic : MonoBehaviour
 {
@@ -10,11 +7,6 @@ public class MainMenuCanvasLogic : MonoBehaviour
 
     [SerializeField] MainMenuCanvasHeaderLogic _header;
     [SerializeField] MainMenuCanvasBodyLogic _body;
-
-    private void Awake()
-    {
-        
-    }
 
     private void Start()
     {
@@ -25,5 +17,19 @@ public class MainMenuCanvasLogic : MonoBehaviour
     public void Continue()
     {
         _header.Continue(); // This calls continue on _header after animation complete
+    }
+
+    public void SetActive(bool active)
+    {
+        if(active)
+        {
+            _header.gameObject.SetActive(true);
+            _body.gameObject.SetActive(true);
+        }
+        else
+        {
+            _header.gameObject.SetActive(false);
+            _body.gameObject.SetActive(false);
+        }
     }
 }

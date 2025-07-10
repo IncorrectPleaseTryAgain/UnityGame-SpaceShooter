@@ -28,7 +28,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     string _saveFilePath;
 
     public static event Action OnSystemInitialized;
-
+    // Initialize System
     public IEnumerator Initialize()
     {
         LogSystem.Instance.Log("Initializing SaveSystem...", LogType.Info, _logTag);
@@ -45,10 +45,17 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
             playerData = new PlayerData();
             SavePlayerData();
         }
+
         OnSystemInitialized?.Invoke();
     }
 
-    void SavePlayerData()
+    /*
+     * Json Data Structure
+     */
+    /*
+     * Player Data
+     */
+    public void SavePlayerData()
     {
         LogSystem.Instance.Log("Saving player data to file.", LogType.Info, _logTag);
 
@@ -62,8 +69,9 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         {
             LogSystem.Instance.Log($"Error saving player data: {e.Message}", LogType.Error, _logTag);
         }
-    }
 
+        PlayerPrefs.Save();
+    }
     void LoadPlayerData()
     {
         LogSystem.Instance.Log("Loading player data from file.", LogType.Info, _logTag);
@@ -81,7 +89,12 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         }
     }
 
-    // Audio Settings
+    /*
+     * PlayerPrefs Data Structure
+     */
+    /*
+     * Audio Data
+     */
     public float GetMasterVolume(float defaultVolume)
     {
         return PlayerPrefs.GetFloat(PlayerPrefKeys.MASTER_VOLUME_KEY, defaultVolume);
@@ -94,7 +107,6 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     {
         return PlayerPrefs.GetFloat(PlayerPrefKeys.SFX_VOLUME_KEY, defaultVolume);
     }
-
     public void SaveAudioSettings(float masterVolume, float musicVolume, float sfxVolume)
     {
         PlayerPrefs.SetFloat(PlayerPrefKeys.MASTER_VOLUME_KEY , masterVolume);
@@ -102,7 +114,9 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         PlayerPrefs.SetFloat(PlayerPrefKeys.SFX_VOLUME_KEY, sfxVolume);
     }
 
-    // Video Settings
+    /*
+    * Video Data
+    */
     public int GetResolutionWidth(int defaultResWidth)
     {
         return PlayerPrefs.GetInt(PlayerPrefKeys.RESOLUTION_WIDTH_KEY, defaultResWidth);
@@ -111,14 +125,13 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     {
         return PlayerPrefs.GetInt(PlayerPrefKeys.RESOLUTION_HEIGHT_KEY, defaultResHeight);
     }
-    public bool GetIsFullscreen(int defaultIsFullscreen)
+    public bool GetFullscreen(int defaultIsFullscreen)
     {
         return PlayerPrefs.GetInt(PlayerPrefKeys.FULLSCREEN_KEY, defaultIsFullscreen) == 1 ? true : false;
     }
-
     public void SaveVideoSettings(int resWidth, int resHeight, int fullscreen)
     {
-        PlayerPrefs.SetInt(PlayerPrefKeys.RESOLUTION_WIDTH_KEY , resWidth);
+        PlayerPrefs.SetInt(PlayerPrefKeys.RESOLUTION_WIDTH_KEY, resWidth);
         PlayerPrefs.SetInt(PlayerPrefKeys.RESOLUTION_HEIGHT_KEY, resHeight);
         PlayerPrefs.SetInt(PlayerPrefKeys.FULLSCREEN_KEY, fullscreen);
     }

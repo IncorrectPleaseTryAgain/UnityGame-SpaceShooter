@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,10 +34,14 @@ public class MainMenuManager : MonoBehaviour
     {
         ButtonLogic.OnButtonAction += HandleButtonAction;
         MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete += MainMenuCanvasHeaderOnAnimationCompleteHandler;
-        Systems.OnAllSystemsInitialized += AllSystemsInitializedHandler;
+        Systems.OnSystemsFinishedInitialization += AllSystemsInitializedHandler;
+    }
 
+    private void Start()
+    {
         InitializeSystems();
     }
+
     void InitializeSystems()
     {
         if (!_systems)
@@ -83,32 +88,31 @@ public class MainMenuManager : MonoBehaviour
     }
     void OpenSettingsHandler()
     {
+        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().SetActive(false);
         _settingsCanvas.gameObject.SetActive(true);
-        _mainMenuCanvas.gameObject.SetActive(false);
     }
     void CloseSettingsHandler()
     {
         _settingsCanvas.gameObject.SetActive(false);
-        _mainMenuCanvas.gameObject.SetActive(true);
+        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().SetActive(true);
     }
     void SaveSettingsHandler()
     {
         _settingsCanvas.gameObject.SetActive(false);
-        _mainMenuCanvas.gameObject.SetActive(true);
+        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().SetActive(true);
     }
 
     void AllSystemsInitializedHandler()
     {
         LogSystem.Instance.Log("All Systems Initialized", LogType.Info, _logTag);
-        Systems.OnAllSystemsInitialized -= AllSystemsInitializedHandler;
+        Systems.OnSystemsFinishedInitialization -= AllSystemsInitializedHandler;
 
         InitializePlayerInput();
         InitializeCamera();
 
         InstantiateObject(_background, _camera.transform);
         _mainMenuCanvas = InstantiateObject(_mainMenuCanvas);
-        _settingsCanvas = InstantiateObject(_settingsCanvas);
-        //_mainMenuTitleCanvas = InstantiateObject(_mainMenuTitleCanvas);
+        _settingsCanvas = InstantiateObject(_settingsCanvas, _mainMenuCanvas.transform);
     }
 
     private void InitializeCamera()
