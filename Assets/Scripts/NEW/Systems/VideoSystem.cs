@@ -36,6 +36,10 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
             resolutionOptions.Add($"{res.width} x {res.height}");
         }
 
+        defaultResolutionWidth = Screen.currentResolution.width;
+        defaultResolutionHeight = Screen.currentResolution.height;
+        defaultFullscreen = Screen.fullScreen;
+
         OnSystemInitialized?.Invoke();
     }
     // Initialize Video
@@ -60,7 +64,7 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
      * Video Methods
      */
     // Getters
-    private int GetHeightResolutionOption(int index)
+    private int GetWidthResolutionOption(int index)
     {
         string res = resolutionOptions[index];
         // Get first integer in string
@@ -75,7 +79,7 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
         }
         return 0;
     }
-    private int GetWidthResolutionOption(int index)
+    private int GetHeightResolutionOption(int index)
     {
         string res = resolutionOptions[index];
         // Get second integer in string

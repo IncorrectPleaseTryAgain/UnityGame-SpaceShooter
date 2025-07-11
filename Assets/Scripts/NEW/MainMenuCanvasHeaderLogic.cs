@@ -37,7 +37,6 @@ public class MainMenuCanvasHeaderLogic : MonoBehaviour, IAnimationEventsReceiver
                 OnFadeInAnimationComplete?.Invoke();
                 break;
             case "ContinueAnimationComplete":
-                Debug.Log("OnContinueAnimationComplete?.Invoke()");
                 OnContinueAnimationComplete?.Invoke();
                 break;
         }

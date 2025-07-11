@@ -119,10 +119,10 @@ public class PlayerController : MonoBehaviour, IHealthResponder
     }
 
     private void Start() 
-    { 
-        pauseAction = InputSystem.actions.FindAction("Escape");
-        moveAction = InputSystem.actions.FindAction("Move");
-        sprintAction = InputSystem.actions.FindAction("Sprint");
+    {
+        pauseAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Escape");
+        moveAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Move");
+        sprintAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Sprint");
     }
 
     private void OnGameStateChangedHandler(GameStates state)

@@ -33,8 +33,8 @@ public class CreditsManager : MonoBehaviour
     private void Awake()
     {
         creditsTransform = credits.GetComponent<RectTransform>();
-        escapeAction = InputSystem.actions.FindAction("Escape");
-        moveAction = InputSystem.actions.FindAction("Move");
+        escapeAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Escape");
+        moveAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Move");
     }
 
     private void Start() { currentScrollSpeed = properties.getDefaultSpeed(); }

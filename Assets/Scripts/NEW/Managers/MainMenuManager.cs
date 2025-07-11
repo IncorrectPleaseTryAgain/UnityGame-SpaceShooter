@@ -9,7 +9,6 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Systems")]
     [SerializeField] Systems _systems;
-    [SerializeField] PlayerInput _playerInput;
     
     [Header("Enviroment")]
     [SerializeField] Camera _camera;
@@ -67,6 +66,7 @@ public class MainMenuManager : MonoBehaviour
         LogSystem.Instance.Log("Continue...", LogType.Info, _logTag);
 
         continueAction = null;
+        InputSystem.Instance.SetActionMapActive(InputSystem.ActionMaps.InGame);
         AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
         _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().Continue();
     }
@@ -126,8 +126,8 @@ public class MainMenuManager : MonoBehaviour
     void InitializePlayerInput()
     {
         LogSystem.Instance.Log("Initializing Player Input", LogType.Info, _logTag);
-        _playerInput = GetComponent<PlayerInput>();
-        _playerInput.DeactivateInput();
+        continueAction = null;
+        InputSystem.Instance.SetInputActive(false);
     }
 
     GameObject InstantiateObject(GameObject obj, Transform parent = null)
@@ -144,7 +144,8 @@ public class MainMenuManager : MonoBehaviour
     void MainMenuCanvasHeaderOnAnimationCompleteHandler()
     {
         LogSystem.Instance.Log("Enabling Continue Action", LogType.Info, _logTag);
-        _playerInput.SwitchCurrentActionMap("Initializer");
-        continueAction = _playerInput.actions["Continue"];
+        InputSystem.Instance.SetInputActive(true);
+        InputSystem.Instance.SetActionMapActive(InputSystem.ActionMaps.Continue);
+        continueAction = InputSystem.Instance.GetAction("Continue");
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class SaveSystem : Singleton<SaveSystem>, ISystem
 {
@@ -18,6 +20,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         public const string FULLSCREEN_KEY = "fullscreen_key";
 
         // Controls
+        public const string CONTROLS_KEY = "controls_key";
     }
 
     const string _logTag = "SaveSystem";
@@ -112,6 +115,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         PlayerPrefs.SetFloat(PlayerPrefKeys.MASTER_VOLUME_KEY , masterVolume);
         PlayerPrefs.SetFloat(PlayerPrefKeys.MUSIC_VOLUME_KEY, musicVolume);
         PlayerPrefs.SetFloat(PlayerPrefKeys.SFX_VOLUME_KEY, sfxVolume);
+        PlayerPrefs.Save();
     }
 
     /*
@@ -127,13 +131,35 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     }
     public bool GetFullscreen(int defaultIsFullscreen)
     {
-        return PlayerPrefs.GetInt(PlayerPrefKeys.FULLSCREEN_KEY, defaultIsFullscreen) == 1 ? true : false;
+        return PlayerPrefs.GetInt(PlayerPrefKeys.FULLSCREEN_KEY, defaultIsFullscreen) == 1;
     }
     public void SaveVideoSettings(int resWidth, int resHeight, int fullscreen)
     {
+        LogSystem.Instance.Log($"Saving video settings: {resWidth} x {resHeight}, Fullscreen: {fullscreen == 1}", LogType.Info, _logTag);
+
         PlayerPrefs.SetInt(PlayerPrefKeys.RESOLUTION_WIDTH_KEY, resWidth);
         PlayerPrefs.SetInt(PlayerPrefKeys.RESOLUTION_HEIGHT_KEY, resHeight);
         PlayerPrefs.SetInt(PlayerPrefKeys.FULLSCREEN_KEY, fullscreen);
+        PlayerPrefs.Save();
+    }
+
+    /*
+     * Controls Data
+     */
+    public void LoadControls(InputActionAsset actions)
+    {
+        LogSystem.Instance.Log("Loading control bindings from PlayerPrefs.", LogType.Debug, _logTag);
+        string rebinds = PlayerPrefs.GetString(PlayerPrefKeys.CONTROLS_KEY);
+        if (!string.IsNullOrEmpty(rebinds))
+            actions.LoadBindingOverridesFromJson(rebinds);
+    }
+
+    public void SaveControls(InputActionAsset actions)
+    {
+        LogSystem.Instance.Log("Saving control bindings to PlayerPrefs.", LogType.Debug, _logTag);
+        string rebinds = actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString(PlayerPrefKeys.CONTROLS_KEY, rebinds);
+        PlayerPrefs.Save();
     }
 }
 

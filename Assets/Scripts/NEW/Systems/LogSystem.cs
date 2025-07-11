@@ -5,6 +5,7 @@ public enum LogType
 {
     None,
     Info,
+    Debug,
     Warning,
     Error,
     Todo
@@ -16,11 +17,13 @@ public class LogSystem : Singleton<LogSystem>, ISystem
 
     [SerializeField] bool _globalLogEnabled = true;
     [SerializeField] bool _InfoEnabled = true;
+    [SerializeField] bool _DebugEnabled = true;
     [SerializeField] bool _WarningEnabled = true;
     [SerializeField] bool _ErrorEnabled = true;
     [SerializeField] bool _TodoEnabled = true;
 
     [SerializeField] Color infoColor = Color.black;
+    [SerializeField] Color DebugColor = Color.blue;
     [SerializeField] Color warningColor = Color.yellow;
     [SerializeField] Color errorColor = Color.red;
     [SerializeField] Color todoColor = Color.green;
@@ -43,6 +46,10 @@ public class LogSystem : Singleton<LogSystem>, ISystem
             case LogType.Info:
                 if (!_InfoEnabled) return;
                 Debug.Log($"<color=#{ColorUtility.ToHtmlStringRGB(infoColor)}>[{_logTag}]</color> {message}");
+                break;
+            case LogType.Debug:
+                if (!_DebugEnabled) return;
+                Debug.Log($"<color=#{ColorUtility.ToHtmlStringRGB(DebugColor)}>[{_logTag}]</color> {message}");
                 break;
             case LogType.Warning:
                 if (!_WarningEnabled) return;
@@ -68,6 +75,9 @@ public class LogSystem : Singleton<LogSystem>, ISystem
         {
             case LogType.Info:
                 _InfoEnabled = false;
+                break;
+            case LogType.Debug:
+                _DebugEnabled = false;
                 break;
             case LogType.Warning:
                 _WarningEnabled = false;

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
@@ -16,17 +17,10 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] TMP_Dropdown _resolutionDropdown;
 
     [Header("Controls")]
-    [SerializeField] Button _keybindForward;
-    [SerializeField] Button _keybindBackward;
-    [SerializeField] Button _keybindLeft;
-    [SerializeField] Button _keybindRight;
-
-    [SerializeField] Button _keybindAttack;
-    [SerializeField] Button _keybindAbility;
+    InputActionRebindingExtensions.RebindingOperation rebindOperation;
 
     bool audioSettingsChanged = false;
     bool videoSettingsChanged = false;
-    bool controlsSettingsChanged = false;
 
     private void OnEnable()
     {
@@ -74,7 +68,7 @@ public class SettingsManager : MonoBehaviour
 
         }
     }
-    void OpenSettingsHandler() { }
+    void OpenSettingsHandler() { LoadSettings(); }
     void CloseSettingsHandler() { ReloadSettings(); }
     void SaveSettingsHandler() { SaveSettings(); }
     void ResetSettingsAudioHandler()
@@ -97,15 +91,17 @@ public class SettingsManager : MonoBehaviour
      */
     void LoadSettings()
     {
-        LogSystem.Instance.Log("Loading settings...", LogType.Todo, _logTag);
+        LogSystem.Instance.Log("Loading settings...", LogType.Info, _logTag);
         // Load Audio Settings
         LoadAudioSettings();
         // Load Video Settings
         LoadVideoSettings();
+        // Load Controls Settings
+        InputSystem.Instance.LoadControls();
     }
     void ReloadSettings()
     {
-        LogSystem.Instance.Log("Reloading settings...", LogType.Todo, _logTag);
+        LogSystem.Instance.Log("Reloading settings...", LogType.Info, _logTag);
         // Reload Audio Settings
         if (audioSettingsChanged)
         {
@@ -114,7 +110,7 @@ public class SettingsManager : MonoBehaviour
             LoadAudioSettings();
         }
 
-        LogSystem.Instance.Log("Video Settings Changed: " + videoSettingsChanged, LogType.Todo, _logTag);
+        LogSystem.Instance.Log("Video Settings Changed: " + videoSettingsChanged, LogType.Info, _logTag);
 
         // Reload Video Settings
         if (videoSettingsChanged)
@@ -126,7 +122,7 @@ public class SettingsManager : MonoBehaviour
     }
     void SaveSettings()
     {
-        LogSystem.Instance.Log("Saving settings...", LogType.Todo, _logTag);
+        LogSystem.Instance.Log("Saving settings...", LogType.Info, _logTag);
         // Save Audio Settings
         if (audioSettingsChanged)
         {
@@ -139,6 +135,9 @@ public class SettingsManager : MonoBehaviour
             videoSettingsChanged = false;
             VideoSystem.Instance.SaveVideoSettings();
         }
+
+        // Save Controls Settings
+        InputSystem.Instance.SaveControls();
 
         SaveSystem.Instance.SavePlayerData();
     }
@@ -177,8 +176,6 @@ public class SettingsManager : MonoBehaviour
     {
         _fullscreenToggle.isOn = VideoSystem.Instance.fullscreen;
         _resolutionDropdown.value = GetResolutionDropdownIndex(VideoSystem.Instance.resolutionWidth, VideoSystem.Instance.resolutionHeight);
-    
-        LogSystem.Instance.Log($"Loaded Video Settings: {VideoSystem.Instance.resolutionWidth} x {VideoSystem.Instance.resolutionHeight} Dropdown Value: {_resolutionDropdown.value}, Fullscreen: {VideoSystem.Instance.fullscreen}", LogType.Info, _logTag);
     }
     void FullscreeenToggleValueChangedHandler(bool value)
     {
@@ -192,12 +189,8 @@ public class SettingsManager : MonoBehaviour
     }
     int GetResolutionDropdownIndex(int width, int height)
     {
-        return _resolutionDropdown.options.FindIndex(option => option.text == $"{width}x{height}");
+        return _resolutionDropdown.options.FindIndex(option => option.text == $"{width} x {height}");
     }
-
-
-
-
 
 
     void AddListeners()
@@ -210,9 +203,6 @@ public class SettingsManager : MonoBehaviour
         // Video
         _fullscreenToggle.onValueChanged.AddListener(FullscreeenToggleValueChangedHandler);
         _resolutionDropdown.onValueChanged.AddListener(ResolutionDropdownValueChangedHandler);
-
-        // Controls
-
     }
     void RemoveListeners()
     {
@@ -224,13 +214,5 @@ public class SettingsManager : MonoBehaviour
         // Video
         _fullscreenToggle.onValueChanged.RemoveAllListeners();
         _resolutionDropdown.onValueChanged.RemoveAllListeners();
-
-        // Controls
-        _keybindForward.onClick.RemoveAllListeners();
-        _keybindBackward.onClick.RemoveAllListeners();
-        _keybindLeft.onClick.RemoveAllListeners();
-        _keybindRight.onClick.RemoveAllListeners();
-        _keybindAttack.onClick.RemoveAllListeners();
-        _keybindAbility.onClick.RemoveAllListeners();
     }
 }

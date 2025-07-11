@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Menu Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 8139091373454979055, guid: 7676b603fcc9ea546897287d22fe7276, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: InGame
+      objectReference: {fileID: 0}
     - target: {fileID: 8403593597208807729, guid: 7676b603fcc9ea546897287d22fe7276, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
