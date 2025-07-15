@@ -15,8 +15,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject _background;
 
     [Header("Main Menu")]
-    [SerializeField] GameObject _mainMenuCanvas;
     [SerializeField] AudioClip _mainMenuMusic;
+    [SerializeField] GameObject _mainMenuCanvas;
+    MainMenuCanvasLogic _mainMenuCanvasLogic;
 
     [Header("Overlays")]
     [SerializeField] GameObject _settingsCanvas;
@@ -25,15 +26,17 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        ButtonLogic.OnButtonAction -= HandleButtonAction;
         MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete -= MainMenuCanvasHeaderOnAnimationCompleteHandler;
+        SettingsManager.OnSettingsIsActive -= OnSettingsIsActiveHandler;
+
     }
 
     private void Awake()
     {
-        ButtonLogic.OnButtonAction += HandleButtonAction;
         MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete += MainMenuCanvasHeaderOnAnimationCompleteHandler;
-        Systems.OnSystemsFinishedInitialization += AllSystemsInitializedHandler;
+        Systems.OnSystemsFinishedInitialization += AllSystemsInitializedHandler; // removed after initialization
+        SettingsManager.OnSettingsIsActive += OnSettingsIsActiveHandler;
+
     }
 
     private void Start()
@@ -68,38 +71,28 @@ public class MainMenuManager : MonoBehaviour
         continueAction = null;
         InputSystem.Instance.SetActionMapActive(InputSystem.ActionMaps.InGame);
         AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
-        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().Continue();
+        _mainMenuCanvasLogic.Continue();
     }
 
-    void HandleButtonAction(Actions action)
+    public void OpenSettingsHandler()
     {
-        switch (action)
-        {
-            case Actions.OpenSettings:
-                OpenSettingsHandler();
-                break;
-            case Actions.CloseSettings:
-                CloseSettingsHandler();
-                break;
-            case Actions.SaveSettings:
-                SaveSettingsHandler();
-                break;
-        }
-    }
-    void OpenSettingsHandler()
-    {
-        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().SetActive(false);
         _settingsCanvas.gameObject.SetActive(true);
+        _mainMenuCanvasLogic.SetActive(false);
     }
-    void CloseSettingsHandler()
+
+    void OnSettingsIsActiveHandler(bool isActive)
     {
-        _settingsCanvas.gameObject.SetActive(false);
-        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().SetActive(true);
-    }
-    void SaveSettingsHandler()
-    {
-        _settingsCanvas.gameObject.SetActive(false);
-        _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>().SetActive(true);
+        LogSystem.Instance.Log("Settings Active: " + isActive, LogType.Info, _logTag);
+        if (isActive)
+        {
+            _settingsCanvas.gameObject.SetActive(true);
+            _mainMenuCanvasLogic.SetActive(false);
+        }
+        else
+        {
+            _settingsCanvas.gameObject.SetActive(false);
+            _mainMenuCanvasLogic.SetActive(true);
+        }
     }
 
     void AllSystemsInitializedHandler()
@@ -113,6 +106,7 @@ public class MainMenuManager : MonoBehaviour
         InstantiateObject(_background, _camera.transform);
         _mainMenuCanvas = InstantiateObject(_mainMenuCanvas);
         _settingsCanvas = InstantiateObject(_settingsCanvas, _mainMenuCanvas.transform);
+        _mainMenuCanvasLogic = _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>();
     }
 
     private void InitializeCamera()

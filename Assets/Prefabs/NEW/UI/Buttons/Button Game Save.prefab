@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 5950982735432854539}
   - component: {fileID: 4057818262668413284}
   - component: {fileID: 6027994175283485424}
-  - component: {fileID: 2456565005183349356}
-  - component: {fileID: 4328583734738902079}
   m_Layer: 5
   m_Name: Button Game Save
   m_TagString: Untagged
@@ -123,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4328583734738902079}
-        m_TargetAssemblyTypeName: ButtonGameSaveLogic, Assembly-CSharp
-        m_MethodName: OnClickHandler
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: MainMenuCanvasLogic, Assembly-CSharp
+        m_MethodName: LoadGameButtonHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -135,32 +133,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2456565005183349356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376433517681340916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c001e819fae86a84992d7f1b16d7319f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: 0
-  scene: 0
---- !u!114 &4328583734738902079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376433517681340916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6cecf6f1c2bcd448b48a6e3f95ae45b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7353739332811182885
 GameObject:
   m_ObjectHideFlags: 0

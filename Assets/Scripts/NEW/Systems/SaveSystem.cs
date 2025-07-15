@@ -7,6 +7,14 @@ using UnityEngine.InputSystem;
 
 public class SaveSystem : Singleton<SaveSystem>, ISystem
 {
+    public enum SaveIndex
+    {
+        NOSAVE = 0,
+        Save1 = 1,
+        Save2 = 2,
+        Save3 = 3
+    }
+
     struct PlayerPrefKeys
     {
         // Audio
@@ -24,8 +32,9 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     }
 
     const string _logTag = "SaveSystem";
-    PlayerData playerData;
 
+    public PlayerData playerData;
+    public int currentGameSave = 0;
 
     const string _saveFileName = "/playerData.json";
     string _saveFilePath;
@@ -39,15 +48,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         if (SaveSystem.Instance == null) { yield return null; }
 
         _saveFilePath = Application.persistentDataPath + _saveFileName;
-        if (File.Exists(_saveFilePath))
-        {
-            LoadPlayerData();
-        }
-        else
-        {
-            playerData = new PlayerData();
-            SavePlayerData();
-        }
+        Load();
 
         OnSystemInitialized?.Invoke();
     }
@@ -58,9 +59,9 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     /*
      * Player Data
      */
-    public void SavePlayerData()
+    public void Save()
     {
-        LogSystem.Instance.Log("Saving player data to file.", LogType.Info, _logTag);
+        LogSystem.Instance.Log("Saving player data to file path: " + _saveFilePath, LogType.Info, _logTag);
 
         try
         {
@@ -75,7 +76,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
         PlayerPrefs.Save();
     }
-    void LoadPlayerData()
+    public PlayerData Load()
     {
         LogSystem.Instance.Log("Loading player data from file.", LogType.Info, _logTag);
 
@@ -89,6 +90,38 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         {
             LogSystem.Instance.Log($"Error loading player data: {e.Message}", LogType.Error, _logTag);
             playerData = new PlayerData(); // Reset to default if loading fails
+            Save();
+            Load();
+        }
+
+        return playerData;
+    }
+
+    public void ResetSave(SaveIndex save)
+    {
+        switch (save)
+        {
+            case SaveIndex.Save1:
+                LogSystem.Instance.Log("Resetting Save 1", LogType.Info, _logTag);
+                playerData.Save1Name = "Create Save";
+                playerData.Save1Active = false;
+                playerData.Save1Chapter = 1;
+                playerData.Save1Level = 1;
+                break;
+            case SaveIndex.Save2:
+                LogSystem.Instance.Log("Resetting Save 2", LogType.Info, _logTag);
+                playerData.Save2Name = "Create Save";
+                playerData.Save2Active = false;
+                playerData.Save2Chapter = 1;
+                playerData.Save2Level = 1;
+                break;
+            case SaveIndex.Save3:
+                LogSystem.Instance.Log("Resetting Save 3", LogType.Info, _logTag);
+                playerData.Save3Name = "Create Save";
+                playerData.Save3Active = false;
+                playerData.Save3Chapter = 1;
+                playerData.Save3Level = 1;
+                break;
         }
     }
 

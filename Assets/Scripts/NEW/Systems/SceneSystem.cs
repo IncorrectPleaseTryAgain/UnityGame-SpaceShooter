@@ -6,6 +6,7 @@ public enum Scenes
 {
     None,
     MainMenu,
+    ChapterSelect,
 }
 
 public class  SceneSystem : Singleton<SceneSystem>, ISystem

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,38 +7,39 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
 {
     const string _logTag = "MainMenuCanvasBodyLogic";
     [Header("Game Saves")]
+    [SerializeField] GameObject _newGameOverlay;
+
     [SerializeField] Button _gameSaveLeft;
     [SerializeField] TextMeshProUGUI _gameSaveLeftText;
-    [SerializeField] Color _gameSaveLeftColor;
-    [SerializeField] Color _gameSaveLeftTextColor;
+    [SerializeField] Button _deleteLeftSave;
 
     [SerializeField] Button _gameSaveCenter;
     [SerializeField] TextMeshProUGUI _gameSaveCenterText;
-    [SerializeField] Color _gameSaveCenterColor;
-    [SerializeField] Color _gameSaveCenterTextColor;
+    [SerializeField] Button _deleteCenterSave;
 
     [SerializeField] Button _gameSaveRight;
     [SerializeField] TextMeshProUGUI _gameSaveRightText;
-    [SerializeField] Color _gameSaveRightColor;
-    [SerializeField] Color _gameSaveRightTextColor;
+    [SerializeField] Button _deleteRightSave;
 
     [Header("Settings")]
     [SerializeField] Button _settings;
-    [SerializeField] Color _settingsColor;
 
     [Header("Quit")]
     [SerializeField] Button _quit;
-    [SerializeField] Color _quitColor;
 
     [SerializeField] float _fadeInDuration;
     float elapsedTime;
     bool fadeInButtons;
 
+    Color colorTransparent = new Color(1f, 1f, 1f, 0f);
+    Color gameSaveInactive = new Color(1f, 1f, 1f, 0.25f);
+    Color gameSaveActive = new Color(1f, 1f, 1f, 1f);
+    Color colorQuit = new Color(1f, 0f, 0f, 1f);
+
     private void OnEnable()
     {
-        MainMenuCanvasHeaderLogic.OnContinueAnimationComplete += Continue;
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         MainMenuCanvasHeaderLogic.OnContinueAnimationComplete -= Continue;
     }
@@ -45,28 +47,47 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
     // Setup
     private void Awake()
     {
+        MainMenuCanvasHeaderLogic.OnContinueAnimationComplete += Continue;
         fadeInButtons = false;
         elapsedTime = 0;
-
-        _gameSaveLeftColor = _gameSaveLeft.image.color;
-        _gameSaveLeftTextColor = _gameSaveLeft.GetComponentInChildren<TextMeshProUGUI>().color;
-
-        _gameSaveCenterColor = _gameSaveCenter.image.color;
-        _gameSaveCenterTextColor = _gameSaveCenter.GetComponentInChildren<TextMeshProUGUI>().color;
-
-        _gameSaveRightColor = _gameSaveRight.image.color;
-        _gameSaveRightTextColor = _gameSaveRight.GetComponentInChildren<TextMeshProUGUI>().color;
-
-        _settingsColor = _settings.image.color;
-        _quitColor = _quit.image.color;
     }
-    // Manipulation
     public void Initialize()
     {
+        InitializeSaves();
         Disable();
-
-        // Initialize Game Saves
     }
+
+    private void InitializeSaves()
+    {
+        LogSystem.Instance.Log("Initializing Saves", LogType.Info, _logTag);
+        _gameSaveLeftText.text = SaveSystem.Instance.playerData.Save1Name;
+        _deleteLeftSave.gameObject.SetActive(false);
+
+        _gameSaveCenterText.text = SaveSystem.Instance.playerData.Save2Name;
+        _deleteCenterSave.gameObject.SetActive(false);
+
+        _gameSaveRightText.text = SaveSystem.Instance.playerData.Save3Name;
+        _deleteRightSave.gameObject.SetActive(false);
+    }
+
+    public void UpdateGameSaves()
+    {
+        // Update Save Names
+        _gameSaveLeftText.text = SaveSystem.Instance.playerData.Save1Name;
+        _gameSaveCenterText.text = SaveSystem.Instance.playerData.Save2Name;
+        _gameSaveRightText.text = SaveSystem.Instance.playerData.Save3Name;
+
+        // Update Save Colors
+        _gameSaveLeft.image.color = SaveSystem.Instance.playerData.Save1Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveLeftText.color = SaveSystem.Instance.playerData.Save1Active ? gameSaveActive : gameSaveInactive;
+
+        _gameSaveCenter.image.color = SaveSystem.Instance.playerData.Save2Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveCenterText.color = SaveSystem.Instance.playerData.Save2Active ? gameSaveActive : gameSaveInactive;
+
+        _gameSaveRight.image.color = SaveSystem.Instance.playerData.Save3Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveRightText.color = SaveSystem.Instance.playerData.Save3Active ? gameSaveActive : gameSaveInactive;
+    }
+
     public void Disable()
     { 
         // Hide
@@ -74,6 +95,8 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
 
         // Disable Buttons
         ButtonsEnabled(false);
+
+        _newGameOverlay.gameObject.SetActive(false);
     }
     void Continue()
     {
@@ -98,39 +121,52 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
     }
     private void ButtonsFadeIn(float t)
     {
-        _gameSaveLeft.image.color = Color.Lerp(new Color(_gameSaveLeftColor.r, _gameSaveLeftColor.g, _gameSaveLeftColor.b, 0f), 
-                                        new Color(_gameSaveLeftColor.r, _gameSaveLeftColor.g, _gameSaveLeftColor.b, 1f), t);
-        _gameSaveLeftText.color = Color.Lerp(new Color(_gameSaveLeftTextColor.r, _gameSaveLeftTextColor.g, _gameSaveLeftTextColor.b, 0f),
-                                        new Color(_gameSaveLeftTextColor.r, _gameSaveLeftTextColor.g, _gameSaveLeftTextColor.b, 1f), t);
+        if(SaveSystem.Instance.playerData.Save1Active)
+        {
+            _gameSaveLeft.image.color = Color.Lerp(colorTransparent, gameSaveActive, t);
+            _gameSaveLeftText.color = Color.Lerp(colorTransparent, gameSaveActive, t);
+        }
+        else
+        {
+            _gameSaveLeft.image.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
+            _gameSaveLeftText.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
+        }
+        if(SaveSystem.Instance.playerData.Save2Active)
+        {
+            _gameSaveCenter.image.color = Color.Lerp(colorTransparent, gameSaveActive, t);
+            _gameSaveCenterText.color = Color.Lerp(colorTransparent, gameSaveActive, t);
+        }
+        else
+        {
+            _gameSaveCenter.image.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
+            _gameSaveCenterText.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
+        }
+        if(SaveSystem.Instance.playerData.Save3Active)
+        {
+            _gameSaveRight.image.color = Color.Lerp(colorTransparent, gameSaveActive, t);
+            _gameSaveRightText.color = Color.Lerp(colorTransparent, gameSaveActive, t);
+        }
+        else
+        {
+            _gameSaveRight.image.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
+            _gameSaveRightText.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
+        }
 
-        _gameSaveCenter.image.color = Color.Lerp(new Color(_gameSaveCenterColor.r, _gameSaveCenterColor.g, _gameSaveCenterColor.b, 0f),
-                                            new Color(_gameSaveCenterColor.r, _gameSaveCenterColor.g, _gameSaveCenterColor.b, 1f), t);
-        _gameSaveCenterText.color = Color.Lerp(new Color(_gameSaveCenterTextColor.r, _gameSaveCenterTextColor.g, _gameSaveCenterTextColor.b, 0f),
-                                            new Color(_gameSaveCenterTextColor.r, _gameSaveCenterTextColor.g, _gameSaveCenterTextColor.b, 1f), t);
-
-        _gameSaveRight.image.color = Color.Lerp(new Color(_gameSaveRightColor.r, _gameSaveRightColor.g, _gameSaveRightColor.b, 0f),
-                                            new Color(_gameSaveRightColor.r, _gameSaveRightColor.g, _gameSaveRightColor.b, 1f), t);
-        _gameSaveRightText.color = Color.Lerp(new Color(_gameSaveRightTextColor.r, _gameSaveRightTextColor.g, _gameSaveRightTextColor.b, 0f),
-                                            new Color(_gameSaveRightTextColor.r, _gameSaveRightTextColor.g, _gameSaveRightTextColor.b, 1f), t);
-
-        _settings.image.color = Color.Lerp(new Color(_settingsColor.r, _settingsColor.g, _settingsColor.b, 0f),
-                                        new Color(_settingsColor.r, _settingsColor.g, _settingsColor.b, 1f), t);
-        _quit.image.color = Color.Lerp(new Color(_quitColor.r, _quitColor.g, _quitColor.b, 0f),
-                                    new Color(_quitColor.r, _quitColor.g, _quitColor.b, 1f), t);
+        _settings.image.color = Color.Lerp(colorTransparent, new Color(1f, 1f, 1f, 1f), t);
+        _quit.image.color = Color.Lerp(colorTransparent, colorQuit, t);
     }
+
+
     void SetButtonsColorTransparent()
     {
-        _gameSaveLeft.image.color = new Color(_gameSaveLeftColor.r, _gameSaveLeftColor.g, _gameSaveLeftColor.b, 0f);
-        _gameSaveLeftText.color = new Color(_gameSaveLeftTextColor.r, _gameSaveLeftTextColor.g, _gameSaveLeftTextColor.b, 0f);
-
-        _gameSaveCenter.image.color = new Color(_gameSaveCenterColor.r, _gameSaveCenterColor.g, _gameSaveCenterColor.b, 0f);
-        _gameSaveCenterText.color = new Color(_gameSaveCenterTextColor.r, _gameSaveCenterTextColor.g, _gameSaveCenterTextColor.b, 0f);
-
-        _gameSaveRight.image.color = new Color(_gameSaveRightColor.r, _gameSaveRightColor.g, _gameSaveRightColor.b, 0f);
-        _gameSaveRightText.color = new Color(_gameSaveRightTextColor.r, _gameSaveRightTextColor.g, _gameSaveRightTextColor.b, 0f);
-
-        _settings.image.color = new Color(_settingsColor.r, _settingsColor.g, _settingsColor.b, 0f);
-        _quit.image.color = new Color(_quitColor.r, _quitColor.g, _quitColor.b, 0f);
+        _gameSaveLeft.image.color = colorTransparent;
+        _gameSaveLeftText.color = colorTransparent;
+        _gameSaveCenter.image.color = colorTransparent;
+        _gameSaveCenterText.color = colorTransparent;
+        _gameSaveRight.image.color = colorTransparent;
+        _gameSaveRightText.color = colorTransparent;
+        _settings.image.color = colorTransparent;
+        _quit.image.color = colorTransparent;
     }
     void ButtonsEnabled(bool enabled)
     {
@@ -143,27 +179,58 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
         _settings.enabled = enabled;
     }
 
-    //public void Enable()
-    //{
-    //    // Show
-    //    ResetButtonColors();
 
-    //    // Enable Buttons
-    //    ButtonsEnabled(true);
-    //}
-    //private void ResetButtonColors()
-    //{
-    //    _gameSaveLeft.image.color = _gameSaveLeftColor;
-    //    _gameSaveLeftText.color = _gameSaveLeftTextColor;
 
-    //    _gameSaveCenter.image.color = _gameSaveCenterColor;
-    //    _gameSaveCenterText.color = _gameSaveCenterTextColor;
 
-    //    _gameSaveRight.image.color = _gameSaveRightColor;
-    //    _gameSaveRightText.color = _gameSaveRightTextColor;
+    // TODO: Refactor these to use a single method with parameters using button prefab script
 
-    //    _settings.image.color = _settingsColor;
-    //    _quit.image.color = _quitColor;
-    //}
+    public void OnLeftSaveButtonPointerEnterHandler()
+    {
+        if (SaveSystem.Instance.playerData.Save1Active)
+        {
+            _deleteLeftSave.gameObject.SetActive(true);
+        }
+    }
+    public void OnCenterSaveButtonPointerEnterHandler()
+    {
+        if (SaveSystem.Instance.playerData.Save2Active)
+        {
+            _deleteCenterSave.gameObject.SetActive(true);
+        }
+    }
+    public void OnRightSaveButtonPointerEnterHandler()
+    {
+        if (SaveSystem.Instance.playerData.Save3Active)
+        {
+            _deleteRightSave.gameObject.SetActive(true);
+        }
+    }
+
+    public void OnLeftSaveButtonPointerExitHandler()
+    {
+        if (_deleteLeftSave.IsActive())
+        {
+            _deleteLeftSave.gameObject.SetActive(false);
+        }
+    }
+    public void OnCenterSaveButtonPointerExitHandler()
+    {
+        if (_deleteCenterSave.IsActive())
+        {
+            _deleteCenterSave.gameObject.SetActive(false);
+        }
+    }
+    public void OnRightSaveButtonPointerExitHandler()
+    {
+        if (_deleteRightSave.IsActive())
+        {
+            _deleteRightSave.gameObject.SetActive(false);
+        }
+    }
+
+
+
+
+
 
 }

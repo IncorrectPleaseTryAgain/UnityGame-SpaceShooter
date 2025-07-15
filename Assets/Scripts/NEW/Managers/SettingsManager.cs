@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -16,75 +17,87 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] Toggle _fullscreenToggle;
     [SerializeField] TMP_Dropdown _resolutionDropdown;
 
-    [Header("Controls")]
-    InputActionRebindingExtensions.RebindingOperation rebindOperation;
+    //[Header("Controls")]
+    //InputActionRebindingExtensions.RebindingOperation rebindOperation;
 
     bool audioSettingsChanged = false;
     bool videoSettingsChanged = false;
 
+    public static event Action<bool> OnSettingsIsActive;
+
     private void OnEnable()
     {
-        ButtonLogic.OnButtonAction += HandleButtonAction;
-        AddListeners();
+        LoadSettings();
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
-        ButtonLogic.OnButtonAction -= HandleButtonAction;
         RemoveListeners();
     }
+
     private void Awake()
     {
+        AddListeners();
         gameObject.SetActive(false); // Start with settings menu hidden
-        LoadSettings();
+
         _resolutionDropdown.ClearOptions();
         _resolutionDropdown.AddOptions(VideoSystem.Instance.GetResolutionOptions());
     }
 
     /*
-     * Button Logic
+     * Button Handlers
      */
-    void HandleButtonAction(Actions action)
-    {
-        switch (action)
-        {
-            case Actions.OpenSettings:
-                OpenSettingsHandler();
-                break;
-            case Actions.CloseSettings:
-                CloseSettingsHandler();
-                break;
-            case Actions.SaveSettings:
-                SaveSettingsHandler();
-                break;
-            case Actions.ResetSettingsAudio:
-                ResetSettingsAudioHandler();
-                break;
-            case Actions.ResetSettingsControls:
-                ResetSettingsControlsHandler();
-                break;
-            case Actions.ResetSettingsVideo:
-                ResetSettingsVideoHandler();
-                break;
-
-        }
-    }
-    void OpenSettingsHandler() { LoadSettings(); }
-    void CloseSettingsHandler() { ReloadSettings(); }
-    void SaveSettingsHandler() { SaveSettings(); }
-    void ResetSettingsAudioHandler()
+    public void ResetAudioSettingsHandler()
     {
         AudioSystem.Instance.Reset();
         _audioMasterSlider.value = AudioSystem.Instance.defaultVolume;
         _audioMusicSlider.value = AudioSystem.Instance.defaultVolume;
         _audioSFXSlider.value = AudioSystem.Instance.defaultVolume;
     }
-    void ResetSettingsVideoHandler()
+    public void ResetVideoSettingsHandler()
     {
         VideoSystem.Instance.Reset();
         _fullscreenToggle.isOn = VideoSystem.Instance.defaultFullscreen;
         _resolutionDropdown.value = GetResolutionDropdownIndex(VideoSystem.Instance.defaultResolutionWidth, VideoSystem.Instance.defaultResolutionHeight);
     }
-    void ResetSettingsControlsHandler() { }
+
+    public void OpenSettingsHandler()
+    {
+        LogSystem.Instance.Log("Opening settings...", LogType.Info, _logTag);
+        LoadSettings();
+        OnSettingsIsActive?.Invoke(true);
+        gameObject.SetActive(true); // Show settings menu
+    }
+    public void CloseSettingsHandler()
+    {
+        LogSystem.Instance.Log("Closing settings...", LogType.Info, _logTag);
+        ReloadSettings();
+        OnSettingsIsActive?.Invoke(false);
+        gameObject.SetActive(false); // Hide settings menu
+    }
+    public void SaveSettingsHandler()
+    {
+        LogSystem.Instance.Log("Saving settings...", LogType.Info, _logTag);
+
+        // Save Audio Settings
+        if (audioSettingsChanged)
+        {
+            audioSettingsChanged = false;
+            AudioSystem.Instance.SaveAudioSettings();
+        }
+        // Save Video Settings
+        if (videoSettingsChanged)
+        {
+            videoSettingsChanged = false;
+            VideoSystem.Instance.SaveVideoSettings();
+        }
+
+        // Save Controls Settings
+        InputSystem.Instance.SaveControls();
+
+        OnSettingsIsActive?.Invoke(false);
+        gameObject.SetActive(false); // Hide settings menu
+    }
+
 
     /*
      * Settings Methods
@@ -120,28 +133,6 @@ public class SettingsManager : MonoBehaviour
             LoadVideoSettings();
         }
     }
-    void SaveSettings()
-    {
-        LogSystem.Instance.Log("Saving settings...", LogType.Info, _logTag);
-        // Save Audio Settings
-        if (audioSettingsChanged)
-        {
-            audioSettingsChanged = false;
-            AudioSystem.Instance.SaveAudioSettings();
-        }
-        // Save Video Settings
-        if (videoSettingsChanged)
-        {
-            videoSettingsChanged = false;
-            VideoSystem.Instance.SaveVideoSettings();
-        }
-
-        // Save Controls Settings
-        InputSystem.Instance.SaveControls();
-
-        SaveSystem.Instance.SavePlayerData();
-    }
-
 
     /*
      * Audio Settings Methods
@@ -195,6 +186,8 @@ public class SettingsManager : MonoBehaviour
 
     void AddListeners()
     {
+        MainMenuCanvasLogic.OnOpenSettings += OpenSettingsHandler;
+        
         // Audio
         _audioMasterSlider.onValueChanged.AddListener(AudioMasterSliderValueChangedHandler);
         _audioMusicSlider.onValueChanged.AddListener(AudioMusicSliderValueChangedHandler);
@@ -206,6 +199,8 @@ public class SettingsManager : MonoBehaviour
     }
     void RemoveListeners()
     {
+        MainMenuCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
+
         // Audio
         _audioMasterSlider.onValueChanged.RemoveAllListeners();
         _audioMusicSlider.onValueChanged.RemoveAllListeners();

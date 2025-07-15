@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7675698183614617969}
   - component: {fileID: 19115721840753694}
   - component: {fileID: 7760847110230355850}
-  - component: {fileID: 1874857864755611414}
   m_Layer: 5
   m_Name: Button Settings
   m_TagString: Untagged
@@ -121,7 +120,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1874857864755611414}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ButtonLogic, Assembly-CSharp
         m_MethodName: ExecuteAction
         m_Mode: 1
@@ -133,17 +132,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1874857864755611414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3101220297099347086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c001e819fae86a84992d7f1b16d7319f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: 2
-  scene: 0

@@ -5,7 +5,7 @@ using System;
 public enum Actions
 {
     None,
-    LoadScene,
+    LoadGame,
 
     // Settings Actions
     OpenSettings,
@@ -35,8 +35,8 @@ public class ButtonLogic : MonoBehaviour
 
         switch (action)
         {
-            case Actions.LoadScene:
-                LoadScene();
+            case Actions.LoadGame:
+                LoadGame();
                 break;
             case Actions.QuitGame:
                 QuitGame();
@@ -44,11 +44,7 @@ public class ButtonLogic : MonoBehaviour
         }
     }
 
-    //private void LoadChapterLevel()
-    //{
-    //}
-
-    private void LoadScene()
+    private void LoadGame()
     {
         if (scene == Scenes.None)
         {

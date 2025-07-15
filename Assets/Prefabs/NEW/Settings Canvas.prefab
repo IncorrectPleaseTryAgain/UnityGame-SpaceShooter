@@ -1867,10 +1867,10 @@ RectTransform:
   - {fileID: 8543182462548102345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 930, y: 523}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &847741630248694601
 Canvas:
@@ -4820,6 +4820,26 @@ PrefabInstance:
       propertyPath: m_Transition
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 432168967416705774}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseSettingsHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8016190339352225139, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5399,6 +5419,26 @@ PrefabInstance:
       propertyPath: action
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 432168967416705774}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveSettingsHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8016190339352225139, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5516,6 +5556,18 @@ PrefabInstance:
     - target: {fileID: 3760198632062320030, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
       propertyPath: action
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 432168967416705774}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetAudioSettingsHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8016190339352225139, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
       propertyPath: m_Pivot.x
@@ -5635,6 +5687,18 @@ PrefabInstance:
     - target: {fileID: 3760198632062320030, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
       propertyPath: action
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 432168967416705774}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetVideoSettingsHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5016496114946626818, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8016190339352225139, guid: 723a7d714afc4f54eb4fbeef1d1708f5, type: 3}
       propertyPath: m_Pivot.x

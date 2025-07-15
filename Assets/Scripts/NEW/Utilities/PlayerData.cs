@@ -3,20 +3,18 @@ using System;
 [Serializable]
 public class PlayerData
 {
-    public string gameSaveName_1 = "Empty";
-    public string gameSaveName_2 = "Empty";
-    public string gameSaveName_3 = "Empty";
+    public string Save1Name = "Create Save";
+    public bool Save1Active = false;
+    public int Save1Chapter = 1;
+    public int Save1Level = 1;
 
-    public bool isGameSave_1 = false;
-    public bool isGameSave_2 = false;
-    public bool isGameSave_3 = false;
+    public string Save2Name = "Create Save";
+    public bool Save2Active = false;
+    public int Save2Chapter = 1;
+    public int Save2Level = 1;
 
-    // Game Save Data
-    public int gameSave_1_Chapter = 0;
-    public int gameSave_2_Chapter = 0;
-    public int gameSave_3_Chapter = 0;
-
-    public int gameSave_1_Level = 0;
-    public int gameSave_2_Level = 0;
-    public int gameSave_3_Level = 0;
+    public string Save3Name = "Create Save";
+    public bool Save3Active = false;
+    public int Save3Chapter = 1;
+    public int Save3Level = 1;
 }
