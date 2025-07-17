@@ -189,6 +189,6 @@ public class MainMenuCanvasLogic : MonoBehaviour
                 return;
         }
         SaveSystem.Instance.Save();
-        SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
+        SceneSystem.Instance.LoadScene(Scenes.Credits);
     }
 }

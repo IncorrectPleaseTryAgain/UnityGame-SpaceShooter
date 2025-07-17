@@ -1,15 +1,17 @@
 using System;
-using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class MainMenuManager : MonoBehaviour
 {
     const string _logTag = "MainMenuManager";
 
-    [Header("Systems")]
+    [Header("Utility")]
+    [SerializeField] PlayerInput _playerInput;
+    [SerializeField] EventSystem _eventSystem;
     [SerializeField] Systems _systems;
-    
+
     [Header("Enviroment")]
     [SerializeField] Camera _camera;
     [SerializeField] GameObject _background;
@@ -36,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
         MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete += MainMenuCanvasHeaderOnAnimationCompleteHandler;
         Systems.OnSystemsFinishedInitialization += AllSystemsInitializedHandler; // removed after initialization
         SettingsManager.OnSettingsIsActive += OnSettingsIsActiveHandler;
-
+        _playerInput.enabled = false;
     }
 
     private void Start()
@@ -69,7 +71,8 @@ public class MainMenuManager : MonoBehaviour
         LogSystem.Instance.Log("Continue...", LogType.Info, _logTag);
 
         continueAction = null;
-        InputSystem.Instance.SetActionMapActive(InputSystem.ActionMaps.InGame);
+        
+        _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.InGame));
         AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
         _mainMenuCanvasLogic.Continue();
     }
@@ -100,7 +103,7 @@ public class MainMenuManager : MonoBehaviour
         LogSystem.Instance.Log("All Systems Initialized", LogType.Info, _logTag);
         Systems.OnSystemsFinishedInitialization -= AllSystemsInitializedHandler;
 
-        InitializePlayerInput();
+        InitializeEventSystem();
         InitializeCamera();
 
         InstantiateObject(_background, _camera.transform);
@@ -109,19 +112,19 @@ public class MainMenuManager : MonoBehaviour
         _mainMenuCanvasLogic = _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>();
     }
 
+    private void InitializeEventSystem()
+    {
+        LogSystem.Instance.Log("Instantiating EventSystem", LogType.Info, _logTag);
+        if (_eventSystem == null) { LogSystem.Instance.Log("_eventSystem Null Reference", LogType.Error, _logTag); throw new NullReferenceException("_eventSystem"); }
+        _eventSystem = Instantiate(_eventSystem);
+    }
+
     private void InitializeCamera()
     {
         LogSystem.Instance.Log("Instantiating Camera", LogType.Info, _logTag);
         if (_camera == null) { LogSystem.Instance.Log("_camera Null Reference", LogType.Error, _logTag); throw new NullReferenceException("_camera"); }
 
         _camera = Instantiate(_camera);
-    }
-
-    void InitializePlayerInput()
-    {
-        LogSystem.Instance.Log("Initializing Player Input", LogType.Info, _logTag);
-        continueAction = null;
-        InputSystem.Instance.SetInputActive(false);
     }
 
     GameObject InstantiateObject(GameObject obj, Transform parent = null)
@@ -138,8 +141,9 @@ public class MainMenuManager : MonoBehaviour
     void MainMenuCanvasHeaderOnAnimationCompleteHandler()
     {
         LogSystem.Instance.Log("Enabling Continue Action", LogType.Info, _logTag);
-        InputSystem.Instance.SetInputActive(true);
-        InputSystem.Instance.SetActionMapActive(InputSystem.ActionMaps.Continue);
-        continueAction = InputSystem.Instance.GetAction("Continue");
+        _playerInput.enabled = true;
+        _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.MainMenu));
+
+        continueAction = _playerInput.actions["Continue"];
     }
 }

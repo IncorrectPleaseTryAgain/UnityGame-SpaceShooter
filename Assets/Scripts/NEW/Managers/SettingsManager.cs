@@ -91,8 +91,7 @@ public class SettingsManager : MonoBehaviour
             VideoSystem.Instance.SaveVideoSettings();
         }
 
-        // Save Controls Settings
-        InputSystem.Instance.SaveControls();
+        SaveSystem.Instance.SaveControls();
 
         OnSettingsIsActive?.Invoke(false);
         gameObject.SetActive(false); // Hide settings menu
@@ -110,7 +109,7 @@ public class SettingsManager : MonoBehaviour
         // Load Video Settings
         LoadVideoSettings();
         // Load Controls Settings
-        InputSystem.Instance.LoadControls();
+        SaveSystem.Instance.LoadControls();
     }
     void ReloadSettings()
     {

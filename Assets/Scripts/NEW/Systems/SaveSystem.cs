@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class SaveSystem : Singleton<SaveSystem>, ISystem
 {
+    [SerializeField] InputActionAsset actions;
+
     public enum SaveIndex
     {
         NOSAVE = 0,
@@ -179,7 +181,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     /*
      * Controls Data
      */
-    public void LoadControls(InputActionAsset actions)
+    public void LoadControls()
     {
         LogSystem.Instance.Log("Loading control bindings from PlayerPrefs.", LogType.Debug, _logTag);
         string rebinds = PlayerPrefs.GetString(PlayerPrefKeys.CONTROLS_KEY);
@@ -187,7 +189,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
             actions.LoadBindingOverridesFromJson(rebinds);
     }
 
-    public void SaveControls(InputActionAsset actions)
+    public void SaveControls()
     {
         LogSystem.Instance.Log("Saving control bindings to PlayerPrefs.", LogType.Debug, _logTag);
         string rebinds = actions.SaveBindingOverridesAsJson();

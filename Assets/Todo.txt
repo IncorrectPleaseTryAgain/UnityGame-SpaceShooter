@@ -1,3 +1,2 @@
-- Settings: Video settings getting index of dropdown
-			Make sure values are saveed correctly - width to width and height to height
-			Check the text format of the dropdown values
+- Credits:
+	Change it so that the credit scroll logic is in the credit text

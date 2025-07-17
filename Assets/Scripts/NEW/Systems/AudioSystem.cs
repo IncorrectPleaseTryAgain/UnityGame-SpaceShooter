@@ -57,6 +57,7 @@ public class AudioSystem : Singleton<AudioSystem>, ISystem
         musicAudioSource.loop = loop;
         musicAudioSource.Play(); 
     }
+    public void StopMusic() { musicAudioSource.Stop(); }
     public void PlaySfx(AudioClip clip) { Play(sfxAudioSource, clip); }
     void Play(AudioSource source, AudioClip clip) { source.PlayOneShot(clip); }
 

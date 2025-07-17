@@ -6,6 +6,7 @@ public enum Scenes
 {
     None,
     MainMenu,
+    Credits,
     ChapterSelect,
 }
 

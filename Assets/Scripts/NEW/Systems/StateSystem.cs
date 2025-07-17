@@ -15,7 +15,7 @@ public enum States
 public class StateSystem : Singleton<StateSystem>, ISystem
 {
     const string _LogTag = "StateSystem";
-    public static event Action<GameStates> OnGameStateChanged;
+    //public static event Action<GameStates> OnGameStateChanged;
 
     public static event Action OnSystemInitialized;
 
@@ -28,14 +28,14 @@ public class StateSystem : Singleton<StateSystem>, ISystem
         OnSystemInitialized?.Invoke();
     }
 
-    public void UpdateGameState(GameStates newState)
-    {
-        switch (newState)
-        {
-            default:
-                LogSystem.Instance.Log("Unhandled game state: " + newState, LogType.Error, _LogTag);
-                break;
-        }
-        OnGameStateChanged?.Invoke(newState);
-    }
+    //public void UpdateGameState(GameStates newState)
+    //{
+    //    switch (newState)
+    //    {
+    //        default:
+    //            LogSystem.Instance.Log("Unhandled game state: " + newState, LogType.Error, _LogTag);
+    //            break;
+    //    }
+    //    OnGameStateChanged?.Invoke(newState);
+    //}
 }
