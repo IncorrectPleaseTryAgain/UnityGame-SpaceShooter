@@ -195,7 +195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 600034.4}
+  m_AnchoredPosition: {x: 0, y: -1850}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8659602920090392491
@@ -226,33 +226,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\r\n        <size=200>\r\n        Space \r\n        Shooter\r\n       
-    <size=75>Chapter 1: \r\n        <size=50>The Beginning of Space Shooter\r\n\r\n       
-    <size=40> <size=100>\r\n        Lorem ipsum dolor sit amet, consectetuer adipiscing
-    elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociisLorem ipsum dolor
+  m_text: "\r\n<size=200>\r\nSpace \r\nShooter\r\n<size=75>Chapter 1: \r\n<size=50>The
+    Beginning of Space Shooter\r\n\r\n<margin=40> <size=100>\r\nLorem ipsum dolor
     sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean
-    massa. Cum sociis Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-    commodo ligula eget dolor. Aenean massa. Cum sociis .\r\n\r\n        natoque
-    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam
-    felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-    quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-    In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum
-    felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum
-    semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-    consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis,
-    feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
-    Aenean imperdiet. \r\n\r\n        Etiam ultricies nisi vel augue. Curabitur ullamcorper
-    ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum
-    rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam
-    quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio
-    et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam
-    quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla
-    mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum
-    sodales, augue velit cursus nunc, \r\n\r\n        Lorem ipsum dolor sit amet,
+    massa. Cum sociisLorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+    commodo ligula eget dolor. Aenean massa. Cum sociis Lorem ipsum dolor sit amet,
     consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-    Cum sociisLorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-    ligula eget dolor. Aenean massa. Cum sociis Lorem ipsum dolor sit amet, consectetuer
-    adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis .\r\n\r\n       
+    Cum sociis .\r\n\r\n        natoque penatibus et magnis dis parturient montes,
+    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+    quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel,
+    aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis
+    vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+    Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
+    Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam
+    lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla
+    ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. \r\n\r\n        Etiam
+    ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+    Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper
+    libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel,
+    luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.
+    Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit
+    amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet
+    nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales,
+    augue velit cursus nunc, \r\n\r\n        Lorem ipsum dolor sit amet, consectetuer
+    adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociisLorem
+    ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+    dolor. Aenean massa. Cum sociis Lorem ipsum dolor sit amet, consectetuer adipiscing
+    elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis .\r\n\r\n       
     natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
     quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat
     massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
@@ -456,3 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708726401e41160429c1c3786821c7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _creditsText: {fileID: 3262043663079088427}
+  scrollSpeed: 50
+  scrollSpeedMultiplier: 5
+  scrollDirection: {x: 0, y: 0, z: 0}

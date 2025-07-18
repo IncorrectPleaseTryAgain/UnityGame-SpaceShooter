@@ -7,53 +7,35 @@ public class CreditsCanvasLogic : MonoBehaviour
     private const string _logTag = "CreditsCanvasLogic";
     [SerializeField] TextMeshProUGUI _creditsText;
 
-    [SerializeField] float _creditsScrollSpeedMultiplier;
-    [SerializeField] float _creditsScrollAcceleration;
-    [SerializeField] float _creditsScrollMaxSpeed;
-    private float _currentScrollSpeed;
-    private Vector3 _scrollDirection;
-    private bool _isManualScrolling;
+    [SerializeField] float scrollSpeed;
+    [SerializeField] float scrollSpeedMultiplier;
+    [SerializeField] Vector3 scrollDirection;
 
     public void Awake()
     {
-        _currentScrollSpeed = 0f;
-        _scrollDirection = Vector3.up; // Default scroll direction
+        scrollDirection = Vector3.up * scrollSpeed;
     }
 
     public void Update()
     {
-        // Update the scroll speed based on input
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            _currentScrollSpeed += _creditsScrollAcceleration * Time.deltaTime;
-            _currentScrollSpeed = Mathf.Min(_currentScrollSpeed, _creditsScrollMaxSpeed);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            _currentScrollSpeed -= _creditsScrollAcceleration * Time.deltaTime;
-            _currentScrollSpeed = Mathf.Max(_currentScrollSpeed, -_creditsScrollMaxSpeed);
-        }
-        else
-        {
-            // Decelerate when no input is given
-            _currentScrollSpeed = Mathf.MoveTowards(_currentScrollSpeed, 0f, _creditsScrollAcceleration * Time.deltaTime);
-        }
-        // Scroll the credits text
-        _creditsText.rectTransform.localPosition += _scrollDirection * _currentScrollSpeed * Time.deltaTime;
+        _creditsText.rectTransform.position += scrollDirection * Time.deltaTime;
     }
+
     public void SetCreditsText(string text)
     {
         _creditsText.text = text;
     }
-
-    public void SetScrollDirection(Vector3 direction)
+    public void NavigationWasPressedHandler(Vector2 direction)
     {
-        _scrollDirection = direction.normalized;
+        scrollDirection = new Vector3(0f, direction.normalized.y * (scrollSpeedMultiplier * scrollSpeed), 0f);
+    }
+    public void NavigationWasReleasedHandler()
+    {
+        scrollDirection = Vector3.up * scrollSpeed;
     }
 
-    // Set if player is using keys to scroll the credits
-    public void SetIsManualScrolling(bool value)
+    public void Continue()
     {
-        _isManualScrolling = value;
+        SceneSystem.Instance.LoadScene(Scenes.MainMenu); // TODO: Change to LevelSelect in Specific Chapter
     }
 }

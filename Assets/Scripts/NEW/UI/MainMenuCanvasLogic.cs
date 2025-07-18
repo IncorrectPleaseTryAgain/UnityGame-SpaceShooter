@@ -134,14 +134,17 @@ public class MainMenuCanvasLogic : MonoBehaviour
         SaveSystem.Instance.currentGameSave = 1;
         if(SaveSystem.Instance.playerData.Save1Active)
         {
+            AudioSystem.Instance.StopMusic();
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
-        }else { DisplayCreateNewSaveOverlay(); }
+        }
+        else { DisplayCreateNewSaveOverlay(); }
     }
     public void LoadGameButtonCenterHandler()
     {
         SaveSystem.Instance.currentGameSave = 2;
         if (SaveSystem.Instance.playerData.Save2Active)
         {
+            AudioSystem.Instance.StopMusic();
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         } else { DisplayCreateNewSaveOverlay(); }
     }
@@ -150,8 +153,10 @@ public class MainMenuCanvasLogic : MonoBehaviour
         SaveSystem.Instance.currentGameSave = 3;
         if (SaveSystem.Instance.playerData.Save3Active)
         {
+            AudioSystem.Instance.StopMusic();
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
-        } else { DisplayCreateNewSaveOverlay(); }
+        }
+        else { DisplayCreateNewSaveOverlay(); }
     }
 
     private void DisplayCreateNewSaveOverlay()
@@ -189,6 +194,7 @@ public class MainMenuCanvasLogic : MonoBehaviour
                 return;
         }
         SaveSystem.Instance.Save();
+        AudioSystem.Instance.StopMusic();
         SceneSystem.Instance.LoadScene(Scenes.Credits);
     }
 }

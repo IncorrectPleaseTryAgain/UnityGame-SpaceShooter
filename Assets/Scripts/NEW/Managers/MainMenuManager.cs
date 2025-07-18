@@ -75,6 +75,7 @@ public class MainMenuManager : MonoBehaviour
         _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.InGame));
         AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
         _mainMenuCanvasLogic.Continue();
+        InitializeEventSystem();
     }
 
     public void OpenSettingsHandler()
@@ -103,7 +104,6 @@ public class MainMenuManager : MonoBehaviour
         LogSystem.Instance.Log("All Systems Initialized", LogType.Info, _logTag);
         Systems.OnSystemsFinishedInitialization -= AllSystemsInitializedHandler;
 
-        InitializeEventSystem();
         InitializeCamera();
 
         InstantiateObject(_background, _camera.transform);

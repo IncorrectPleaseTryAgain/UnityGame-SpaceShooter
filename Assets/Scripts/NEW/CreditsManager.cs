@@ -19,6 +19,7 @@ public class CreditsManager : MonoBehaviour
     [SerializeField] AudioClip _creditsMusic;
     [SerializeField] string _creditsTextObjName = "TMP Credits";
     TextMeshProUGUI creditsText;
+    CreditsCanvasLogic creditsCanvasLogic;
 
     InputAction continueAction;
     InputAction navigateAction;
@@ -47,20 +48,29 @@ public class CreditsManager : MonoBehaviour
 
     public void Update()
     {
-        navigateAction.ReadValue<Vector2>();
+        if (navigateAction.WasPressedThisFrame())
+        {
+            //LogSystem.Instance.Log("Continue action pressed", LogType.Debug, _logTag);
+            creditsCanvasLogic.NavigationWasPressedHandler(navigateAction.ReadValue<Vector2>());
+        }
+        else if(navigateAction.WasReleasedThisFrame())
+        {
+            //LogSystem.Instance.Log("Continue action released", LogType.Debug, _logTag);
+            creditsCanvasLogic.NavigationWasReleasedHandler();
+        }
     }
 
     private void Initialize()
     {
         _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.Credits));
+        _playerInput.enabled = true;
         navigateAction = _playerInput.actions["Navigate"];
         continueAction = _playerInput.actions["Continue"];
-        _playerInput.enabled = true;
-
 
         Instantiate(_camera);
         Instantiate(_background);
-        Instantiate(_creditsCanvas);
+        _creditsCanvas = Instantiate(_creditsCanvas);
+        creditsCanvasLogic = _creditsCanvas.GetComponent<CreditsCanvasLogic>();
     }
 
     public void Continue(InputAction.CallbackContext context)
@@ -106,7 +116,8 @@ public class CreditsManager : MonoBehaviour
         }
     }
 
-
-
-
+    public void OnContinueActionHandler()
+    {
+        _creditsCanvas.GetComponent<CreditsCanvasLogic>().Continue();
+    }
 }
