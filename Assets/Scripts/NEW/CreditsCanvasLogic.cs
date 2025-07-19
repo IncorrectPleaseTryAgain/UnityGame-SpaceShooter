@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEditor.XR;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CreditsCanvasLogic : MonoBehaviour
 {
@@ -32,10 +33,5 @@ public class CreditsCanvasLogic : MonoBehaviour
     public void NavigationWasReleasedHandler()
     {
         scrollDirection = Vector3.up * scrollSpeed;
-    }
-
-    public void Continue()
-    {
-        SceneSystem.Instance.LoadScene(Scenes.MainMenu); // TODO: Change to LevelSelect in Specific Chapter
     }
 }

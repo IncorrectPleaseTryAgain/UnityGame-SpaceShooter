@@ -1,13 +1,15 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class ChapterSelectManager : MonoBehaviour
+public class LevelSelectManager : MonoBehaviour
 {
     [Header("Enviroment")]
     [SerializeField] new Camera camera;
     [SerializeField] GameObject background;
 
     [Header("Level Select")]
-    [SerializeField] Canvas chapterSelectCanvas;
+    [SerializeField] Canvas levelSelectCanvas;
 
     private void Start()
     {
@@ -18,7 +20,7 @@ public class ChapterSelectManager : MonoBehaviour
     {
         Instantiate(camera);
         Instantiate(background);
-        chapterSelectCanvas.GetComponent<ChapterSelectCanvasLogic>().Initialize();
-        Instantiate(chapterSelectCanvas);
+        levelSelectCanvas.GetComponent<LevelSelectCanvasLogic>().Initialize();
+        Instantiate(levelSelectCanvas);
     }
 }

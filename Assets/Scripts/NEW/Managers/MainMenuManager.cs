@@ -43,7 +43,14 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeSystems();
+        if(Systems.Instance == null)
+        {
+            InitializeSystems();
+        }
+        else
+        {
+            AllSystemsInitializedHandler();
+        }
     }
 
     void InitializeSystems()
@@ -103,6 +110,10 @@ public class MainMenuManager : MonoBehaviour
     {
         LogSystem.Instance.Log("All Systems Initialized", LogType.Info, _logTag);
         Systems.OnSystemsFinishedInitialization -= AllSystemsInitializedHandler;
+
+        SaveSystem.Instance.currentGameSave = 0; // Default to save 0
+        SaveSystem.Instance.currentChapter = 1; // Default to chapter 1
+        SaveSystem.Instance.currentLevel = 1; // Default to level 1
 
         InitializeCamera();
 

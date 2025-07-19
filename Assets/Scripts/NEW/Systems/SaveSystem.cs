@@ -37,6 +37,8 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
     public PlayerData playerData;
     public int currentGameSave = 0;
+    public int currentChapter = 1;
+    public int currentLevel = 1;
 
     const string _saveFileName = "/playerData.json";
     string _saveFilePath;

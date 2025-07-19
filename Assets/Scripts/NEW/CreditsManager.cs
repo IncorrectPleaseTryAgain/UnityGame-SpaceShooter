@@ -48,6 +48,10 @@ public class CreditsManager : MonoBehaviour
 
     public void Update()
     {
+        if (continueAction.WasPressedThisFrame())
+        {
+            SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
+        }
         if (navigateAction.WasPressedThisFrame())
         {
             //LogSystem.Instance.Log("Continue action pressed", LogType.Debug, _logTag);
@@ -99,7 +103,7 @@ public class CreditsManager : MonoBehaviour
         }
 
         // Convert current chapter to Credit enum
-        switch (chapter)
+        switch (SaveSystem.Instance.currentChapter)
         {
             case 1:
                 return Credits.Credit.CHAPTER_1;
@@ -114,10 +118,5 @@ public class CreditsManager : MonoBehaviour
             default:
                 return Credits.Credit.END; // Default to END if chapter is out of range
         }
-    }
-
-    public void OnContinueActionHandler()
-    {
-        _creditsCanvas.GetComponent<CreditsCanvasLogic>().Continue();
     }
 }

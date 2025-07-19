@@ -8,6 +8,7 @@ public enum Scenes
     MainMenu,
     Credits,
     ChapterSelect,
+    LevelSelect,
 }
 
 public class  SceneSystem : Singleton<SceneSystem>, ISystem

@@ -227,10 +227,4 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
             _deleteRightSave.gameObject.SetActive(false);
         }
     }
-
-
-
-
-
-
 }

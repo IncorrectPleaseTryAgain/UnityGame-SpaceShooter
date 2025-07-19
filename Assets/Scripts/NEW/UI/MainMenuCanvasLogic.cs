@@ -135,6 +135,7 @@ public class MainMenuCanvasLogic : MonoBehaviour
         if(SaveSystem.Instance.playerData.Save1Active)
         {
             AudioSystem.Instance.StopMusic();
+            SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save1Chapter;
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         }
         else { DisplayCreateNewSaveOverlay(); }
@@ -145,6 +146,7 @@ public class MainMenuCanvasLogic : MonoBehaviour
         if (SaveSystem.Instance.playerData.Save2Active)
         {
             AudioSystem.Instance.StopMusic();
+            SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save2Chapter;
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         } else { DisplayCreateNewSaveOverlay(); }
     }
@@ -154,6 +156,7 @@ public class MainMenuCanvasLogic : MonoBehaviour
         if (SaveSystem.Instance.playerData.Save3Active)
         {
             AudioSystem.Instance.StopMusic();
+            SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save3Chapter;
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         }
         else { DisplayCreateNewSaveOverlay(); }
@@ -179,14 +182,17 @@ public class MainMenuCanvasLogic : MonoBehaviour
         {
             case 1:
                 SaveSystem.Instance.playerData.Save1Active = true;
+                SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save1Chapter;
                 SaveSystem.Instance.playerData.Save1Name = newSaveName;
                 break;
             case 2:
                 SaveSystem.Instance.playerData.Save2Active = true;
+                SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save2Chapter;
                 SaveSystem.Instance.playerData.Save2Name = newSaveName;
                 break;
             case 3:
                 SaveSystem.Instance.playerData.Save3Active = true;
+                SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save3Chapter;
                 SaveSystem.Instance.playerData.Save3Name = newSaveName;
                 break;
             default:
