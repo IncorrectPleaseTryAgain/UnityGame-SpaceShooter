@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class ChapterSelectCanvasLogic : MonoBehaviour
 {
     [SerializeField] Button[] chapterButtons;
     [SerializeField] GameObject settings;
+    public static event Action OnOpenSettings;
 
     public void Initialize()
     {
@@ -94,10 +96,6 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
             }
         }
     }
-    public void OnSettingsButtonClicked()
-    {
-        LogSystem.Instance.Log("Opening Settings", LogType.Todo, "LevelSelectCanvasLogic");
-    }
 
     public void OnMainMenuButtonClicked()
     {
@@ -108,5 +106,10 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
     {
         SaveSystem.Instance.currentChapter = chapterIndex;
         SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
+    }
+
+    public void OnSettingsButtonClickHandler()
+    {
+        OnOpenSettings?.Invoke();
     }
 }

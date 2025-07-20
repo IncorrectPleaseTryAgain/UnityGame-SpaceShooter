@@ -88,20 +88,6 @@ public class CreditsManager : MonoBehaviour
 
     Credits.Credit GetChapterForCurrentSave()
     {
-        int chapter = 1; // Default to chapter 1
-        switch (SaveSystem.Instance.currentGameSave)
-        {
-            case (int)SaveSystem.SaveIndex.Save1:
-                chapter = SaveSystem.Instance.playerData.Save1Chapter;
-                break;
-            case (int)SaveSystem.SaveIndex.Save2:
-                chapter = SaveSystem.Instance.playerData.Save2Chapter;
-                break;
-            case (int)SaveSystem.SaveIndex.Save3:
-                chapter = SaveSystem.Instance.playerData.Save3Chapter;
-                break;
-        }
-
         // Convert current chapter to Credit enum
         switch (SaveSystem.Instance.currentChapter)
         {

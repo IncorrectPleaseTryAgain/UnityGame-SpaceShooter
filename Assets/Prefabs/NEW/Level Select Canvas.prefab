@@ -2340,7 +2340,7 @@ PrefabInstance:
       objectReference: {fileID: 2185744389579524650}
     - target: {fileID: 7760847110230355850, guid: 4c9c456bd77e901438b01ff1e24ba8b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnSettingsButtonClicked
+      value: OnSettingsButtonClickHandler
       objectReference: {fileID: 0}
     - target: {fileID: 7760847110230355850, guid: 4c9c456bd77e901438b01ff1e24ba8b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

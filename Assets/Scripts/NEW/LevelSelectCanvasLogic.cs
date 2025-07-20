@@ -8,6 +8,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
     [SerializeField] Button[] levelButtons;
     [SerializeField] TextMeshProUGUI chapterText;
     [SerializeField] GameObject settings;
+    public static event Action OnOpenSettings;
 
     public void Initialize()
     {
@@ -137,13 +138,13 @@ public class LevelSelectCanvasLogic : MonoBehaviour
         SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
     }
 
-    public void OnSettingsButtonClicked()
-    {
-        LogSystem.Instance.Log("Opening Settings", LogType.Todo, "LevelSelectCanvasLogic");
-    }
-
     public void OnCreditsButtonClicked()
     {
         SceneSystem.Instance.LoadScene(Scenes.Credits);
+    }
+
+    public void OnSettingsButtonClickHandler()
+    {
+        OnOpenSettings?.Invoke();
     }
 }

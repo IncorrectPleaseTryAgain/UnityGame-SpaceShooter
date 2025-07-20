@@ -94,16 +94,7 @@ public class MainMenuManager : MonoBehaviour
     void OnSettingsIsActiveHandler(bool isActive)
     {
         LogSystem.Instance.Log("Settings Active: " + isActive, LogType.Info, _logTag);
-        if (isActive)
-        {
-            _settingsCanvas.gameObject.SetActive(true);
-            _mainMenuCanvasLogic.SetActive(false);
-        }
-        else
-        {
-            _settingsCanvas.gameObject.SetActive(false);
-            _mainMenuCanvasLogic.SetActive(true);
-        }
+        _mainMenuCanvasLogic.SetActive(!isActive);
     }
 
     void AllSystemsInitializedHandler()
@@ -119,7 +110,8 @@ public class MainMenuManager : MonoBehaviour
 
         InstantiateObject(_background, _camera.transform);
         _mainMenuCanvas = InstantiateObject(_mainMenuCanvas);
-        _settingsCanvas = InstantiateObject(_settingsCanvas, _mainMenuCanvas.transform);
+        //_settingsCanvas = InstantiateObject(_settingsCanvas, _mainMenuCanvas.transform);
+        _settingsCanvas = InstantiateObject(_settingsCanvas);
         _mainMenuCanvasLogic = _mainMenuCanvas.GetComponent<MainMenuCanvasLogic>();
     }
 

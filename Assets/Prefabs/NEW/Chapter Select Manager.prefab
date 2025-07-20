@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f020ab7bf103c7742b8fabf940fbb91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 7459239547825329770, guid: 5cbd1a9cedb04e24aa70819bac735013, type: 3}
-  background: {fileID: 1884367978294721569, guid: 1da440b028f09e249acd10c64df82292, type: 3}
-  chapterSelectCanvas: {fileID: 2561446659983669508, guid: 3a2701a744f70484ea153c84353a5bfd, type: 3}
+  _camera: {fileID: 7459239547825329770, guid: 5cbd1a9cedb04e24aa70819bac735013, type: 3}
+  _background: {fileID: 1884367978294721569, guid: 1da440b028f09e249acd10c64df82292, type: 3}
+  _chapterSelectCanvas: {fileID: 2561446659983669508, guid: 3a2701a744f70484ea153c84353a5bfd, type: 3}
+  _settingsCanvas: {fileID: 4709400138825434658, guid: 226a2b9040df4fd48acecfc08938126a, type: 3}
 --- !u!1 &6585006359222213329
 GameObject:
   m_ObjectHideFlags: 0

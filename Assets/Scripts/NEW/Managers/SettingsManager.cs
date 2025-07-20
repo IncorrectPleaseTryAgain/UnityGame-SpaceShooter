@@ -17,6 +17,9 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] Toggle _fullscreenToggle;
     [SerializeField] TMP_Dropdown _resolutionDropdown;
 
+    [Header("Controls")]
+    [SerializeField] InputActionAsset _inputActions;
+
     //[Header("Controls")]
     //InputActionRebindingExtensions.RebindingOperation rebindOperation;
 
@@ -58,6 +61,13 @@ public class SettingsManager : MonoBehaviour
         VideoSystem.Instance.Reset();
         _fullscreenToggle.isOn = VideoSystem.Instance.defaultFullscreen;
         _resolutionDropdown.value = GetResolutionDropdownIndex(VideoSystem.Instance.defaultResolutionWidth, VideoSystem.Instance.defaultResolutionHeight);
+    }
+    public void ResetControlsHandler()
+    {
+        foreach (InputActionMap map in _inputActions.actionMaps)
+        {
+            map.RemoveAllBindingOverrides();
+        }
     }
 
     public void OpenSettingsHandler()
@@ -186,7 +196,9 @@ public class SettingsManager : MonoBehaviour
     void AddListeners()
     {
         MainMenuCanvasLogic.OnOpenSettings += OpenSettingsHandler;
-        
+        ChapterSelectCanvasLogic.OnOpenSettings += OpenSettingsHandler;
+        LevelSelectCanvasLogic.OnOpenSettings += OpenSettingsHandler;
+
         // Audio
         _audioMasterSlider.onValueChanged.AddListener(AudioMasterSliderValueChangedHandler);
         _audioMusicSlider.onValueChanged.AddListener(AudioMusicSliderValueChangedHandler);
@@ -199,6 +211,8 @@ public class SettingsManager : MonoBehaviour
     void RemoveListeners()
     {
         MainMenuCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
+        ChapterSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
+        LevelSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
 
         // Audio
         _audioMasterSlider.onValueChanged.RemoveAllListeners();
