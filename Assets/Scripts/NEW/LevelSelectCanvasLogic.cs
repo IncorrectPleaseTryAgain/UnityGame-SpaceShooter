@@ -147,4 +147,10 @@ public class LevelSelectCanvasLogic : MonoBehaviour
     {
         OnOpenSettings?.Invoke();
     }
+
+    public void OnLevelButtonCkicled(int level)
+    {
+        SaveSystem.Instance.currentLevel = level;
+        SceneSystem.Instance.LoadScene(Scenes.InGame);
+    }
 }

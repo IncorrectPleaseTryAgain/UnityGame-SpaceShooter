@@ -661,7 +661,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5119887573819374184}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2185744389579524650}
+        m_TargetAssemblyTypeName: LevelSelectCanvasLogic, Assembly-CSharp
+        m_MethodName: OnLevelButtonCkicled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2057143322781805571
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +794,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 766937614577129489}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2185744389579524650}
+        m_TargetAssemblyTypeName: LevelSelectCanvasLogic, Assembly-CSharp
+        m_MethodName: OnLevelButtonCkicled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2251050068766097819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,7 +1601,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7162622300741463406}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2185744389579524650}
+        m_TargetAssemblyTypeName: LevelSelectCanvasLogic, Assembly-CSharp
+        m_MethodName: OnLevelButtonCkicled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6371749485325355077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,7 +2008,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6088091889017981980}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2185744389579524650}
+        m_TargetAssemblyTypeName: LevelSelectCanvasLogic, Assembly-CSharp
+        m_MethodName: OnLevelButtonCkicled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8766011908263704172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,7 +2277,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3033300088301985991}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2185744389579524650}
+        m_TargetAssemblyTypeName: LevelSelectCanvasLogic, Assembly-CSharp
+        m_MethodName: OnLevelButtonCkicled
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1665347618613524910
 PrefabInstance:
   m_ObjectHideFlags: 0

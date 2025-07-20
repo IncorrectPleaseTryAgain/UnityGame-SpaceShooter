@@ -9,6 +9,7 @@ public enum Scenes
     Credits,
     ChapterSelect,
     LevelSelect,
+    InGame
 }
 
 public class  SceneSystem : Singleton<SceneSystem>, ISystem

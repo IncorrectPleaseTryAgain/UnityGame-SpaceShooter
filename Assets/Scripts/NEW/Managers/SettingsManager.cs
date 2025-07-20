@@ -198,6 +198,8 @@ public class SettingsManager : MonoBehaviour
         MainMenuCanvasLogic.OnOpenSettings += OpenSettingsHandler;
         ChapterSelectCanvasLogic.OnOpenSettings += OpenSettingsHandler;
         LevelSelectCanvasLogic.OnOpenSettings += OpenSettingsHandler;
+        InGameManager.OnOpenSettings += OpenSettingsHandler;
+        InGameManager.OnCloseSettings += CloseSettingsHandler;
 
         // Audio
         _audioMasterSlider.onValueChanged.AddListener(AudioMasterSliderValueChangedHandler);
@@ -213,6 +215,9 @@ public class SettingsManager : MonoBehaviour
         MainMenuCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
         ChapterSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
         LevelSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
+        LevelSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
+        InGameManager.OnOpenSettings -= OpenSettingsHandler;
+        InGameManager.OnCloseSettings -= CloseSettingsHandler;
 
         // Audio
         _audioMasterSlider.onValueChanged.RemoveAllListeners();
