@@ -145,6 +145,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     public void OnSettingsButtonClickHandler()
     {
+        gameObject.SetActive(false);
         OnOpenSettings?.Invoke();
     }
 

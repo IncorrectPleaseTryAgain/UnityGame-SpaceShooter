@@ -29,7 +29,7 @@ public class MainMenuManager : MonoBehaviour
     private void OnDestroy()
     {
         MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete -= MainMenuCanvasHeaderOnAnimationCompleteHandler;
-        SettingsManager.OnSettingsIsActive -= OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
 
     }
 
@@ -37,7 +37,7 @@ public class MainMenuManager : MonoBehaviour
     {
         MainMenuCanvasHeaderLogic.OnFadeInAnimationComplete += MainMenuCanvasHeaderOnAnimationCompleteHandler;
         Systems.OnSystemsFinishedInitialization += AllSystemsInitializedHandler; // removed after initialization
-        SettingsManager.OnSettingsIsActive += OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
         _playerInput.enabled = false;
     }
 
@@ -91,10 +91,9 @@ public class MainMenuManager : MonoBehaviour
         _mainMenuCanvasLogic.SetActive(false);
     }
 
-    void OnSettingsIsActiveHandler(bool isActive)
+    void OnSettingsClosedHandler()
     {
-        LogSystem.Instance.Log("Settings Active: " + isActive, LogType.Info, _logTag);
-        _mainMenuCanvasLogic.SetActive(!isActive);
+        _mainMenuCanvasLogic.SetActive(true);
     }
 
     void AllSystemsInitializedHandler()

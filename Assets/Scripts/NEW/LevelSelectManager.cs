@@ -16,12 +16,12 @@ public class LevelSelectManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        SettingsManager.OnSettingsIsActive -= OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
     }
 
     private void Awake()
     {
-        SettingsManager.OnSettingsIsActive += OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
     }
 
 
@@ -38,8 +38,8 @@ public class LevelSelectManager : MonoBehaviour
         _levelSelectCanvas = Instantiate(_levelSelectCanvas);
         _settingsCanvas = Instantiate(_settingsCanvas);
     }
-    void OnSettingsIsActiveHandler(bool isActive)
+    void OnSettingsClosedHandler()
     {
-        _levelSelectCanvas.gameObject.SetActive(!isActive);
+        _levelSelectCanvas.gameObject.SetActive(true);
     }
 }

@@ -25,20 +25,26 @@ public class InGameManager : MonoBehaviour
     [SerializeField] Canvas _pauseMenuCanvas;
 
     bool _isPaused = false;
+    bool _isSettingsActive = false;
+    bool _isPlayerAlive = true;
 
     public static event Action OnOpenSettings;
     public static event Action OnCloseSettings;
 
     private void OnDestroy()
     {
-        SettingsManager.OnSettingsIsActive -= OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
+        PauseMenuCanvasLogic.OnOpenSettings -= OnOpenSettingsHandler;
+        PauseMenuCanvasLogic.OnResumeGame -= ResumeGame;
     }
 
 
 
     private void Awake()
     {
-        SettingsManager.OnSettingsIsActive += OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
+        PauseMenuCanvasLogic.OnOpenSettings += OnOpenSettingsHandler;
+        PauseMenuCanvasLogic.OnResumeGame += ResumeGame;
         Initialize();
     }
 
@@ -64,27 +70,33 @@ public class InGameManager : MonoBehaviour
         _pauseMenuCanvas.gameObject.SetActive(false);
     }
 
-    private void OnSettingsIsActiveHandler(bool obj)
+    private void OnSettingsClosedHandler()
     {
-        LogSystem.Instance.Log("Settings Active: " + obj, LogType.Info, "InGameManager");
-        _isPaused = obj;
+        _isSettingsActive = false;
+        _settingsCanvas.gameObject.SetActive(false);
+        _pauseMenuCanvas.gameObject.SetActive(true);
+    }
+
+    private void OnOpenSettingsHandler()
+    {
+        LogSystem.Instance.Log("Opening Settings", LogType.Info, "InGameManager");
+        _isSettingsActive = true;
+        _pauseMenuCanvas.gameObject.SetActive(false);
+        _settingsCanvas.gameObject.SetActive(true);
     }
 
     public void OnPauseHandler(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _isPlayerAlive && !_isSettingsActive)
         {
             if (_isPaused)
             {
-                OnOpenSettings?.Invoke();
                 ResumeGame();
             }
             else
             {
-                OnCloseSettings?.Invoke();
                 PauseGame();
             }
-            _isPaused = !_isPaused;
         }
     }
 
@@ -92,13 +104,15 @@ public class InGameManager : MonoBehaviour
     {
         LogSystem.Instance.Log("Game Paused", LogType.Info, "GameManager");
         Time.timeScale = 0f;
-        _settingsCanvas.gameObject.SetActive(true);
+        _pauseMenuCanvas.gameObject.SetActive(true);
+        _isPaused = !_isPaused;
     }
 
     private void ResumeGame()
     {
         LogSystem.Instance.Log("Game Resumed", LogType.Info, "GameManager");
         Time.timeScale = 1f;
-        _settingsCanvas.gameObject.SetActive(false);
+        _pauseMenuCanvas.gameObject.SetActive(false);
+        _isPaused = !_isPaused;
     }
 }

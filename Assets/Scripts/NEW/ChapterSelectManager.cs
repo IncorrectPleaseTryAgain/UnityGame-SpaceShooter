@@ -15,12 +15,12 @@ public class ChapterSelectManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        SettingsManager.OnSettingsIsActive -= OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
     }
 
     private void Awake()
     {
-        SettingsManager.OnSettingsIsActive += OnSettingsIsActiveHandler;
+        SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
     }
 
 
@@ -38,9 +38,9 @@ public class ChapterSelectManager : MonoBehaviour
         _settingsCanvas = Instantiate(_settingsCanvas);
     }
 
-    void OnSettingsIsActiveHandler(bool isActive)
+    void OnSettingsClosedHandler()
     {
-        _chapterSelectCanvas.gameObject.SetActive(!isActive);
+        _chapterSelectCanvas.gameObject.SetActive(true);
     }
 
 }

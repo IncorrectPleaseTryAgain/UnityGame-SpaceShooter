@@ -36,7 +36,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     const string _logTag = "SaveSystem";
 
     public PlayerData playerData;
-    public int currentGameSave = 0;
+    public int currentGameSave = 0; //TEMP: Change back to 0
     public int currentChapter = 1;
     public int currentLevel = 1;
 

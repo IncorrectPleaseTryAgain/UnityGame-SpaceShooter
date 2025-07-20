@@ -26,7 +26,7 @@ public class SettingsManager : MonoBehaviour
     bool audioSettingsChanged = false;
     bool videoSettingsChanged = false;
 
-    public static event Action<bool> OnSettingsIsActive;
+    public static event Action OnSettingsClosed;
 
     private void OnEnable()
     {
@@ -72,16 +72,16 @@ public class SettingsManager : MonoBehaviour
 
     public void OpenSettingsHandler()
     {
+        if (gameObject.activeSelf) { CloseSettingsHandler(); return; }
         LogSystem.Instance.Log("Opening settings...", LogType.Info, _logTag);
         LoadSettings();
-        OnSettingsIsActive?.Invoke(true);
         gameObject.SetActive(true); // Show settings menu
     }
     public void CloseSettingsHandler()
     {
         LogSystem.Instance.Log("Closing settings...", LogType.Info, _logTag);
         ReloadSettings();
-        OnSettingsIsActive?.Invoke(false);
+        OnSettingsClosed?.Invoke();
         gameObject.SetActive(false); // Hide settings menu
     }
     public void SaveSettingsHandler()
@@ -103,7 +103,7 @@ public class SettingsManager : MonoBehaviour
 
         SaveSystem.Instance.SaveControls();
 
-        OnSettingsIsActive?.Invoke(false);
+        OnSettingsClosed?.Invoke();
         gameObject.SetActive(false); // Hide settings menu
     }
 

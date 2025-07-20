@@ -110,6 +110,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     public void OnSettingsButtonClickHandler()
     {
+        gameObject.SetActive(false);
         OnOpenSettings?.Invoke();
     }
 }
