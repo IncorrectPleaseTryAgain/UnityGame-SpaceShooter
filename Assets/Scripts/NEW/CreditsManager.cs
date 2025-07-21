@@ -50,6 +50,7 @@ public class CreditsManager : MonoBehaviour
     {
         if (continueAction.WasPressedThisFrame())
         {
+            AudioSystem.Instance.StopMusic();
             SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
         }
         if (navigateAction.WasPressedThisFrame())
@@ -66,7 +67,6 @@ public class CreditsManager : MonoBehaviour
 
     private void Initialize()
     {
-        _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.Credits));
         _playerInput.enabled = true;
         navigateAction = _playerInput.actions["Navigate"];
         continueAction = _playerInput.actions["Continue"];
@@ -77,19 +77,10 @@ public class CreditsManager : MonoBehaviour
         creditsCanvasLogic = _creditsCanvas.GetComponent<CreditsCanvasLogic>();
     }
 
-    public void Continue(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            AudioSystem.Instance.StopMusic();
-            SceneSystem.Instance.LoadScene(Scenes.MainMenu); // TODO: Change to LevelSelect in Specific Chapter
-        }
-    }
-
     Credits.Credit GetChapterForCurrentSave()
     {
         // Convert current chapter to Credit enum
-        switch (SaveSystem.Instance.currentChapter)
+        switch (DataSystem.Instance.currentChapter)
         {
             case 1:
                 return Credits.Credit.CHAPTER_1;

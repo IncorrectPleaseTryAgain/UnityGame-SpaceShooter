@@ -16,7 +16,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     private void InitializeChapterButtons()
     {
-        switch (SaveSystem.Instance.currentGameSave)
+        switch (DataSystem.Instance.currentSave)
         {
             case (int)SaveSystem.SaveIndex.Save1:
                 InitializeButtonsForSave1();
@@ -35,7 +35,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave1()
     {
-        int numChaptersUnlocked = SaveSystem.Instance.playerData.Save1Chapter;
+        int numChaptersUnlocked = DataSystem.Instance.gameData.Save1Chapter;
         for (int i = 0; i < numChaptersUnlocked; i++)
         {
             if (i < numChaptersUnlocked)
@@ -67,7 +67,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave2()
     {
-        int numChaptersUnlocked = SaveSystem.Instance.playerData.Save2Chapter;
+        int numChaptersUnlocked = DataSystem.Instance.gameData.Save2Chapter;
         for (int i = 0; i < numChaptersUnlocked; i++)
         {
             if (i < numChaptersUnlocked)
@@ -83,7 +83,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave3()
     {
-        int numChaptersUnlocked = SaveSystem.Instance.playerData.Save3Chapter;
+        int numChaptersUnlocked = DataSystem.Instance.gameData.Save3Chapter;
         for (int i = 0; i < numChaptersUnlocked; i++)
         {
             if (i < numChaptersUnlocked)
@@ -104,7 +104,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     public void OnChapterButtonClicked(int chapterIndex)
     {
-        SaveSystem.Instance.currentChapter = chapterIndex;
+        DataSystem.Instance.currentChapter = chapterIndex;
         SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
     }
 

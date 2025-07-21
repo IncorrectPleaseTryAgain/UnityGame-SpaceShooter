@@ -79,7 +79,6 @@ public class MainMenuManager : MonoBehaviour
 
         continueAction = null;
         
-        _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.InGame));
         AudioSystem.Instance.PlayMusic(_mainMenuMusic, true);
         _mainMenuCanvasLogic.Continue();
         InitializeEventSystem();
@@ -100,10 +99,6 @@ public class MainMenuManager : MonoBehaviour
     {
         LogSystem.Instance.Log("All Systems Initialized", LogType.Info, _logTag);
         Systems.OnSystemsFinishedInitialization -= AllSystemsInitializedHandler;
-
-        SaveSystem.Instance.currentGameSave = 0; // Default to save 0
-        SaveSystem.Instance.currentChapter = 1; // Default to chapter 1
-        SaveSystem.Instance.currentLevel = 1; // Default to level 1
 
         InitializeCamera();
 
@@ -143,8 +138,10 @@ public class MainMenuManager : MonoBehaviour
     void MainMenuCanvasHeaderOnAnimationCompleteHandler()
     {
         LogSystem.Instance.Log("Enabling Continue Action", LogType.Info, _logTag);
+        
+        const string MAIN_MENU = "MainMenu";
         _playerInput.enabled = true;
-        _playerInput.SwitchCurrentActionMap(ActionMap.GetActionMap(ActionMap.ActionMaps.MainMenu));
+        _playerInput.SwitchCurrentActionMap(MAIN_MENU);
 
         continueAction = _playerInput.actions["Continue"];
     }

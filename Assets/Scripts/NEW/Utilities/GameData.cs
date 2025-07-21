@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class PlayerData
+public class GameData
 {
     public string Save1Name = "Create Save";
     public bool Save1Active = false;

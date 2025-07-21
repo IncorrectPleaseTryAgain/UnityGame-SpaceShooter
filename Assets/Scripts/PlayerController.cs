@@ -118,7 +118,7 @@
 //        staminaBar.SetStamina(sprintCooldown - sprintTimer);
 //    }
 
-//    private void Start() 
+//    private void Start()
 //    {
 //        pauseAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Escape");
 //        moveAction = UnityEngine.InputSystem.InputSystem.actions.FindAction("Move");
@@ -244,13 +244,13 @@
 //        //Debug.Log("Attack");
 //        if (!IsPaused && IsAlive)
 //        {
-//            if (context.performed) 
-//            { 
+//            if (context.performed)
+//            {
 //                projectileSpawner.GetComponent<ProjectileSpawnerLogic>().SpawnProjectile(projectilePrefab, rb.linearVelocity);
 //            }
 //        }
 //    }
-//    public void ApplyDamage(float damage) 
+//    public void ApplyDamage(float damage)
 //    {
 //        if (!IsPaused && IsAlive)
 //        {

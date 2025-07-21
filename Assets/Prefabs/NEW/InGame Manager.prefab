@@ -46,13 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356967630d2bcd740b77a8c19a6f09dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInput: {fileID: 0}
+  _playerInput: {fileID: 3317861593415929550}
   _camera: {fileID: 7208443808210890321, guid: 58f2f936b6eeebb4f99be9c50e4c961c, type: 3}
   _cinemachineCamera: {fileID: 2598621247158261558, guid: 509fa022dc34fbd4cb5c45885c8c0ed0, type: 3}
   _globalVolume: {fileID: 2831172118101152419, guid: e8e65956c522683488daa3be30d9418e, type: 3}
   _globalLight2D: {fileID: 5089989729057939859, guid: 3db1f45666b2dff4eb4d2d35275c026b, type: 3}
   _background: {fileID: 3499730557844052802, guid: f9e9dae069fa7c54ab290c66b43f0ac7, type: 3}
   _inGameCanvas: {fileID: 6721920253882884922, guid: 75cc279f85f6d3d438a9d4f9b1d42e88, type: 3}
+  player: {fileID: 5851743150533982304, guid: 63f2bf576879f9f4f8302b53790cfeb8, type: 3}
   _settingsCanvas: {fileID: 847741630248694601, guid: 226a2b9040df4fd48acecfc08938126a, type: 3}
   _deathScreenCanvas: {fileID: 7588260221276442401, guid: 22fba1ca9dd04f7409e415db969a6104, type: 3}
   _completeScreenCanvas: {fileID: 7250547674311558110, guid: f3158f7efdad92a4195e50ff374d41ca, type: 3}
@@ -172,7 +173,7 @@ MonoBehaviour:
     m_ActionName: 'Credits/Navigate[/Keyboard/w,/Keyboard/s,/Keyboard/upArrow,/Keyboard/downArrow]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: InGame
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1059517044035065116
@@ -202,7 +203,7 @@ Transform:
   m_GameObject: {fileID: 1059517044035065116}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.000015258789, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

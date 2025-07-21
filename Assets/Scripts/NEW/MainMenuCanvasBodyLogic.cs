@@ -60,32 +60,32 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
     private void InitializeSaves()
     {
         LogSystem.Instance.Log("Initializing Saves", LogType.Info, _logTag);
-        _gameSaveLeftText.text = SaveSystem.Instance.playerData.Save1Name;
+        _gameSaveLeftText.text = DataSystem.Instance.gameData.Save1Name;
         _deleteLeftSave.gameObject.SetActive(false);
 
-        _gameSaveCenterText.text = SaveSystem.Instance.playerData.Save2Name;
+        _gameSaveCenterText.text = DataSystem.Instance.gameData.Save2Name;
         _deleteCenterSave.gameObject.SetActive(false);
 
-        _gameSaveRightText.text = SaveSystem.Instance.playerData.Save3Name;
+        _gameSaveRightText.text = DataSystem.Instance.gameData.Save3Name;
         _deleteRightSave.gameObject.SetActive(false);
     }
 
     public void UpdateGameSaves()
     {
         // Update Save Names
-        _gameSaveLeftText.text = SaveSystem.Instance.playerData.Save1Name;
-        _gameSaveCenterText.text = SaveSystem.Instance.playerData.Save2Name;
-        _gameSaveRightText.text = SaveSystem.Instance.playerData.Save3Name;
+        _gameSaveLeftText.text = DataSystem.Instance.gameData.Save1Name;
+        _gameSaveCenterText.text = DataSystem.Instance.gameData.Save2Name;
+        _gameSaveRightText.text = DataSystem.Instance.gameData.Save3Name;
 
         // Update Save Colors
-        _gameSaveLeft.image.color = SaveSystem.Instance.playerData.Save1Active ? gameSaveActive : gameSaveInactive;
-        _gameSaveLeftText.color = SaveSystem.Instance.playerData.Save1Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveLeft.image.color = DataSystem.Instance.gameData.Save1Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveLeftText.color = DataSystem.Instance.gameData.Save1Active ? gameSaveActive : gameSaveInactive;
 
-        _gameSaveCenter.image.color = SaveSystem.Instance.playerData.Save2Active ? gameSaveActive : gameSaveInactive;
-        _gameSaveCenterText.color = SaveSystem.Instance.playerData.Save2Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveCenter.image.color = DataSystem.Instance.gameData.Save2Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveCenterText.color = DataSystem.Instance.gameData.Save2Active ? gameSaveActive : gameSaveInactive;
 
-        _gameSaveRight.image.color = SaveSystem.Instance.playerData.Save3Active ? gameSaveActive : gameSaveInactive;
-        _gameSaveRightText.color = SaveSystem.Instance.playerData.Save3Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveRight.image.color = DataSystem.Instance.gameData.Save3Active ? gameSaveActive : gameSaveInactive;
+        _gameSaveRightText.color = DataSystem.Instance.gameData.Save3Active ? gameSaveActive : gameSaveInactive;
     }
 
     public void Disable()
@@ -121,7 +121,7 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
     }
     private void ButtonsFadeIn(float t)
     {
-        if(SaveSystem.Instance.playerData.Save1Active)
+        if(DataSystem.Instance.gameData.Save1Active)
         {
             _gameSaveLeft.image.color = Color.Lerp(colorTransparent, gameSaveActive, t);
             _gameSaveLeftText.color = Color.Lerp(colorTransparent, gameSaveActive, t);
@@ -131,7 +131,7 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
             _gameSaveLeft.image.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
             _gameSaveLeftText.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
         }
-        if(SaveSystem.Instance.playerData.Save2Active)
+        if(DataSystem.Instance.gameData.Save2Active)
         {
             _gameSaveCenter.image.color = Color.Lerp(colorTransparent, gameSaveActive, t);
             _gameSaveCenterText.color = Color.Lerp(colorTransparent, gameSaveActive, t);
@@ -141,7 +141,7 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
             _gameSaveCenter.image.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
             _gameSaveCenterText.color = Color.Lerp(colorTransparent, gameSaveInactive, t);
         }
-        if(SaveSystem.Instance.playerData.Save3Active)
+        if(DataSystem.Instance.gameData.Save3Active)
         {
             _gameSaveRight.image.color = Color.Lerp(colorTransparent, gameSaveActive, t);
             _gameSaveRightText.color = Color.Lerp(colorTransparent, gameSaveActive, t);
@@ -186,21 +186,21 @@ public class MainMenuCanvasBodyLogic : MonoBehaviour
 
     public void OnLeftSaveButtonPointerEnterHandler()
     {
-        if (SaveSystem.Instance.playerData.Save1Active)
+        if (DataSystem.Instance.gameData.Save1Active)
         {
             _deleteLeftSave.gameObject.SetActive(true);
         }
     }
     public void OnCenterSaveButtonPointerEnterHandler()
     {
-        if (SaveSystem.Instance.playerData.Save2Active)
+        if (DataSystem.Instance.gameData.Save2Active)
         {
             _deleteCenterSave.gameObject.SetActive(true);
         }
     }
     public void OnRightSaveButtonPointerEnterHandler()
     {
-        if (SaveSystem.Instance.playerData.Save3Active)
+        if (DataSystem.Instance.gameData.Save3Active)
         {
             _deleteRightSave.gameObject.SetActive(true);
         }

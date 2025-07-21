@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca78005a4c1fd1643b4bef684086a474, type: 3}
+  m_Name: 3.1 Level Data
+  m_EditorClassIdentifier: 
+  Chapter: 3
+  Level: 1
+  NumberOfEnemies: 0
+  NumberOfBosses: 0
+  TimeLimit: 0
+  PlayerPrefab: {fileID: 0}
+  StaticEnemies: []
+  DynamicEnemies: []
+  Boss: {fileID: 0}

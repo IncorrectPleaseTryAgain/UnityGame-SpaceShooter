@@ -56,19 +56,19 @@ public class MainMenuCanvasLogic : MonoBehaviour
     public void OnDeleteLeftSaveButtonClickHandler()
     {
         _deleteSaveOverlay.SetActive(true);
-        _deleteSaveNameText.text = SaveSystem.Instance.playerData.Save1Name;
+        _deleteSaveNameText.text = DataSystem.Instance.gameData.Save1Name;
         gameSaveToDelete = 1;
     }
     public void OnDeleteCenterSaveButtonClickHandler()
     {
         _deleteSaveOverlay.SetActive(true);
-        _deleteSaveNameText.text = SaveSystem.Instance.playerData.Save2Name;
+        _deleteSaveNameText.text = DataSystem.Instance.gameData.Save2Name;
         gameSaveToDelete = 2;
     }
     public void OnDeleteRightSaveButtonClickHandler()
     {
         _deleteSaveOverlay.SetActive(true);
-        _deleteSaveNameText.text = SaveSystem.Instance.playerData.Save3Name;
+        _deleteSaveNameText.text = DataSystem.Instance.gameData.Save3Name;
         gameSaveToDelete = 3;
     }
 
@@ -131,32 +131,32 @@ public class MainMenuCanvasLogic : MonoBehaviour
 
     public void LoadGameButtonLeftHandler()
     {
-        SaveSystem.Instance.currentGameSave = 1;
-        if(SaveSystem.Instance.playerData.Save1Active)
+        DataSystem.Instance.currentSave = 1;
+        if(DataSystem.Instance.gameData.Save1Active)
         {
             AudioSystem.Instance.StopMusic();
-            SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save1Chapter;
+            DataSystem.Instance.currentChapter = DataSystem.Instance.gameData.Save1Chapter;
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         }
         else { DisplayCreateNewSaveOverlay(); }
     }
     public void LoadGameButtonCenterHandler()
     {
-        SaveSystem.Instance.currentGameSave = 2;
-        if (SaveSystem.Instance.playerData.Save2Active)
+        DataSystem.Instance.currentSave = 2;
+        if (DataSystem.Instance.gameData.Save2Active)
         {
             AudioSystem.Instance.StopMusic();
-            SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save2Chapter;
+            DataSystem.Instance.currentChapter = DataSystem.Instance.gameData.Save2Chapter;
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         } else { DisplayCreateNewSaveOverlay(); }
     }
     public void LoadGameButtonRightHandler()
     {
-        SaveSystem.Instance.currentGameSave = 3;
-        if (SaveSystem.Instance.playerData.Save3Active)
+        DataSystem.Instance.currentSave = 3;
+        if (DataSystem.Instance.gameData.Save3Active)
         {
             AudioSystem.Instance.StopMusic();
-            SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save3Chapter;
+            DataSystem.Instance.currentChapter = DataSystem.Instance.gameData.Save3Chapter;
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect);
         }
         else { DisplayCreateNewSaveOverlay(); }
@@ -178,22 +178,22 @@ public class MainMenuCanvasLogic : MonoBehaviour
         }
 
         LogSystem.Instance.Log($"Creating new save with name: {newSaveName}", LogType.Todo, _logTag);
-        switch(SaveSystem.Instance.currentGameSave)
+        switch(DataSystem.Instance.currentSave)
         {
             case 1:
-                SaveSystem.Instance.playerData.Save1Active = true;
-                SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save1Chapter;
-                SaveSystem.Instance.playerData.Save1Name = newSaveName;
+                DataSystem.Instance.gameData.Save1Active = true;
+                DataSystem.Instance.currentChapter = DataSystem.Instance.gameData.Save1Chapter;
+                DataSystem.Instance.gameData.Save1Name = newSaveName;
                 break;
             case 2:
-                SaveSystem.Instance.playerData.Save2Active = true;
-                SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save2Chapter;
-                SaveSystem.Instance.playerData.Save2Name = newSaveName;
+                DataSystem.Instance.gameData.Save2Active = true;
+                DataSystem.Instance.currentChapter = DataSystem.Instance.gameData.Save2Chapter;
+                DataSystem.Instance.gameData.Save2Name = newSaveName;
                 break;
             case 3:
-                SaveSystem.Instance.playerData.Save3Active = true;
-                SaveSystem.Instance.currentChapter = SaveSystem.Instance.playerData.Save3Chapter;
-                SaveSystem.Instance.playerData.Save3Name = newSaveName;
+                DataSystem.Instance.gameData.Save3Active = true;
+                DataSystem.Instance.currentChapter = DataSystem.Instance.gameData.Save3Chapter;
+                DataSystem.Instance.gameData.Save3Name = newSaveName;
                 break;
             default:
                 LogSystem.Instance.Log("No valid save slot selected.", LogType.Error, _logTag);

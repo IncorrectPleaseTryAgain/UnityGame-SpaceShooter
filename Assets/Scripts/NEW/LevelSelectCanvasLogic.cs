@@ -19,11 +19,11 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     private void InitializeChapterText()
     {
-        chapterText.text = $"Chapter {SaveSystem.Instance.currentChapter}";
+        chapterText.text = $"Chapter {DataSystem.Instance.currentChapter}";
     }
     private void InitializeLevelButtons()
     {
-        switch (SaveSystem.Instance.currentGameSave)
+        switch (DataSystem.Instance.currentSave)
         {
             case (int)SaveSystem.SaveIndex.Save1:
                 InitializeButtonsForSave1();
@@ -42,7 +42,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave1()
     {
-        if (SaveSystem.Instance.currentChapter < SaveSystem.Instance.playerData.Save1Chapter)
+        if (DataSystem.Instance.currentChapter < DataSystem.Instance.gameData.Save1Chapter)
         {
             foreach (Button button in levelButtons)
             {
@@ -51,7 +51,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
         }
         else
         {
-            int numLevelsUnlocked = SaveSystem.Instance.playerData.Save1Level;
+            int numLevelsUnlocked = DataSystem.Instance.gameData.Save1Level;
             for (int i = 0; i < numLevelsUnlocked; i++)
             {
                 if (i < numLevelsUnlocked)
@@ -84,7 +84,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave2()
     {
-        if (SaveSystem.Instance.currentChapter < SaveSystem.Instance.playerData.Save2Chapter)
+        if (DataSystem.Instance.currentChapter < DataSystem.Instance.gameData.Save2Chapter)
         {
             foreach (Button button in levelButtons)
             {
@@ -93,7 +93,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
         }
         else
         {
-            int numLevelsUnlocked = SaveSystem.Instance.playerData.Save2Level;
+            int numLevelsUnlocked = DataSystem.Instance.gameData.Save2Level;
             for (int i = 0; i < numLevelsUnlocked; i++)
             {
                 if (i < numLevelsUnlocked)
@@ -110,7 +110,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave3()
     {
-        if (SaveSystem.Instance.currentChapter < SaveSystem.Instance.playerData.Save3Chapter)
+        if (DataSystem.Instance.currentChapter < DataSystem.Instance.gameData.Save3Chapter)
         {
             foreach (Button button in levelButtons)
             {
@@ -119,7 +119,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
         }
         else
         {
-            int numLevelsUnlocked = SaveSystem.Instance.playerData.Save3Level;
+            int numLevelsUnlocked = DataSystem.Instance.gameData.Save3Level;
             for (int i = 0; i < numLevelsUnlocked; i++)
             {
                 if (i < numLevelsUnlocked)
@@ -151,7 +151,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     public void OnLevelButtonCkicled(int level)
     {
-        SaveSystem.Instance.currentLevel = level;
+        DataSystem.Instance.currentLevel = level;
         SceneSystem.Instance.LoadScene(Scenes.InGame);
     }
 }

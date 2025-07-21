@@ -18,15 +18,20 @@ public class InGameManager : MonoBehaviour
     [Header("InGame")]
     [SerializeField] Canvas _inGameCanvas;
 
+    [Header("Player")]
+    [SerializeField] PlayerController player;
+
     [Header("Overlays")]
     [SerializeField] Canvas _settingsCanvas;
     [SerializeField] Canvas _deathScreenCanvas;
     [SerializeField] Canvas _completeScreenCanvas;
     [SerializeField] Canvas _pauseMenuCanvas;
 
-    bool _isPaused = false;
-    bool _isSettingsActive = false;
-    bool _isPlayerAlive = true;
+    bool _isPaused;
+    bool _isSettingsActive;
+    bool _isPlayerAlive;
+    LevelData _currentLevelData;
+
 
     public static event Action OnOpenSettings;
     public static event Action OnCloseSettings;
@@ -38,14 +43,20 @@ public class InGameManager : MonoBehaviour
         PauseMenuCanvasLogic.OnResumeGame -= ResumeGame;
     }
 
-
-
     private void Awake()
     {
         SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
         PauseMenuCanvasLogic.OnOpenSettings += OnOpenSettingsHandler;
         PauseMenuCanvasLogic.OnResumeGame += ResumeGame;
         Initialize();
+    }
+
+    private void Start()
+    {
+        string levelName = $"Chapter {DataSystem.Instance.currentChapter} - Level {DataSystem.Instance.currentLevel}";
+        int numEnemiesLeft = _currentLevelData.NumberOfEnemies;
+        float timer = _currentLevelData.TimeLimit;
+        _inGameCanvas.GetComponent<InGameCanvasLogic>().Initialize(levelName, numEnemiesLeft, timer);
     }
 
     private void Initialize()
@@ -68,6 +79,14 @@ public class InGameManager : MonoBehaviour
 
         _pauseMenuCanvas = Instantiate(_pauseMenuCanvas);
         _pauseMenuCanvas.gameObject.SetActive(false);
+
+        _isPaused = false;
+        _isSettingsActive = false;
+        _isPlayerAlive = true;
+        _currentLevelData = DataSystem.Instance.GetLevelData();
+
+        player.Initialize(_currentLevelData.spaceship);
+        Instantiate(player);
     }
 
     private void OnSettingsClosedHandler()

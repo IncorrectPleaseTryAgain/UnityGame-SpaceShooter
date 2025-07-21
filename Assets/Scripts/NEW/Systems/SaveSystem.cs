@@ -35,10 +35,6 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
     const string _logTag = "SaveSystem";
 
-    public PlayerData playerData;
-    public int currentGameSave = 0; //TEMP: Change back to 0
-    public int currentChapter = 1;
-    public int currentLevel = 1;
 
     const string _saveFileName = "/playerData.json";
     string _saveFilePath;
@@ -52,7 +48,6 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         if (SaveSystem.Instance == null) { yield return null; }
 
         _saveFilePath = Application.persistentDataPath + _saveFileName;
-        Load();
 
         OnSystemInitialized?.Invoke();
     }
@@ -69,7 +64,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
         try
         {
-            string json = JsonUtility.ToJson(playerData, true);
+            string json = JsonUtility.ToJson(DataSystem.Instance.gameData, true);
             File.WriteAllText(_saveFilePath, json);
             LogSystem.Instance.Log("Player data saved successfully.", LogType.Info, _logTag);
         }
@@ -80,25 +75,23 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
         PlayerPrefs.Save();
     }
-    public PlayerData Load()
+    public void Load()
     {
         LogSystem.Instance.Log("Loading player data from file.", LogType.Info, _logTag);
 
         try
         {
             string json = File.ReadAllText(_saveFilePath);
-            playerData = JsonUtility.FromJson<PlayerData>(json);
+            DataSystem.Instance.gameData = JsonUtility.FromJson<GameData>(json);
             LogSystem.Instance.Log("Player data loaded successfully.", LogType.Info, _logTag);
         }
         catch (Exception e)
         {
             LogSystem.Instance.Log($"Error loading player data: {e.Message}", LogType.Error, _logTag);
-            playerData = new PlayerData(); // Reset to default if loading fails
+            DataSystem.Instance.gameData = new GameData(); // Reset to default if loading fails
             Save();
             Load();
         }
-
-        return playerData;
     }
 
     public void ResetSave(SaveIndex save)
@@ -107,24 +100,24 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         {
             case SaveIndex.Save1:
                 LogSystem.Instance.Log("Resetting Save 1", LogType.Info, _logTag);
-                playerData.Save1Name = "Create Save";
-                playerData.Save1Active = false;
-                playerData.Save1Chapter = 1;
-                playerData.Save1Level = 1;
+                DataSystem.Instance.gameData.Save1Name = "Create Save";
+                DataSystem.Instance.gameData.Save1Active = false;
+                DataSystem.Instance.gameData.Save1Chapter = 1;
+                DataSystem.Instance.gameData.Save1Level = 1;
                 break;
             case SaveIndex.Save2:
                 LogSystem.Instance.Log("Resetting Save 2", LogType.Info, _logTag);
-                playerData.Save2Name = "Create Save";
-                playerData.Save2Active = false;
-                playerData.Save2Chapter = 1;
-                playerData.Save2Level = 1;
+                DataSystem.Instance.gameData.Save2Name = "Create Save";
+                DataSystem.Instance.gameData.Save2Active = false;
+                DataSystem.Instance.gameData.Save2Chapter = 1;
+                DataSystem.Instance.gameData.Save2Level = 1;
                 break;
             case SaveIndex.Save3:
                 LogSystem.Instance.Log("Resetting Save 3", LogType.Info, _logTag);
-                playerData.Save3Name = "Create Save";
-                playerData.Save3Active = false;
-                playerData.Save3Chapter = 1;
-                playerData.Save3Level = 1;
+                DataSystem.Instance.gameData.Save3Name = "Create Save";
+                DataSystem.Instance.gameData.Save3Active = false;
+                DataSystem.Instance.gameData.Save3Chapter = 1;
+                DataSystem.Instance.gameData.Save3Level = 1;
                 break;
         }
     }
