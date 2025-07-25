@@ -19,51 +19,51 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     private void InitializeChapterText()
     {
-        chapterText.text = $"Chapter {DataSystem.Instance.currentChapter}";
+        //chapterText.text = $"Chapter {GameDataSystem.Instance.currentChapter}";
     }
     private void InitializeLevelButtons()
     {
-        switch (DataSystem.Instance.currentSave)
-        {
-            case (int)SaveSystem.SaveIndex.Save1:
-                InitializeButtonsForSave1();
-                break;
-            case (int)SaveSystem.SaveIndex.Save2:
-                InitializeButtonsForSave2();
-                break;
-            case (int)SaveSystem.SaveIndex.Save3:
-                InitializeButtonsForSave3();
-                break;
-            default:
-                Debug.LogError("Invalid save index. Please check the currentGameSave value in SaveSystem.");
-                return;
-        }
+        //switch (GameDataSystem.Instance.currentSave)
+        //{
+        //    case (int)SaveSystem.SaveIndex.Save1:
+        //        InitializeButtonsForSave1();
+        //        break;
+        //    case (int)SaveSystem.SaveIndex.Save2:
+        //        InitializeButtonsForSave2();
+        //        break;
+        //    case (int)SaveSystem.SaveIndex.Save3:
+        //        InitializeButtonsForSave3();
+        //        break;
+        //    default:
+        //        Debug.LogError("Invalid save index. Please check the currentGameSave value in SaveSystem.");
+        //        return;
+        //}
     }
 
     private void InitializeButtonsForSave1()
     {
-        if (DataSystem.Instance.currentChapter < DataSystem.Instance.gameData.Save1Chapter)
-        {
-            foreach (Button button in levelButtons)
-            {
-                SetLevelButtonActive(button, true);
-            }
-        }
-        else
-        {
-            int numLevelsUnlocked = DataSystem.Instance.gameData.Save1Level;
-            for (int i = 0; i < numLevelsUnlocked; i++)
-            {
-                if (i < numLevelsUnlocked)
-                {
-                    SetLevelButtonActive(levelButtons[i], true);
-                }
-                else
-                {
-                    SetLevelButtonActive(levelButtons[i], false);
-                }
-            }
-        }
+        //if (GameDataSystem.Instance.currentChapter < GameDataSystem.Instance.gameData.Save1Chapter)
+        //{
+        //    foreach (Button button in levelButtons)
+        //    {
+        //        SetLevelButtonActive(button, true);
+        //    }
+        //}
+        //else
+        //{
+        //    int numLevelsUnlocked = GameDataSystem.Instance.gameData.Save1Level;
+        //    for (int i = 0; i < numLevelsUnlocked; i++)
+        //    {
+        //        if (i < numLevelsUnlocked)
+        //        {
+        //            SetLevelButtonActive(levelButtons[i], true);
+        //        }
+        //        else
+        //        {
+        //            SetLevelButtonActive(levelButtons[i], false);
+        //        }
+        //    }
+        //}
     }
 
     private void SetLevelButtonActive(Button button, bool active)
@@ -84,54 +84,54 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave2()
     {
-        if (DataSystem.Instance.currentChapter < DataSystem.Instance.gameData.Save2Chapter)
-        {
-            foreach (Button button in levelButtons)
-            {
-                SetLevelButtonActive(button, true);
-            }
-        }
-        else
-        {
-            int numLevelsUnlocked = DataSystem.Instance.gameData.Save2Level;
-            for (int i = 0; i < numLevelsUnlocked; i++)
-            {
-                if (i < numLevelsUnlocked)
-                {
-                    SetLevelButtonActive(levelButtons[i], true);
-                }
-                else
-                {
-                    SetLevelButtonActive(levelButtons[i], false);
-                }
-            }
-        }
+        //if (GameDataSystem.Instance.currentChapter < GameDataSystem.Instance.gameData.Save2Chapter)
+        //{
+        //    foreach (Button button in levelButtons)
+        //    {
+        //        SetLevelButtonActive(button, true);
+        //    }
+        //}
+        //else
+        //{
+        //    int numLevelsUnlocked = GameDataSystem.Instance.gameData.Save2Level;
+        //    for (int i = 0; i < numLevelsUnlocked; i++)
+        //    {
+        //        if (i < numLevelsUnlocked)
+        //        {
+        //            SetLevelButtonActive(levelButtons[i], true);
+        //        }
+        //        else
+        //        {
+        //            SetLevelButtonActive(levelButtons[i], false);
+        //        }
+        //    }
+        //}
     }
 
     private void InitializeButtonsForSave3()
     {
-        if (DataSystem.Instance.currentChapter < DataSystem.Instance.gameData.Save3Chapter)
-        {
-            foreach (Button button in levelButtons)
-            {
-                SetLevelButtonActive(button, true);
-            }
-        }
-        else
-        {
-            int numLevelsUnlocked = DataSystem.Instance.gameData.Save3Level;
-            for (int i = 0; i < numLevelsUnlocked; i++)
-            {
-                if (i < numLevelsUnlocked)
-                {
-                    SetLevelButtonActive(levelButtons[i], true);
-                }
-                else
-                {
-                    SetLevelButtonActive(levelButtons[i], false);
-                }
-            }
-        }
+        //if (GameDataSystem.Instance.currentChapter < GameDataSystem.Instance.gameData.Save3Chapter)
+        //{
+        //    foreach (Button button in levelButtons)
+        //    {
+        //        SetLevelButtonActive(button, true);
+        //    }
+        //}
+        //else
+        //{
+        //    int numLevelsUnlocked = GameDataSystem.Instance.gameData.Save3Level;
+        //    for (int i = 0; i < numLevelsUnlocked; i++)
+        //    {
+        //        if (i < numLevelsUnlocked)
+        //        {
+        //            SetLevelButtonActive(levelButtons[i], true);
+        //        }
+        //        else
+        //        {
+        //            SetLevelButtonActive(levelButtons[i], false);
+        //        }
+        //    }
+        //}
     }
     public void OnChapterSelectButtonClicked()
     {
@@ -151,7 +151,7 @@ public class LevelSelectCanvasLogic : MonoBehaviour
 
     public void OnLevelButtonCkicled(int level)
     {
-        DataSystem.Instance.currentLevel = level;
+        //GameDataSystem.Instance.currentLevel = level;
         SceneSystem.Instance.LoadScene(Scenes.InGame);
     }
 }

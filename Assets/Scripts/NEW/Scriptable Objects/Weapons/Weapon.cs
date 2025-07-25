@@ -8,9 +8,13 @@ public class Weapon : ScriptableObject
 
     [Header("Weapon Properties")]
     public float Damage;
-    public float FireRate;
-    public float Range;
-    public float ReloadTime;
+    public bool Automatic;
+    [Tooltip("How many entities should be spawned per instance of attack")]
+    public float NumItemsPerAttack;
+    [Tooltip("IF Automatic -> time between shots (Seconds)")]
+    public float AutomaticAttackDelay;
+    [Tooltip("Seconds")]
+    public float Lifetime;
 
     [Header("Weapon Sounds")]
     public AudioClip FireSound;

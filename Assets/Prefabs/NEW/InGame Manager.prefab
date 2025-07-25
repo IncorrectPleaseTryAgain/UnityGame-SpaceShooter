@@ -53,7 +53,7 @@ MonoBehaviour:
   _globalLight2D: {fileID: 5089989729057939859, guid: 3db1f45666b2dff4eb4d2d35275c026b, type: 3}
   _background: {fileID: 3499730557844052802, guid: f9e9dae069fa7c54ab290c66b43f0ac7, type: 3}
   _inGameCanvas: {fileID: 6721920253882884922, guid: 75cc279f85f6d3d438a9d4f9b1d42e88, type: 3}
-  player: {fileID: 5851743150533982304, guid: 63f2bf576879f9f4f8302b53790cfeb8, type: 3}
+  _player: {fileID: 5851743150533982304, guid: 63f2bf576879f9f4f8302b53790cfeb8, type: 3}
   _settingsCanvas: {fileID: 847741630248694601, guid: 226a2b9040df4fd48acecfc08938126a, type: 3}
   _deathScreenCanvas: {fileID: 7588260221276442401, guid: 22fba1ca9dd04f7409e415db969a6104, type: 3}
   _completeScreenCanvas: {fileID: 7250547674311558110, guid: f3158f7efdad92a4195e50ff374d41ca, type: 3}
@@ -84,7 +84,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 148103121831839833}
+        m_TargetAssemblyTypeName: InGameManager, Assembly-CSharp
+        m_MethodName: OnMoveHandler
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'InGame/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:

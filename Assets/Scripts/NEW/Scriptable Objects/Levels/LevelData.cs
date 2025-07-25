@@ -9,16 +9,17 @@ public class LevelData : ScriptableObject
 
     [Header("Game Rules")]
     public int NumberOfEnemies;
-    public int NumberOfBosses;
     [Tooltip("Seconds")]
     public float TimeLimit;
+    [Tooltip("Seconds")]
+    public float StaticEnemySpawnRate;
 
     [Header("Spaceship")]
     public Spaceship spaceship;
 
     [Header("Enemies")]
-    public GameObject[] StaticEnemies;
     public GameObject[] DynamicEnemies;
-    public GameObject Boss;
+    public GameObject[] StaticEnemies;
+    public GameObject BossEnemy;
 
 }

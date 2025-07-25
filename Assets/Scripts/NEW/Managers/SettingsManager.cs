@@ -70,6 +70,16 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+
+    public void OnSettingsButtonClicked()
+    {
+        if (gameObject.activeSelf) { CloseSettingsHandler(); return; }
+        LogSystem.Instance.Log("Opening settings...", LogType.Info, _logTag);
+        LoadSettings();
+        gameObject.SetActive(true); // Show settings menu
+    }
+
+
     public void OpenSettingsHandler()
     {
         if (gameObject.activeSelf) { CloseSettingsHandler(); return; }
@@ -195,7 +205,7 @@ public class SettingsManager : MonoBehaviour
 
     void AddListeners()
     {
-        MainMenuCanvasLogic.OnOpenSettings += OpenSettingsHandler;
+        //MainMenuCanvasLogic.OnOpenSettings += OpenSettingsHandler;
         ChapterSelectCanvasLogic.OnOpenSettings += OpenSettingsHandler;
         LevelSelectCanvasLogic.OnOpenSettings += OpenSettingsHandler;
         InGameManager.OnOpenSettings += OpenSettingsHandler;
@@ -212,7 +222,7 @@ public class SettingsManager : MonoBehaviour
     }
     void RemoveListeners()
     {
-        MainMenuCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
+        //MainMenuCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
         ChapterSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
         LevelSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;
         LevelSelectCanvasLogic.OnOpenSettings -= OpenSettingsHandler;

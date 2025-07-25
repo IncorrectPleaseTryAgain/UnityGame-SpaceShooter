@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class SaveSystem : Singleton<SaveSystem>, ISystem
 {
+    const string _logTag = "SaveSystem";
     [SerializeField] InputActionAsset actions;
 
     public enum SaveIndex
@@ -33,11 +34,9 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         public const string CONTROLS_KEY = "controls_key";
     }
 
-    const string _logTag = "SaveSystem";
 
-
-    const string _saveFileName = "/playerData.json";
-    string _saveFilePath;
+    const string SAVE_FOLDER_NAME = "/saves/";
+    string saveFolderPath;
 
     public static event Action OnSystemInitialized;
     // Initialize System
@@ -47,7 +46,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
 
         if (SaveSystem.Instance == null) { yield return null; }
 
-        _saveFilePath = Application.persistentDataPath + _saveFileName;
+        saveFolderPath = Application.persistentDataPath + SAVE_FOLDER_NAME;
 
         OnSystemInitialized?.Invoke();
     }
@@ -58,68 +57,75 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
     /*
      * Player Data
      */
-    public void Save()
+    public void Save(SaveData saveData, int slot)
     {
-        LogSystem.Instance.Log("Saving player data to file path: " + _saveFilePath, LogType.Info, _logTag);
+        if(slot < 0 || slot > 3) { throw new ArgumentException($"Invalid Saving Slot {{slot}}"); }
+        LogSystem.Instance.Log("Saving...", LogType.Debug, _logTag);
 
         try
         {
-            string json = JsonUtility.ToJson(DataSystem.Instance.gameData, true);
-            File.WriteAllText(_saveFilePath, json);
-            LogSystem.Instance.Log("Player data saved successfully.", LogType.Info, _logTag);
+            if (!Directory.Exists(saveFolderPath)) { Directory.CreateDirectory(saveFolderPath); }
+
+            string path = GetPath(slot);
+            string json = JsonUtility.ToJson(saveData, true);
+            File.WriteAllText(path, json);
+
+            LogSystem.Instance.Log($"Saved Successfully. {path}", LogType.Debug, _logTag);
         }
         catch (Exception e)
         {
-            LogSystem.Instance.Log($"Error saving player data: {e.Message}", LogType.Error, _logTag);
+            LogSystem.Instance.Log($"Error: {e.Message}", LogType.Error, _logTag);
         }
 
         PlayerPrefs.Save();
     }
-    public void Load()
+    public SaveData Load(int slot)
     {
-        LogSystem.Instance.Log("Loading player data from file.", LogType.Info, _logTag);
-
+        LogSystem.Instance.Log("Loading...", LogType.Debug, _logTag);
         try
         {
-            string json = File.ReadAllText(_saveFilePath);
-            DataSystem.Instance.gameData = JsonUtility.FromJson<GameData>(json);
-            LogSystem.Instance.Log("Player data loaded successfully.", LogType.Info, _logTag);
+            string path = GetPath(slot);
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                LogSystem.Instance.Log("Loaded Sucessfully.", LogType.Debug, _logTag);
+                GameDataSystem.Instance.CurrentSaveData = JsonUtility.FromJson<SaveData>(json);
+            }
+            else
+            {
+                LogSystem.Instance.Log($"No Save Found.\nCreating New Save...", LogType.Debug, _logTag);
+                GameDataSystem.Instance.CurrentSaveData = new SaveData();
+                LogSystem.Instance.Log($"New Save Creation Successfull...", LogType.Debug, _logTag);
+            }
         }
         catch (Exception e)
         {
-            LogSystem.Instance.Log($"Error loading player data: {e.Message}", LogType.Error, _logTag);
-            DataSystem.Instance.gameData = new GameData(); // Reset to default if loading fails
-            Save();
-            Load();
+            LogSystem.Instance.Log($"Error: {e.Message}", LogType.Error, _logTag);
+            return null;
+        }
+        return GameDataSystem.Instance.CurrentSaveData;
+    }
+    public bool DeleteSave(int slot)
+    {
+        if (!SaveExists(slot)) { return true; }
+        try
+        {
+            File.Delete(GetPath(slot));
+            return true;
+        }
+        catch (Exception e)
+        {
+            LogSystem.Instance.Log($"Error: {e.Message}", LogType.Error, _logTag);
+            return false;
         }
     }
-
-    public void ResetSave(SaveIndex save)
+    private string GetPath(int slot)
     {
-        switch (save)
-        {
-            case SaveIndex.Save1:
-                LogSystem.Instance.Log("Resetting Save 1", LogType.Info, _logTag);
-                DataSystem.Instance.gameData.Save1Name = "Create Save";
-                DataSystem.Instance.gameData.Save1Active = false;
-                DataSystem.Instance.gameData.Save1Chapter = 1;
-                DataSystem.Instance.gameData.Save1Level = 1;
-                break;
-            case SaveIndex.Save2:
-                LogSystem.Instance.Log("Resetting Save 2", LogType.Info, _logTag);
-                DataSystem.Instance.gameData.Save2Name = "Create Save";
-                DataSystem.Instance.gameData.Save2Active = false;
-                DataSystem.Instance.gameData.Save2Chapter = 1;
-                DataSystem.Instance.gameData.Save2Level = 1;
-                break;
-            case SaveIndex.Save3:
-                LogSystem.Instance.Log("Resetting Save 3", LogType.Info, _logTag);
-                DataSystem.Instance.gameData.Save3Name = "Create Save";
-                DataSystem.Instance.gameData.Save3Active = false;
-                DataSystem.Instance.gameData.Save3Chapter = 1;
-                DataSystem.Instance.gameData.Save3Level = 1;
-                break;
-        }
+        return Path.Combine(saveFolderPath, $"save{slot}.json");
+    }
+    public bool SaveExists(int slot)
+    {
+        return File.Exists(GetPath(slot));
     }
 
     /*

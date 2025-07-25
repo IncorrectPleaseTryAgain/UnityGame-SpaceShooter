@@ -13,5 +13,8 @@ public class Spaceship : ScriptableObject
     [Header("Spaceship Properties")]
     public float MaxHealth;
     public float MaxSpeed;
+    public float Acceleration;
+    public float SprintMultiplier;
     public float GravityScale;
+    public Weapon weapon;
 }

@@ -87,12 +87,12 @@ public class MainMenuManager : MonoBehaviour
     public void OpenSettingsHandler()
     {
         _settingsCanvas.gameObject.SetActive(true);
-        _mainMenuCanvasLogic.SetActive(false);
+        _mainMenuCanvasLogic.gameObject.SetActive(false);
     }
 
     void OnSettingsClosedHandler()
     {
-        _mainMenuCanvasLogic.SetActive(true);
+        _mainMenuCanvasLogic.gameObject.SetActive(true);
     }
 
     void AllSystemsInitializedHandler()

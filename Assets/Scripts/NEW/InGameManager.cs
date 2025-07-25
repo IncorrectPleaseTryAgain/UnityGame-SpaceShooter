@@ -19,7 +19,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] Canvas _inGameCanvas;
 
     [Header("Player")]
-    [SerializeField] PlayerController player;
+    [SerializeField] PlayerController _player;
 
     [Header("Overlays")]
     [SerializeField] Canvas _settingsCanvas;
@@ -53,16 +53,24 @@ public class InGameManager : MonoBehaviour
 
     private void Start()
     {
-        string levelName = $"Chapter {DataSystem.Instance.currentChapter} - Level {DataSystem.Instance.currentLevel}";
+        //string levelName = $"Chapter {GameDataSystem.Instance.currentChapter} - Level {GameDataSystem.Instance.currentLevel}";
         int numEnemiesLeft = _currentLevelData.NumberOfEnemies;
         float timer = _currentLevelData.TimeLimit;
-        _inGameCanvas.GetComponent<InGameCanvasLogic>().Initialize(levelName, numEnemiesLeft, timer);
+        //_inGameCanvas.GetComponent<InGameCanvasLogic>().Initialize(levelName, numEnemiesLeft, timer);
     }
 
     private void Initialize()
     {
+        //_currentLevelData = GameDataSystem.Instance.GetLevelData();
+
         _camera = Instantiate(_camera);
         _cinemachineCamera = Instantiate(_cinemachineCamera);
+
+        _player = Instantiate(_player);
+        _player.Initialize(_currentLevelData.spaceship, _playerInput);
+
+        _cinemachineCamera.GetComponent<CinemachineCamera>().Follow = _player.transform;
+
         _globalVolume = Instantiate(_globalVolume);
         _globalLight2D = Instantiate(_globalLight2D);
         _background = Instantiate(_background);
@@ -83,10 +91,6 @@ public class InGameManager : MonoBehaviour
         _isPaused = false;
         _isSettingsActive = false;
         _isPlayerAlive = true;
-        _currentLevelData = DataSystem.Instance.GetLevelData();
-
-        player.Initialize(_currentLevelData.spaceship);
-        Instantiate(player);
     }
 
     private void OnSettingsClosedHandler()
@@ -133,5 +137,18 @@ public class InGameManager : MonoBehaviour
         Time.timeScale = 1f;
         _pauseMenuCanvas.gameObject.SetActive(false);
         _isPaused = !_isPaused;
+    }
+
+    public static event Action<InputAction.CallbackContext> OnMove;
+    public void OnMoveHandler(InputAction.CallbackContext context)
+    {
+        OnMove?.Invoke(context);
+    }
+
+    public static event Action<InputAction.CallbackContext> OnShoot;
+    public void OnShootHandler(InputAction.CallbackContext context)
+    {
+        if(!context.performed) { return; }
+        OnShoot?.Invoke(context);
     }
 }

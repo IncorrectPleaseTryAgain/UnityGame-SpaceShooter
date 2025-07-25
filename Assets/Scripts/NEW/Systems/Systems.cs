@@ -12,7 +12,7 @@ public class Systems : PersistentSingleton<Systems>
     [SerializeField] StateSystem _stateSystem;
     [SerializeField] AudioSystem _audioSystem;
     [SerializeField] VideoSystem _videoSystem;
-    [SerializeField] DataSystem _dataSystem;
+    [SerializeField] GameDataSystem _dataSystem;
 
     int systemsInitialized = 0;
     const int NUMBER_OF_SYSTEMS = 7; // 7 systems
@@ -43,7 +43,7 @@ public class Systems : PersistentSingleton<Systems>
     {
         LogSystem.Instance.Log("Calling All Cross-Dependent Initialization Methods", LogType.Info, _logTag);
 
-        _saveSystem.Load(); // Cross Dependent with Data System
+        //_saveSystem.Load(); // Cross Dependent with Data System
         _audioSystem.InitializeAudio(); // Cross Dependent with Save System
         _videoSystem.InitializeVideo(); // Cross Dependent with Save System
 
@@ -67,7 +67,7 @@ public class Systems : PersistentSingleton<Systems>
         StateSystem.OnSystemInitialized += RegisterInitialized;
         AudioSystem.OnSystemInitialized += RegisterInitialized;
         VideoSystem.OnSystemInitialized += RegisterInitialized;
-        DataSystem.OnSystemInitialized += RegisterInitialized;
+        GameDataSystem.OnSystemInitialized += RegisterInitialized;
     }
     void RemoveEventListeners()
     {
@@ -77,6 +77,6 @@ public class Systems : PersistentSingleton<Systems>
         StateSystem.OnSystemInitialized -= RegisterInitialized;
         AudioSystem.OnSystemInitialized -= RegisterInitialized;
         VideoSystem.OnSystemInitialized -= RegisterInitialized;
-        DataSystem.OnSystemInitialized -= RegisterInitialized;
+        GameDataSystem.OnSystemInitialized -= RegisterInitialized;
     }
 }

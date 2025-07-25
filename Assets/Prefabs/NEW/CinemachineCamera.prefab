@@ -102,12 +102,12 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0, y: 0.1, z: 0}
   Damping: {x: 0, y: 0, z: 0}
   Lookahead:
     Enabled: 1
     Time: 1
-    Smoothing: 7
+    Smoothing: 30
     IgnoreY: 0
 --- !u!114 &3968488834134432098
 MonoBehaviour:

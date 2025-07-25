@@ -43,7 +43,7 @@ public class CreditsManager : MonoBehaviour
                 break;
             }
         }
-        creditsText.text = Credits.GetCredits(GetChapterForCurrentSave());
+        //creditsText.text = Credits.GetCredits(GetChapterForCurrentSave());
     }
 
     public void Update()
@@ -77,23 +77,23 @@ public class CreditsManager : MonoBehaviour
         creditsCanvasLogic = _creditsCanvas.GetComponent<CreditsCanvasLogic>();
     }
 
-    Credits.Credit GetChapterForCurrentSave()
-    {
-        // Convert current chapter to Credit enum
-        switch (DataSystem.Instance.currentChapter)
-        {
-            case 1:
-                return Credits.Credit.CHAPTER_1;
-            case 2:
-                return Credits.Credit.CHAPTER_2;
-            case 3:
-                return Credits.Credit.CHAPTER_3;
-            case 4:
-                return Credits.Credit.CHAPTER_4;
-            case 5:
-                return Credits.Credit.CHAPTER_5;
-            default:
-                return Credits.Credit.END; // Default to END if chapter is out of range
-        }
-    }
+    //Credits.Credit GetChapterForCurrentSave()
+    //{
+    //    // Convert current chapter to Credit enum
+    //    switch (GameDataSystem.Instance.currentChapter)
+    //    {
+    //        case 1:
+    //            return Credits.Credit.CHAPTER_1;
+    //        case 2:
+    //            return Credits.Credit.CHAPTER_2;
+    //        case 3:
+    //            return Credits.Credit.CHAPTER_3;
+    //        case 4:
+    //            return Credits.Credit.CHAPTER_4;
+    //        case 5:
+    //            return Credits.Credit.CHAPTER_5;
+    //        default:
+    //            return Credits.Credit.END; // Default to END if chapter is out of range
+    //    }
+    //}
 }

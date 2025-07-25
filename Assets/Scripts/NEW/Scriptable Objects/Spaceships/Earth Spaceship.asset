@@ -17,4 +17,7 @@ MonoBehaviour:
   Sprite: {fileID: -7677329573996571659, guid: f85e0bbc5078ab84ebba80aec6e3a87a, type: 3}
   AnimatorController: {fileID: 9100000, guid: 3f43353c1ba475d44af2212fbc36148e, type: 2}
   MaxHealth: 100
-  MaxSpeed: 20
+  MaxSpeed: 15
+  Acceleration: 1
+  SprintMultiplier: 1.2
+  GravityScale: 100

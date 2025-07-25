@@ -16,37 +16,37 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     private void InitializeChapterButtons()
     {
-        switch (DataSystem.Instance.currentSave)
-        {
-            case (int)SaveSystem.SaveIndex.Save1:
-                InitializeButtonsForSave1();
-                break;
-            case (int)SaveSystem.SaveIndex.Save2:
-                InitializeButtonsForSave2();
-                break;
-            case (int)SaveSystem.SaveIndex.Save3:
-                InitializeButtonsForSave3();
-                break;
-            default:
-                Debug.LogError("Invalid save index. Please check the currentGameSave value in SaveSystem.");
-                return;
-        }
+        //switch (GameDataSystem.Instance.currentSave)
+        //{
+        //    case (int)SaveSystem.SaveIndex.Save1:
+        //        InitializeButtonsForSave1();
+        //        break;
+        //    case (int)SaveSystem.SaveIndex.Save2:
+        //        InitializeButtonsForSave2();
+        //        break;
+        //    case (int)SaveSystem.SaveIndex.Save3:
+        //        InitializeButtonsForSave3();
+        //        break;
+        //    default:
+        //        Debug.LogError("Invalid save index. Please check the currentGameSave value in SaveSystem.");
+        //        return;
+        //}
     }
 
     private void InitializeButtonsForSave1()
     {
-        int numChaptersUnlocked = DataSystem.Instance.gameData.Save1Chapter;
-        for (int i = 0; i < numChaptersUnlocked; i++)
-        {
-            if (i < numChaptersUnlocked)
-            {
-                SetLevelButtonActive(chapterButtons[i], true);
-            }
-            else
-            {
-                SetLevelButtonActive(chapterButtons[i], false);
-            }
-        }
+        //int numChaptersUnlocked = GameDataSystem.Instance.gameData.Save1Chapter;
+        //for (int i = 0; i < numChaptersUnlocked; i++)
+        //{
+        //    if (i < numChaptersUnlocked)
+        //    {
+        //        SetLevelButtonActive(chapterButtons[i], true);
+        //    }
+        //    else
+        //    {
+        //        SetLevelButtonActive(chapterButtons[i], false);
+        //    }
+        //}
     }
 
     private void SetLevelButtonActive(Button button, bool active)
@@ -67,34 +67,34 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     private void InitializeButtonsForSave2()
     {
-        int numChaptersUnlocked = DataSystem.Instance.gameData.Save2Chapter;
-        for (int i = 0; i < numChaptersUnlocked; i++)
-        {
-            if (i < numChaptersUnlocked)
-            {
-                SetLevelButtonActive(chapterButtons[i], true);
-            }
-            else
-            {
-                SetLevelButtonActive(chapterButtons[i], false);
-            }
-        }
+        //int numChaptersUnlocked = GameDataSystem.Instance.gameData.Save2Chapter;
+        //for (int i = 0; i < numChaptersUnlocked; i++)
+        //{
+        //    if (i < numChaptersUnlocked)
+        //    {
+        //        SetLevelButtonActive(chapterButtons[i], true);
+        //    }
+        //    else
+        //    {
+        //        SetLevelButtonActive(chapterButtons[i], false);
+        //    }
+        //}
     }
 
     private void InitializeButtonsForSave3()
     {
-        int numChaptersUnlocked = DataSystem.Instance.gameData.Save3Chapter;
-        for (int i = 0; i < numChaptersUnlocked; i++)
-        {
-            if (i < numChaptersUnlocked)
-            {
-                SetLevelButtonActive(chapterButtons[i], true);
-            }
-            else
-            {
-                SetLevelButtonActive(chapterButtons[i], false);
-            }
-        }
+        //int numChaptersUnlocked = GameDataSystem.Instance.gameData.Save3Chapter;
+        //for (int i = 0; i < numChaptersUnlocked; i++)
+        //{
+        //    if (i < numChaptersUnlocked)
+        //    {
+        //        SetLevelButtonActive(chapterButtons[i], true);
+        //    }
+        //    else
+        //    {
+        //        SetLevelButtonActive(chapterButtons[i], false);
+        //    }
+        //}
     }
 
     public void OnMainMenuButtonClicked()
@@ -104,7 +104,7 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
 
     public void OnChapterButtonClicked(int chapterIndex)
     {
-        DataSystem.Instance.currentChapter = chapterIndex;
+        //GameDataSystem.Instance.currentChapter = chapterIndex;
         SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
     }
 
