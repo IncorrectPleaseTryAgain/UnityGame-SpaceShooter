@@ -7,16 +7,8 @@ using UnityEngine.InputSystem;
 
 public class SaveSystem : Singleton<SaveSystem>, ISystem
 {
-    const string _logTag = "SaveSystem";
-    [SerializeField] InputActionAsset actions;
-
-    public enum SaveIndex
-    {
-        NOSAVE = 0,
-        Save1 = 1,
-        Save2 = 2,
-        Save3 = 3
-    }
+    static readonly string _logTag = "SaveSystem";
+    [SerializeField] private InputActionAsset inputActionAsset;
 
     struct PlayerPrefKeys
     {
@@ -187,13 +179,13 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
         LogSystem.Instance.Log("Loading control bindings from PlayerPrefs.", LogType.Debug, _logTag);
         string rebinds = PlayerPrefs.GetString(PlayerPrefKeys.CONTROLS_KEY);
         if (!string.IsNullOrEmpty(rebinds))
-            actions.LoadBindingOverridesFromJson(rebinds);
+            inputActionAsset.LoadBindingOverridesFromJson(rebinds);
     }
 
     public void SaveControls()
     {
         LogSystem.Instance.Log("Saving control bindings to PlayerPrefs.", LogType.Debug, _logTag);
-        string rebinds = actions.SaveBindingOverridesAsJson();
+        string rebinds = inputActionAsset.SaveBindingOverridesAsJson();
         PlayerPrefs.SetString(PlayerPrefKeys.CONTROLS_KEY, rebinds);
         PlayerPrefs.Save();
     }

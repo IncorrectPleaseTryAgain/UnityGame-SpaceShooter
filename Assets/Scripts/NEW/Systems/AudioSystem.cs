@@ -27,7 +27,7 @@ public class AudioSystem : Singleton<AudioSystem>, ISystem
     // Initialize System
     public IEnumerator Initialize()
     {
-        LogSystem.Instance.Log("AudioSystem...", LogType.Info, _logTag);
+        LogSystem.Instance.Log("Initializing AudioSystem...", LogType.Info, _logTag);
 
         if (AudioSystem.Instance == null) { yield return null; }
 

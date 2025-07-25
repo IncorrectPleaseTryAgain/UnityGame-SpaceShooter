@@ -33,7 +33,7 @@ public class ChapterSelectManager : MonoBehaviour
     {
         Instantiate(_camera);
         Instantiate(_background);
-        _chapterSelectCanvas.GetComponent<ChapterSelectCanvasLogic>().Initialize();
+        //_chapterSelectCanvas.GetComponent<ChapterSelectCanvasLogic>().Initialize();
         _chapterSelectCanvas = Instantiate(_chapterSelectCanvas);
         _settingsCanvas = Instantiate(_settingsCanvas);
     }

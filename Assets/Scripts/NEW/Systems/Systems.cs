@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Systems : PersistentSingleton<Systems>
 {
-    const string _logTag = "Systems";
+    static readonly string _logTag = "Systems";
+
     [Header("Systems")]
-    [SerializeField] LogSystem _logSystem;
-    [SerializeField] SaveSystem _saveSystem;
-    [SerializeField] SceneSystem _sceneSystem;
-    [SerializeField] StateSystem _stateSystem;
-    [SerializeField] AudioSystem _audioSystem;
-    [SerializeField] VideoSystem _videoSystem;
-    [SerializeField] GameDataSystem _dataSystem;
+    [SerializeField] private LogSystem _logSystem;
+    [SerializeField] private SaveSystem _saveSystem;
+    [SerializeField] private SceneSystem _sceneSystem;
+    [SerializeField] private StateSystem _stateSystem;
+    [SerializeField] private AudioSystem _audioSystem;
+    [SerializeField] private VideoSystem _videoSystem;
+    [SerializeField] private GameDataSystem _dataSystem;
 
-    int systemsInitialized = 0;
-    const int NUMBER_OF_SYSTEMS = 7; // 7 systems
+    private int systemsInitialized = 0;
+    private readonly int NUMBER_OF_SYSTEMS = 7;
 
-    public static event Action OnSystemsFinishedInitialization;
-
+    public static event Action OnInitialized;
     private void OnEnable()
     {
         AddEventListeners();
@@ -39,23 +39,12 @@ public class Systems : PersistentSingleton<Systems>
         StartCoroutine(_audioSystem.Initialize());
         StartCoroutine(_videoSystem.Initialize());
     }
-    void CallAllCrossDependentInitializationMethods()
-    {
-        LogSystem.Instance.Log("Calling All Cross-Dependent Initialization Methods", LogType.Info, _logTag);
-
-        //_saveSystem.Load(); // Cross Dependent with Data System
-        _audioSystem.InitializeAudio(); // Cross Dependent with Save System
-        _videoSystem.InitializeVideo(); // Cross Dependent with Save System
-
-        RemoveEventListeners();
-        OnSystemsFinishedInitialization?.Invoke();
-    }
 
     public void RegisterInitialized()
     {
         systemsInitialized++;
-        LogSystem.Instance.Log("Initialzed System | Progress: " + ((systemsInitialized * 100) / NUMBER_OF_SYSTEMS) + "%", LogType.Info, _logTag);
-        if (systemsInitialized == NUMBER_OF_SYSTEMS) { CallAllCrossDependentInitializationMethods(); }
+        LogSystem.Instance.Log(((systemsInitialized * 100) / NUMBER_OF_SYSTEMS) + "% Complete", LogType.Info, _logTag);
+        if (systemsInitialized == NUMBER_OF_SYSTEMS) { OnInitialized?.Invoke(); }
     }
 
 

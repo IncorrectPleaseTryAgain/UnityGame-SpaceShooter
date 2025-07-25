@@ -6,32 +6,51 @@ using UnityEngine;
 
 public class MainMenuCanvasHeaderLogic : MonoBehaviour, IAnimationEventsReceiver
 {
-    const string _logTag = "MainMenuCanvasHeaderLogic";
-    [SerializeField] TextMeshProUGUI _title;
-    [SerializeField] TextMeshProUGUI _continue;
+    static readonly string _logTag = "MainMenuCanvasHeaderLogic";
+    [SerializeField] private TextMeshProUGUI TMP_Title;
+    [SerializeField] private TextMeshProUGUI TMP_Continue;
 
-    [SerializeField] AudioClip _titleFadeInClip;
+    [SerializeField] private AudioClip ACLP_FadeIn;
 
-    [SerializeField] Animation _titleAnimation;
-    [SerializeField] AnimationClip _titleFadeInAnim;
-    [SerializeField] AnimationClip _titleContinueAnim;
-    const string TITLE_FADE_IN_KEY = "title_fade_in";
-    const string TITLE_CONTINUE_KEY = "title_continue";
+    [SerializeField] private Animation ANIM_Title;
+    [SerializeField] private AnimationClip ANIMCLP_TitleFadeIn;
+    [SerializeField] private AnimationClip ANIMCLP_TitleContinue;
+    private static readonly string TITLE_FADE_IN_KEY = "title_fade_in";
+    private static readonly string TITLE_CONTINUE_KEY = "title_continue";
 
-    [SerializeField] float _titleFinalPosY;
-    float titleTransitionTime;
+    [SerializeField] private float titlePosAfterContinueTransition_Y;
+    private float titleContinueAnimDuration;
 
     public static event Action OnFadeInAnimationComplete;
     public static event Action OnContinueAnimationComplete;
+
+    private void OnDestroy()
+    {
+        MainMenuManager.OnContinue -= Continue;
+    }
+    private void Awake()
+    {
+        MainMenuManager.OnContinue += Continue;
+        ANIM_Title.AddClip(ANIMCLP_TitleFadeIn, TITLE_FADE_IN_KEY);
+        ANIM_Title.AddClip(ANIMCLP_TitleContinue, TITLE_CONTINUE_KEY);
+        titleContinueAnimDuration = ANIMCLP_TitleContinue.length;
+
+        TMP_Title.color = Color.clear;
+        TMP_Continue.color = Color.clear;
+    }
+    private void Start()
+    {
+        ANIM_Title.Play(TITLE_FADE_IN_KEY);
+    }
     public void OnAnimationEvent(string eventName)
     {
         switch (eventName)
         {
             case "PlayFadeInSFX":
-                AudioSystem.Instance.PlaySfx(_titleFadeInClip);
+                AudioSystem.Instance.PlaySfx(ACLP_FadeIn);
                 break;
             case "PlayContinueTextEffects":
-                _continue.GetComponent<TextEffect>().StartManualEffects();
+                TMP_Continue.GetComponent<TextEffect>().StartManualEffects();
                 break;
             case "FadeInAnimationComplete":
                 OnFadeInAnimationComplete?.Invoke();
@@ -41,32 +60,13 @@ public class MainMenuCanvasHeaderLogic : MonoBehaviour, IAnimationEventsReceiver
                 break;
         }
     }
-
-    // Setup
-    private void Awake()
+    private void Continue()
     {
-        _titleAnimation = _title.GetComponent<Animation>();
-        _titleAnimation.AddClip(_titleFadeInAnim, TITLE_FADE_IN_KEY);
-        _titleAnimation.AddClip(_titleContinueAnim, TITLE_CONTINUE_KEY);
-        titleTransitionTime = _titleContinueAnim.length;
-    }
-    // Manipulation
-    public void Initialize()
-    {
-        _title.color = new Color(1f, 1f, 1f, 0f);
-        _continue.color = new Color(1f, 1f, 1f, 0f);
-    }
-    public void Start()
-    {
-        _titleAnimation?.Play(TITLE_FADE_IN_KEY);
-    }
-    public void Continue()
-    {
-        // Disable Continue
-        _continue.gameObject.SetActive(false);
+        //Disable Continue
+        TMP_Continue.gameObject.SetActive(false);
 
         // Transition Title
-        _titleAnimation?.Play(TITLE_CONTINUE_KEY);
-        _title.transform.DOLocalMoveY(_titleFinalPosY, titleTransitionTime);
+        ANIM_Title.Play(TITLE_CONTINUE_KEY);
+        TMP_Title.transform.DOLocalMoveY(titlePosAfterContinueTransition_Y, titleContinueAnimDuration);
     }
 }

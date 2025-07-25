@@ -26,7 +26,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.9999924
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -34,8 +34,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 0.9998474
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -45,10 +45,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  clampBetween0And1: 0
+  clampBetween0And1: 1
   timeType: 0
-  colorType: 2
-  startColor: {r: 1, g: 1, b: 1, a: 1}
+  colorType: 3
+  startColor: {r: 1, g: 1, b: 1, a: 0.19607843}
   endColor: {r: 1, g: 0, b: 0, a: 1}
   gradient:
     serializedVersion: 2

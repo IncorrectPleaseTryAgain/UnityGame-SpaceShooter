@@ -45,12 +45,12 @@ public class VideoSystem : Singleton<VideoSystem>, ISystem
     // Initialize Video
     public void InitializeVideo()
     {
+        LogSystem.Instance.Log("Initializing Video...", LogType.Info, _logTag);
+
         fullscreen = SaveSystem.Instance.GetFullscreen(defaultFullscreen ? 1 : 0);
         resolutionWidth = SaveSystem.Instance.GetResolutionWidth(defaultResolutionWidth);
         resolutionHeight = SaveSystem.Instance.GetResolutionHeight(defaultResolutionHeight);
         Screen.SetResolution(resolutionWidth, resolutionHeight, fullscreen);
-
-        LogSystem.Instance.Log($"Video Settings Initialized: {resolutionWidth} x {resolutionHeight}, Fullscreen: {fullscreen}", LogType.Info, _logTag);
     }
     public void Reset()
     {

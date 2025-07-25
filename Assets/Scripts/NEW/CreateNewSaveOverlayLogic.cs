@@ -23,11 +23,11 @@ public class CreateNewSaveOverlayLogic : MonoBehaviour
     {
         SaveSlotLogic.OnEmptySaveSlotClicked -= CreateNewSave;
     }
-
-    public void Initialize()
+    private void Awake()
     {
         SaveSlotLogic.OnEmptySaveSlotClicked += CreateNewSave;
         TMP_CharacterCount.text = $"0/{maxNameLength}";
+
         gameObject.SetActive(false);
     }
 
@@ -67,11 +67,9 @@ public class CreateNewSaveOverlayLogic : MonoBehaviour
         SceneSystem.Instance.LoadScene(Scenes.Credits);
     }
 
-    public static event Action OnCreateNewSaveCancelButtonClicked;
     public void OnCancelButtonClicked()
     {
         INPT_Name.text = string.Empty;
         gameObject.SetActive(false);
-        OnCreateNewSaveCancelButtonClicked?.Invoke();
     }
 }

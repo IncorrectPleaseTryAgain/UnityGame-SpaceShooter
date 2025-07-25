@@ -9,45 +9,6 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
     [SerializeField] GameObject settings;
     public static event Action OnOpenSettings;
 
-    public void Initialize()
-    {
-        InitializeChapterButtons();
-    }
-
-    private void InitializeChapterButtons()
-    {
-        //switch (GameDataSystem.Instance.currentSave)
-        //{
-        //    case (int)SaveSystem.SaveIndex.Save1:
-        //        InitializeButtonsForSave1();
-        //        break;
-        //    case (int)SaveSystem.SaveIndex.Save2:
-        //        InitializeButtonsForSave2();
-        //        break;
-        //    case (int)SaveSystem.SaveIndex.Save3:
-        //        InitializeButtonsForSave3();
-        //        break;
-        //    default:
-        //        Debug.LogError("Invalid save index. Please check the currentGameSave value in SaveSystem.");
-        //        return;
-        //}
-    }
-
-    private void InitializeButtonsForSave1()
-    {
-        //int numChaptersUnlocked = GameDataSystem.Instance.gameData.Save1Chapter;
-        //for (int i = 0; i < numChaptersUnlocked; i++)
-        //{
-        //    if (i < numChaptersUnlocked)
-        //    {
-        //        SetLevelButtonActive(chapterButtons[i], true);
-        //    }
-        //    else
-        //    {
-        //        SetLevelButtonActive(chapterButtons[i], false);
-        //    }
-        //}
-    }
 
     private void SetLevelButtonActive(Button button, bool active)
     {
@@ -65,40 +26,9 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
         }
     }
 
-    private void InitializeButtonsForSave2()
-    {
-        //int numChaptersUnlocked = GameDataSystem.Instance.gameData.Save2Chapter;
-        //for (int i = 0; i < numChaptersUnlocked; i++)
-        //{
-        //    if (i < numChaptersUnlocked)
-        //    {
-        //        SetLevelButtonActive(chapterButtons[i], true);
-        //    }
-        //    else
-        //    {
-        //        SetLevelButtonActive(chapterButtons[i], false);
-        //    }
-        //}
-    }
-
-    private void InitializeButtonsForSave3()
-    {
-        //int numChaptersUnlocked = GameDataSystem.Instance.gameData.Save3Chapter;
-        //for (int i = 0; i < numChaptersUnlocked; i++)
-        //{
-        //    if (i < numChaptersUnlocked)
-        //    {
-        //        SetLevelButtonActive(chapterButtons[i], true);
-        //    }
-        //    else
-        //    {
-        //        SetLevelButtonActive(chapterButtons[i], false);
-        //    }
-        //}
-    }
-
     public void OnMainMenuButtonClicked()
     {
+        AudioSystem.Instance.StopMusic();   
         SceneSystem.Instance.LoadScene(Scenes.MainMenu);
     }
 
