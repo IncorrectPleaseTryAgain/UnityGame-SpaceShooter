@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Credits
 {
     static readonly string PROJECT_NAME = "Space Shooter";
@@ -14,31 +11,19 @@ public class Credits
     static readonly string BODY_TEXT_SIZE = "<size=40>";
     static readonly string TEXT_MARGIN = "<margin=100>";
 
-    public enum Credit
+    public static string GetCredits(int chapter)
     {
-        END,
-        CHAPTER_1,
-        CHAPTER_2,
-        CHAPTER_3,
-        CHAPTER_4,
-        CHAPTER_5
-    }
-
-    public static string GetCredits(Credit credit)
-    {
-        switch (credit)
+        switch (chapter)
         {
-            case Credit.END:
-                return END;
-            case Credit.CHAPTER_1:
+            case 1:
                 return CHAPTER_1;
-            case Credit.CHAPTER_2:
+            case 2:
                 return CHAPTER_2;
-            case Credit.CHAPTER_3:
+            case 3:
                 return CHAPTER_3;
-            case Credit.CHAPTER_4:
+            case 4:
                 return CHAPTER_4;
-            case Credit.CHAPTER_5:
+            case 5:
                 return CHAPTER_5;
             default:
                 return END;

@@ -45,12 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee4f523c3d54b749b4d6404911b6732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInput: {fileID: 1679887829979291512}
-  _camera: {fileID: 7459239547825329770, guid: 5cbd1a9cedb04e24aa70819bac735013, type: 3}
-  _background: {fileID: 1884367978294721569, guid: 1da440b028f09e249acd10c64df82292, type: 3}
-  _creditsCanvas: {fileID: 8359163795681691731, guid: e3a4a715b88bcf546ac3161bc5bc22df, type: 3}
-  _creditsMusic: {fileID: 8300000, guid: 3081d6164964cda4e861355920bf61ae, type: 3}
-  _creditsTextObjName: TMP Credits
+  playerInput: {fileID: 1679887829979291512}
+  camera: {fileID: 7459239547825329770, guid: 5cbd1a9cedb04e24aa70819bac735013, type: 3}
+  background: {fileID: 1884367978294721569, guid: 1da440b028f09e249acd10c64df82292, type: 3}
+  credits: {fileID: 2726015536466780586, guid: e3a4a715b88bcf546ac3161bc5bc22df, type: 3}
+  ACLP_CreditsAudio: {fileID: 8300000, guid: 7223cb79d32150443a5cac2c7d2ccb49, type: 3}
 --- !u!114 &1679887829979291512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +147,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9204161311485725987}
         m_TargetAssemblyTypeName: CreditsManager, Assembly-CSharp
-        m_MethodName: Continue
+        m_MethodName: OnContinueAction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -161,7 +160,19 @@ MonoBehaviour:
     m_ActionId: e33ae898-c607-4191-b005-248ae11d68c0
     m_ActionName: 'Credits/Continue[/Keyboard/space,/Keyboard/enter,/Keyboard/escape]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9204161311485725987}
+        m_TargetAssemblyTypeName: CreditsManager, Assembly-CSharp
+        m_MethodName: OnNavigateAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c62cc5f7-ad55-4f79-b5cd-2cc60d73781e
     m_ActionName: 'Credits/Navigate[/Keyboard/w,/Keyboard/s,/Keyboard/upArrow,/Keyboard/downArrow]'
   m_NeverAutoSwitchControlSchemes: 0

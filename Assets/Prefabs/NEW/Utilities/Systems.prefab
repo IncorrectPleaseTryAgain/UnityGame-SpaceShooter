@@ -240,7 +240,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b49468b24b78149ae8a378683e4ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDatas: []
+  spaceships:
+  - {fileID: 11400000, guid: 719584bb8843f2d42bcf6e604936e654, type: 2}
+  levelsData:
+  - {fileID: 11400000, guid: 9399b14521f7c404c8c46609ed15efcb, type: 2}
+  - {fileID: 11400000, guid: b8b9acc976637554bae9d962f0f13c3d, type: 2}
+  - {fileID: 11400000, guid: af7131ec09305da478f4ca8bd06a65a7, type: 2}
+  - {fileID: 11400000, guid: 45944dcb5861c5a4db6cb4289b0b2b23, type: 2}
+  - {fileID: 11400000, guid: 207aad87fe1044b4a93971222b5ce89f, type: 2}
+  - {fileID: 11400000, guid: 7d2561a9d880afb438ac1244de833aa1, type: 2}
+  - {fileID: 11400000, guid: 8b1a6ad166dae60418cbf284d474cdfc, type: 2}
+  - {fileID: 11400000, guid: 70e4a50bdedc5fb40aa1411ed35d2518, type: 2}
+  - {fileID: 11400000, guid: 97fe1099f1449324c88235d6dc5ff2b6, type: 2}
+  - {fileID: 11400000, guid: ad5acbad7f3eb9148936f68c599d08f3, type: 2}
+  - {fileID: 11400000, guid: e0285299dbac1b641be7b1335887f59e, type: 2}
+  - {fileID: 11400000, guid: ebe980285ac11d0429da48223f76bee1, type: 2}
+  - {fileID: 11400000, guid: 65527abd9544f8544a7ffb96c430518b, type: 2}
+  - {fileID: 11400000, guid: 9aa12092e4ab0504097e695611bd4c6d, type: 2}
+  - {fileID: 11400000, guid: e1e67e1ef4079ba4fbff29d7a50ba76f, type: 2}
+  - {fileID: 11400000, guid: 2b6c9c33e8f759841af00dd8002df5e8, type: 2}
+  - {fileID: 11400000, guid: 27cc3f320df2daf4798a767cbf137e77, type: 2}
+  - {fileID: 11400000, guid: 319424847f310444e9ebb3fec43aaeaa, type: 2}
+  - {fileID: 11400000, guid: a1d216d2ffabecc4eb9f944724aeeb5c, type: 2}
+  - {fileID: 11400000, guid: 9ffa4154c8551194fa78fcf68c73c25a, type: 2}
+  - {fileID: 11400000, guid: fd7b3c0b573fbfd4688dfd0b82c33b76, type: 2}
+  - {fileID: 11400000, guid: fb38fa60537e3b94f9f4afbc55867c31, type: 2}
+  - {fileID: 11400000, guid: e106371b124ca204bb36715a4c7f0c5a, type: 2}
+  - {fileID: 11400000, guid: 678f94bb7158c584c9a4ad1ceab7de65, type: 2}
+  - {fileID: 11400000, guid: 8fe2a989d56a05348bb5b0fd87897cb0, type: 2}
 --- !u!1 &5710244068622300167
 GameObject:
   m_ObjectHideFlags: 0

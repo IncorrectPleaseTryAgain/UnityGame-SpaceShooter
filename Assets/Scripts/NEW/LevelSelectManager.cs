@@ -1,45 +1,45 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class LevelSelectManager : MonoBehaviour
 {
+    [Header("Utility")]
+    [SerializeField] private EventSystem eventSystem;
+
     [Header("Enviroment")]
-    [SerializeField] Camera _camera;
-    [SerializeField] GameObject _background;
+    [SerializeField] private new Camera camera;
+    [SerializeField] private GameObject background;
 
     [Header("Level Select")]
-    [SerializeField] Canvas _levelSelectCanvas;
+    [SerializeField] private LevelSelectCanvasLogic levelSelect;
 
-    [Header("Overlays")]
-    [SerializeField] GameObject _settingsCanvas;
+    [Header("Settings")]
+    [SerializeField] private SettingsManager settings;
 
     private void OnDestroy()
     {
         SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
+        SettingsManager.OnSettingsOpened -= OnSettingsOpenedHandler;
     }
 
     private void Awake()
     {
         SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
+        SettingsManager.OnSettingsOpened += OnSettingsOpenedHandler;
+
+        Instantiate(eventSystem);
+        camera = Instantiate(camera);
+        Instantiate(background, camera.transform);
+        levelSelect = Instantiate(levelSelect);
+        settings = Instantiate(settings);
     }
 
-
-    private void Start()
+    private void OnSettingsClosedHandler()
     {
-        Initialize();
+        levelSelect.gameObject.SetActive(true);
     }
-
-    private void Initialize()
+    private void OnSettingsOpenedHandler()
     {
-        Instantiate(_camera);
-        Instantiate(_background);
-        _levelSelectCanvas.GetComponent<LevelSelectCanvasLogic>().Initialize();
-        _levelSelectCanvas = Instantiate(_levelSelectCanvas);
-        _settingsCanvas = Instantiate(_settingsCanvas);
-    }
-    void OnSettingsClosedHandler()
-    {
-        _levelSelectCanvas.gameObject.SetActive(true);
+        levelSelect.gameObject.SetActive(false);
     }
 }

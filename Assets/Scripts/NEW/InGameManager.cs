@@ -1,118 +1,112 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class InGameManager : MonoBehaviour
 {
     [Header("Utility")]
-    [SerializeField] PlayerInput _playerInput;
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private EventSystem eventSystem;
+    [SerializeField] private GameObject globalVolume;
+    [SerializeField] private GameObject globalLight2D;
 
     [Header("Enviroment")]
-    [SerializeField] Camera _camera;
-    [SerializeField] CinemachineCamera _cinemachineCamera;
-    [SerializeField] GameObject _globalVolume;
-    [SerializeField] GameObject _globalLight2D;
-    [SerializeField] GameObject _background;
+    [SerializeField] private new Camera camera;
+    [SerializeField] private CinemachineCamera cinemachine;
+    [SerializeField] private GameObject background;
 
     [Header("InGame")]
-    [SerializeField] Canvas _inGameCanvas;
+    [SerializeField] private InGameCanvasLogic inGame;
 
     [Header("Player")]
-    [SerializeField] PlayerController _player;
+    [SerializeField] private PlayerController player;
 
     [Header("Overlays")]
-    [SerializeField] Canvas _settingsCanvas;
-    [SerializeField] Canvas _deathScreenCanvas;
-    [SerializeField] Canvas _completeScreenCanvas;
-    [SerializeField] Canvas _pauseMenuCanvas;
+    [SerializeField] private SettingsManager settings;
+    [SerializeField] private DeathScreenLogic deathScreen;
+    [SerializeField] private CompleteScreenLogic completeScreen;
+    [SerializeField] private PauseMenuLogic pauseMenu;
 
-    bool _isPaused;
-    bool _isSettingsActive;
-    bool _isPlayerAlive;
-    LevelData _currentLevelData;
+    private static Spaceship spaceship;
+    private static LevelData levelData;
 
-
-    public static event Action OnOpenSettings;
-    public static event Action OnCloseSettings;
+    private static bool isPaused;
+    private static bool isSettingsActive;
+    private static bool isPlayerAlive;
 
     private void OnDestroy()
     {
-        SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
-        PauseMenuCanvasLogic.OnOpenSettings -= OnOpenSettingsHandler;
-        PauseMenuCanvasLogic.OnResumeGame -= ResumeGame;
+        PauseMenuLogic.OnResumeGame -= ResumeGame;
     }
 
     private void Awake()
     {
-        SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
-        PauseMenuCanvasLogic.OnOpenSettings += OnOpenSettingsHandler;
-        PauseMenuCanvasLogic.OnResumeGame += ResumeGame;
-        Initialize();
+        PauseMenuLogic.OnResumeGame += ResumeGame;
+
+        spaceship = GameDataSystem.Instance.GetSpaceship();
+        levelData = GameDataSystem.Instance.GetLevelData();
+
+        /* Instantiate */
+        // Utility
+        eventSystem = Instantiate(eventSystem);
+        globalLight2D = Instantiate(globalLight2D);
+        globalVolume = Instantiate(globalVolume);
+
+        // Enviroment
+        camera = Instantiate(camera);
+        cinemachine = Instantiate(cinemachine);
+        background = Instantiate(background);
+        
+        // InGame
+        inGame = Instantiate(inGame);
+        
+        // Player
+        player = Instantiate(player);
+        player.Initialize(spaceship, playerInput);
+        cinemachine.Follow = player.transform;
+        
+        // Overlays
+        //settings = Instantiate(settings);
+        //deathScreen = Instantiate(deathScreen);
+        //completeScreen = Instantiate(completeScreen);
+        //pauseMenu = Instantiate(pauseMenu);
+
+
+        isPaused = false;
+        isSettingsActive = false;
+        isPlayerAlive = true;
     }
 
     private void Start()
     {
-        //string levelName = $"Chapter {GameDataSystem.Instance.currentChapter} - Level {GameDataSystem.Instance.currentLevel}";
-        int numEnemiesLeft = _currentLevelData.NumberOfEnemies;
-        float timer = _currentLevelData.TimeLimit;
-        //_inGameCanvas.GetComponent<InGameCanvasLogic>().Initialize(levelName, numEnemiesLeft, timer);
-    }
-
-    private void Initialize()
-    {
-        //_currentLevelData = GameDataSystem.Instance.GetLevelData();
-
-        _camera = Instantiate(_camera);
-        _cinemachineCamera = Instantiate(_cinemachineCamera);
-
-        _player = Instantiate(_player);
-        _player.Initialize(_currentLevelData.spaceship, _playerInput);
-
-        _cinemachineCamera.GetComponent<CinemachineCamera>().Follow = _player.transform;
-
-        _globalVolume = Instantiate(_globalVolume);
-        _globalLight2D = Instantiate(_globalLight2D);
-        _background = Instantiate(_background);
-        _inGameCanvas = Instantiate(_inGameCanvas);
-
-        _settingsCanvas = Instantiate(_settingsCanvas);
-        _settingsCanvas.gameObject.SetActive(false);
-
-        _deathScreenCanvas = Instantiate(_deathScreenCanvas);
-        _deathScreenCanvas.gameObject.SetActive(false);
-
-        _completeScreenCanvas = Instantiate(_completeScreenCanvas);
-        _completeScreenCanvas.gameObject.SetActive(false);
-
-        _pauseMenuCanvas = Instantiate(_pauseMenuCanvas);
-        _pauseMenuCanvas.gameObject.SetActive(false);
-
-        _isPaused = false;
-        _isSettingsActive = false;
-        _isPlayerAlive = true;
+        string levelName = $"Chapter {GameDataSystem.currentChapter} - Level {GameDataSystem.currentLevel}";
+        int numEnemiesLeft = levelData.NumberOfEnemies;
+        float timer = levelData.TimeLimit;
+        inGame.Initialize(levelName, numEnemiesLeft, timer);
     }
 
     private void OnSettingsClosedHandler()
     {
-        _isSettingsActive = false;
-        _settingsCanvas.gameObject.SetActive(false);
-        _pauseMenuCanvas.gameObject.SetActive(true);
+        isSettingsActive = false;
+        settings.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(true);
     }
 
     private void OnOpenSettingsHandler()
     {
         LogSystem.Instance.Log("Opening Settings", LogType.Info, "InGameManager");
-        _isSettingsActive = true;
-        _pauseMenuCanvas.gameObject.SetActive(false);
-        _settingsCanvas.gameObject.SetActive(true);
+        isSettingsActive = true;
+        pauseMenu.gameObject.SetActive(false);
+        settings.gameObject.SetActive(true);
     }
 
     public void OnPauseHandler(InputAction.CallbackContext context)
     {
-        if (context.performed && _isPlayerAlive && !_isSettingsActive)
+        if (context.performed && isPlayerAlive && !isSettingsActive)
         {
-            if (_isPaused)
+            if (isPaused)
             {
                 ResumeGame();
             }
@@ -127,22 +121,22 @@ public class InGameManager : MonoBehaviour
     {
         LogSystem.Instance.Log("Game Paused", LogType.Info, "GameManager");
         Time.timeScale = 0f;
-        _pauseMenuCanvas.gameObject.SetActive(true);
-        _isPaused = !_isPaused;
+        pauseMenu.gameObject.SetActive(true);
+        isPaused = !isPaused;
     }
 
     private void ResumeGame()
     {
         LogSystem.Instance.Log("Game Resumed", LogType.Info, "GameManager");
         Time.timeScale = 1f;
-        _pauseMenuCanvas.gameObject.SetActive(false);
-        _isPaused = !_isPaused;
+        pauseMenu.gameObject.SetActive(false);
+        isPaused = !isPaused;
     }
 
     public static event Action<InputAction.CallbackContext> OnMove;
     public void OnMoveHandler(InputAction.CallbackContext context)
     {
-        OnMove?.Invoke(context);
+        //player.Move(context.ReadValue<Vector2>());
     }
 
     public static event Action<InputAction.CallbackContext> OnShoot;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1fb7c07fa49a343bc489cef06acf3e, type: 3}
   m_Name: Earth Spaceship
   m_EditorClassIdentifier: 
+  chapter: 1
   Name: Earth
   Description: ...
   Sprite: {fileID: -7677329573996571659, guid: f85e0bbc5078ab84ebba80aec6e3a87a, type: 3}
@@ -21,3 +22,4 @@ MonoBehaviour:
   Acceleration: 1
   SprintMultiplier: 1.2
   GravityScale: 100
+  weapon: {fileID: 0}

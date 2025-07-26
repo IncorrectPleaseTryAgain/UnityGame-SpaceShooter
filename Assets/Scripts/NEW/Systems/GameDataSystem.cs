@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public class GameDataSystem : Singleton<GameDataSystem>, ISystem
 {
-    const string _logTag = "GameDataSystem";
-   
-    public SaveData CurrentSaveData;
+    static readonly string _logTag = "GameDataSystem";
 
-    public LevelData[] levelDatas;
+    public static SaveData currentSave;
+    public static int currentChapter;
+    public static int currentLevel;
 
+    [SerializeField] Spaceship[] spaceships;
+    [SerializeField] LevelData[] levelsData;
 
     // Initialize System
     public static event Action OnSystemInitialized;
@@ -18,26 +21,26 @@ public class GameDataSystem : Singleton<GameDataSystem>, ISystem
 
         if(GameDataSystem.Instance == null) { yield return null; }
 
-        //// Initialize Game Data
-        //currentSave = 0;
-        //currentLevel = 1;
-        //currentChapter = 1;
-        //SaveData = new SaveData();
+        currentChapter = 0;
+        currentSave = null;
 
         OnSystemInitialized?.Invoke();
     }
 
-    //public LevelData GetLevelData()
-    //{
-    //    foreach (LevelData levelData in levelDatas)
-    //    {
-    //        if (levelData.Chapter == currentChapter && levelData.Level == currentLevel)
-    //        {
-    //            return levelData;
-    //        }
-    //    }
-
-    //    LogSystem.Instance.Log($"No LevelData found for Chapter {currentChapter} and Level {currentLevel}", LogType.Error, _logTag);
-    //    return null;
-    //}
+    public Spaceship GetSpaceship()
+    {
+        foreach (Spaceship spaceship in spaceships) 
+        {
+            if(spaceship.chapter == currentChapter) {  return spaceship; }
+        }
+        return spaceships[0];
+    }
+    public LevelData GetLevelData()
+    {
+        foreach (LevelData leveldata in levelsData)
+        {
+            if (leveldata.Chapter == currentChapter && leveldata.Level == currentLevel) { return leveldata; }
+        }
+        return levelsData[0];
+    }
 }

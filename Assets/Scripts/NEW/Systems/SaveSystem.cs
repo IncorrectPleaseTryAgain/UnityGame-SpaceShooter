@@ -81,12 +81,12 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
             {
                 string json = File.ReadAllText(path);
                 LogSystem.Instance.Log("Loaded Sucessfully.", LogType.Debug, _logTag);
-                GameDataSystem.Instance.CurrentSaveData = JsonUtility.FromJson<SaveData>(json);
+                GameDataSystem.currentSave = JsonUtility.FromJson<SaveData>(json);
             }
             else
             {
                 LogSystem.Instance.Log($"No Save Found.\nCreating New Save...", LogType.Debug, _logTag);
-                GameDataSystem.Instance.CurrentSaveData = new SaveData();
+                GameDataSystem.currentSave = new SaveData();
                 LogSystem.Instance.Log($"New Save Creation Successfull...", LogType.Debug, _logTag);
             }
         }
@@ -95,7 +95,7 @@ public class SaveSystem : Singleton<SaveSystem>, ISystem
             LogSystem.Instance.Log($"Error: {e.Message}", LogType.Error, _logTag);
             return null;
         }
-        return GameDataSystem.Instance.CurrentSaveData;
+        return GameDataSystem.currentSave;
     }
     public bool DeleteSave(int slot)
     {

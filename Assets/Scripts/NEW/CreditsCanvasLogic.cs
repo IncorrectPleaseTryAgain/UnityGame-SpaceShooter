@@ -1,37 +1,35 @@
 using TMPro;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CreditsCanvasLogic : MonoBehaviour
 {
-    private const string _logTag = "CreditsCanvasLogic";
-    [SerializeField] TextMeshProUGUI _creditsText;
+    private static readonly string _logTag = "CreditsCanvasLogic";
+    [SerializeField] private TextMeshProUGUI TMP_Credits;
 
-    [SerializeField] float scrollSpeed;
-    [SerializeField] float scrollSpeedMultiplier;
-    [SerializeField] Vector3 scrollDirection;
+    [SerializeField] private float scrollSpeed;
+    [SerializeField] private float scrollSpeedMultiplier;
+    [SerializeField] private float creditsSpawnPosY;
+    private Vector3 scrollDirection;
 
-    public void Awake()
+    private void Awake()
     {
+        TMP_Credits.text = Credits.GetCredits(GameDataSystem.currentChapter);
+
         scrollDirection = Vector3.up * scrollSpeed;
     }
 
-    public void Update()
+    private void Start()
     {
-        _creditsText.rectTransform.position += scrollDirection * Time.deltaTime;
+        TMP_Credits.transform.position = new Vector3(TMP_Credits.transform.position.x, creditsSpawnPosY, TMP_Credits.transform.position.z);
     }
 
-    public void SetCreditsText(string text)
+    private void Update()
     {
-        _creditsText.text = text;
+        TMP_Credits.rectTransform.position += scrollDirection * Time.deltaTime;
     }
-    public void NavigationWasPressedHandler(Vector2 direction)
+
+    public void Navigate(Vector2 direction)
     {
-        scrollDirection = new Vector3(0f, direction.normalized.y * (scrollSpeedMultiplier * scrollSpeed), 0f);
-    }
-    public void NavigationWasReleasedHandler()
-    {
-        scrollDirection = Vector3.up * scrollSpeed;
+        scrollDirection = (direction == Vector2.zero)? Vector3.up * scrollSpeed : new Vector3(0f, direction.normalized.y * (scrollSpeedMultiplier * scrollSpeed), 0f);
     }
 }

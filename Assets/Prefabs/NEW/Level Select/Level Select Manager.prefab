@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8410391634329025932
+--- !u!1 &1215183233399175844
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8204904196620454171}
-  - component: {fileID: 9108305884475393260}
+  - component: {fileID: 6863809613054504858}
+  - component: {fileID: 6464813561492287910}
   m_Layer: 0
-  m_Name: Initializer
+  m_Name: Level Select Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8204904196620454171
+--- !u!4 &6863809613054504858
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8410391634329025932}
+  m_GameObject: {fileID: 1215183233399175844}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,20 +32,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9108305884475393260
+--- !u!114 &6464813561492287910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8410391634329025932}
+  m_GameObject: {fileID: 1215183233399175844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33fff362962c4d34688adae0574292e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 17324ef4d73ab4047a8498c5205e2bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 7459239547825329770, guid: 5cbd1a9cedb04e24aa70819bac735013, type: 3}
-  _systems: {fileID: 7243543577692418658, guid: a8a66ce47b53a024f8789573c0c76e57, type: 3}
-  _background: {fileID: 1884367978294721569, guid: 1da440b028f09e249acd10c64df82292, type: 3}
-  _title: {fileID: 3244378425592847623, guid: 40b2d2d6429e7834088cadbaa6df62f1, type: 3}
-  _mainMenuManager: {fileID: 5658467858529135860, guid: 7676b603fcc9ea546897287d22fe7276, type: 3}
+  eventSystem: {fileID: 2953045810030632593, guid: bc080285225999244bb3ec31a606c0d6, type: 3}
+  camera: {fileID: 7459239547825329770, guid: 5cbd1a9cedb04e24aa70819bac735013, type: 3}
+  background: {fileID: 1884367978294721569, guid: 1da440b028f09e249acd10c64df82292, type: 3}
+  levelSelect: {fileID: 2185744389579524650, guid: acf4aa07172a56b408db65f6ed0d6f02, type: 3}
+  settings: {fileID: 432168967416705774, guid: 226a2b9040df4fd48acecfc08938126a, type: 3}

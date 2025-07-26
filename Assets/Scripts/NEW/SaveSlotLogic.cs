@@ -81,6 +81,7 @@ public class SaveSlotLogic : MonoBehaviour
         {
             SaveSystem.Instance.Load(id);
             SceneSystem.Instance.LoadScene(Scenes.ChapterSelect); // TODO: Change to level select
+            return;
         }
 
         Debug.Log("Create New Save");

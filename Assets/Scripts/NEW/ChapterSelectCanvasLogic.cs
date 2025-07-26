@@ -5,25 +5,15 @@ using System;
 
 public class ChapterSelectCanvasLogic : MonoBehaviour
 {
-    [SerializeField] Button[] chapterButtons;
-    [SerializeField] GameObject settings;
-    public static event Action OnOpenSettings;
-
-
-    private void SetLevelButtonActive(Button button, bool active)
+    private void OnDestroy()
     {
-        if (active)
-        {
-            button.interactable = true;
-            button.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-            button.GetComponent<Image>().color = Color.white;
-        }
-        else
-        {
-            button.interactable = false;
-            button.GetComponentInChildren<TextMeshProUGUI>().color = new Color(1f, 1f, 1f, .2f);
-            button.GetComponent<Image>().color = new Color(1f, 1f, 1f, .2f);
-        }
+        SettingsManager.OnSettingsOpened -= OnSettingsOpenedHandler;
+        SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
+    }
+    private void Awake()
+    {
+        SettingsManager.OnSettingsOpened += OnSettingsOpenedHandler;
+        SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
     }
 
     public void OnMainMenuButtonClicked()
@@ -31,16 +21,13 @@ public class ChapterSelectCanvasLogic : MonoBehaviour
         AudioSystem.Instance.StopMusic();   
         SceneSystem.Instance.LoadScene(Scenes.MainMenu);
     }
-
-    public void OnChapterButtonClicked(int chapterIndex)
-    {
-        //GameDataSystem.Instance.currentChapter = chapterIndex;
-        SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
-    }
-
-    public void OnSettingsButtonClickHandler()
+    public void OnSettingsOpenedHandler()
     {
         gameObject.SetActive(false);
-        OnOpenSettings?.Invoke();
+    }
+
+    public void OnSettingsClosedHandler()
+    {
+        gameObject.SetActive(true);
     }
 }

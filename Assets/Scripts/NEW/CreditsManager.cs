@@ -1,99 +1,39 @@
-using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CreditsManager : MonoBehaviour
 {
-    const string _logTag = "CreditsManager";
+    private static readonly string _logTag = "CreditsManager";
 
     [Header("Utility")]
-    [SerializeField] PlayerInput _playerInput;
+    [SerializeField] private PlayerInput playerInput;
 
     [Header("Enviroment")]
-    [SerializeField] Camera _camera;
-    [SerializeField] GameObject _background;
+    [SerializeField] private new Camera camera;
+    [SerializeField] private GameObject background;
 
     [Header("Credits")]
-    [SerializeField] GameObject _creditsCanvas;
-    [SerializeField] AudioClip _creditsMusic;
-    [SerializeField] string _creditsTextObjName = "TMP Credits";
-    TextMeshProUGUI creditsText;
-    CreditsCanvasLogic creditsCanvasLogic;
-
-    InputAction continueAction;
-    InputAction navigateAction;
-
+    [SerializeField] private CreditsCanvasLogic credits;
+    [SerializeField] private AudioClip ACLP_CreditsAudio;
 
     private void Awake()
     {
-        Initialize();
+        playerInput.enabled = true;
+
+        camera = Instantiate(camera);
+        Instantiate(background, camera.transform);
+        credits = Instantiate(credits);
+        AudioSystem.Instance.PlayMusic(ACLP_CreditsAudio, true);
     }
 
-    private void Start()
+    public void OnContinueAction(InputAction.CallbackContext context)
     {
-        //AudioSystem.Instance.PlayMusic(_creditsMusic, true);
-
-        TextMeshProUGUI[] TMProElements = _creditsCanvas.GetComponentsInChildren<TextMeshProUGUI>();
-        foreach (TextMeshProUGUI element in TMProElements)
-        {
-            if (element.name == "TMP Credits")
-            {
-                creditsText = element;
-                break;
-            }
-        }
-        //creditsText.text = Credits.GetCredits(GetChapterForCurrentSave());
+        if(!context.performed) { return; }
+        AudioSystem.Instance.StopMusic();
+        SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
     }
-
-    public void Update()
+    public void OnNavigateAction(InputAction.CallbackContext context)
     {
-        if (continueAction.WasPressedThisFrame())
-        {
-            AudioSystem.Instance.StopMusic();
-            SceneSystem.Instance.LoadScene(Scenes.LevelSelect);
-        }
-        if (navigateAction.WasPressedThisFrame())
-        {
-            //LogSystem.Instance.Log("Continue action pressed", LogType.Debug, _logTag);
-            creditsCanvasLogic.NavigationWasPressedHandler(navigateAction.ReadValue<Vector2>());
-        }
-        else if(navigateAction.WasReleasedThisFrame())
-        {
-            //LogSystem.Instance.Log("Continue action released", LogType.Debug, _logTag);
-            creditsCanvasLogic.NavigationWasReleasedHandler();
-        }
+        credits.Navigate(context.ReadValue<Vector2>());
     }
-
-    private void Initialize()
-    {
-        _playerInput.enabled = true;
-        navigateAction = _playerInput.actions["Navigate"];
-        continueAction = _playerInput.actions["Continue"];
-
-        Instantiate(_camera);
-        Instantiate(_background);
-        _creditsCanvas = Instantiate(_creditsCanvas);
-        creditsCanvasLogic = _creditsCanvas.GetComponent<CreditsCanvasLogic>();
-    }
-
-    //Credits.Credit GetChapterForCurrentSave()
-    //{
-    //    // Convert current chapter to Credit enum
-    //    switch (GameDataSystem.Instance.currentChapter)
-    //    {
-    //        case 1:
-    //            return Credits.Credit.CHAPTER_1;
-    //        case 2:
-    //            return Credits.Credit.CHAPTER_2;
-    //        case 3:
-    //            return Credits.Credit.CHAPTER_3;
-    //        case 4:
-    //            return Credits.Credit.CHAPTER_4;
-    //        case 5:
-    //            return Credits.Credit.CHAPTER_5;
-    //        default:
-    //            return Credits.Credit.END; // Default to END if chapter is out of range
-    //    }
-    //}
 }

@@ -24,11 +24,32 @@ public class PlayerController : MonoBehaviour, IDamageable
     public float _Health { get; set; }
     public bool _IsSprinting { get; private set;}
     public Vector2 _Direction { get; private set; }
+    /*
+    "shieldUnlocked": false,
+    "secondaryUnlocked": false,
+    "boostUnlocked": false,
+    "autoFireUnlocked": false,
+    "maxHp": 100.0,
+    "hpRegenDelay": 5.0,
+    "hpRegenSpeed": 10.0,
+    "primaryAmmo": 10,
+    "primaryDamage": 10.0,
+    "primaryAmmoRegenSpeed": 10.0,
+    "primaryReloadSpeed": 2.0,
+    "secondaryAmmo": 10,
+    "secondaryDamage": 10.0,
+    "secondaryAmmoRegenSpeed": 10.0,
+    "secondaryReloadSpeed": 2.0,
+    "boostDuration": 0.5,
+    "boostDelay": 2.0,
+    "shieldDurability": 20.0,
+    "shieldRegenDelay": 5.0
+    */
 
     private float attackDelayTimer = 0;
 
-    InputAction attackAction;
-    InputAction moveAction;
+    private InputAction moveAction;
+    private InputAction attackAction;
 
     private void Awake()
     {
@@ -37,11 +58,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         _rb = GetComponent<Rigidbody2D>();
         _circleCollider = GetComponent<CircleCollider2D>();
 
-        _IsAlive = true;
+        _IsAlive = false;
         _IsMoving = false;
         _IsAttacking = false;
         _IsSprinting = false;
         _Direction = Vector2.up;
+
+        _MaxHealth = GameDataSystem.currentSave.maxHp;
     }
 
     private void Update()
@@ -108,6 +131,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         _MaxHealth = spaceship.MaxHealth;
         _Health = spaceship.MaxHealth;
+
+        _IsAlive = true;
     }
 
     private void RotateToMousePosition()
@@ -131,15 +156,4 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         LogSystem.Instance.Log("Death Handler", LogType.Todo, _logTag);
     }
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -1,46 +1,46 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ChapterSelectManager : MonoBehaviour
 {
+    [Header("Utility")]
+    [SerializeField] private EventSystem eventSystem;
+
     [Header("Enviroment")]
-    [SerializeField] Camera _camera;
-    [SerializeField] GameObject _background;
+    [SerializeField] private new Camera camera;
+    [SerializeField] private GameObject background;
 
-    [Header("Level Select")]
-    [SerializeField] Canvas _chapterSelectCanvas;
+    [Header("Chapter Select")]
+    [SerializeField] private ChapterSelectCanvasLogic chapterSelect;
 
-    [Header("Overlays")]
-    [SerializeField] GameObject _settingsCanvas;
+    [Header("Settings")]
+    [SerializeField] private SettingsManager settings;
 
     private void OnDestroy()
     {
         SettingsManager.OnSettingsClosed -= OnSettingsClosedHandler;
+        SettingsManager.OnSettingsOpened -= OnSettingsOpenedHandler;
     }
 
     private void Awake()
     {
         SettingsManager.OnSettingsClosed += OnSettingsClosedHandler;
+        SettingsManager.OnSettingsOpened += OnSettingsOpenedHandler;
+
+        Instantiate(eventSystem);
+        camera = Instantiate(camera);
+        Instantiate(background, camera.transform);
+        chapterSelect = Instantiate(chapterSelect);
+        settings = Instantiate(settings);
     }
 
-
-    private void Start()
+    private void OnSettingsClosedHandler()
     {
-        Initialize();
+        chapterSelect.gameObject.SetActive(true);
     }
-
-    private void Initialize()
+    private void OnSettingsOpenedHandler()
     {
-        Instantiate(_camera);
-        Instantiate(_background);
-        //_chapterSelectCanvas.GetComponent<ChapterSelectCanvasLogic>().Initialize();
-        _chapterSelectCanvas = Instantiate(_chapterSelectCanvas);
-        _settingsCanvas = Instantiate(_settingsCanvas);
+        chapterSelect.gameObject.SetActive(false);
     }
-
-    void OnSettingsClosedHandler()
-    {
-        _chapterSelectCanvas.gameObject.SetActive(true);
-    }
-
 }

@@ -1,9 +1,8 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuCanvasLogic : MonoBehaviour
+public class PauseMenuLogic : MonoBehaviour
 {
     [SerializeField] Button _buttonSettings;
 

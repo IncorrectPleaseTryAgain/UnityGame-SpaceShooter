@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spaceship : ScriptableObject
 {
     [Header("Spaceship")]
+    public int chapter;
     public string Name;
     public string Description;
     public Sprite Sprite;

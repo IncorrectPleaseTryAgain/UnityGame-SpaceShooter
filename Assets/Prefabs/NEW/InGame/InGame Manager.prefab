@@ -30,8 +30,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2345225710764840211}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &148103121831839833
@@ -46,18 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356967630d2bcd740b77a8c19a6f09dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInput: {fileID: 3317861593415929550}
-  _camera: {fileID: 7208443808210890321, guid: 58f2f936b6eeebb4f99be9c50e4c961c, type: 3}
-  _cinemachineCamera: {fileID: 2598621247158261558, guid: 509fa022dc34fbd4cb5c45885c8c0ed0, type: 3}
-  _globalVolume: {fileID: 2831172118101152419, guid: e8e65956c522683488daa3be30d9418e, type: 3}
-  _globalLight2D: {fileID: 5089989729057939859, guid: 3db1f45666b2dff4eb4d2d35275c026b, type: 3}
-  _background: {fileID: 3499730557844052802, guid: f9e9dae069fa7c54ab290c66b43f0ac7, type: 3}
-  _inGameCanvas: {fileID: 6721920253882884922, guid: 75cc279f85f6d3d438a9d4f9b1d42e88, type: 3}
-  _player: {fileID: 5851743150533982304, guid: 63f2bf576879f9f4f8302b53790cfeb8, type: 3}
-  _settingsCanvas: {fileID: 847741630248694601, guid: 226a2b9040df4fd48acecfc08938126a, type: 3}
-  _deathScreenCanvas: {fileID: 7588260221276442401, guid: 22fba1ca9dd04f7409e415db969a6104, type: 3}
-  _completeScreenCanvas: {fileID: 7250547674311558110, guid: f3158f7efdad92a4195e50ff374d41ca, type: 3}
-  _pauseMenuCanvas: {fileID: 447527211928441005, guid: 33cff2e6d14440046b1d9b35e1646ab4, type: 3}
+  playerInput: {fileID: 3317861593415929550}
+  eventSystem: {fileID: 2953045810030632593, guid: bc080285225999244bb3ec31a606c0d6, type: 3}
+  globalVolume: {fileID: 2831172118101152419, guid: e8e65956c522683488daa3be30d9418e, type: 3}
+  globalLight2D: {fileID: 5089989729057939859, guid: 3db1f45666b2dff4eb4d2d35275c026b, type: 3}
+  camera: {fileID: 7208443808210890321, guid: 58f2f936b6eeebb4f99be9c50e4c961c, type: 3}
+  cinemachine: {fileID: 2598621247158261558, guid: 509fa022dc34fbd4cb5c45885c8c0ed0, type: 3}
+  background: {fileID: 4543769459354082864, guid: f9e9dae069fa7c54ab290c66b43f0ac7, type: 3}
+  inGame: {fileID: 3934143480308259531, guid: 75cc279f85f6d3d438a9d4f9b1d42e88, type: 3}
+  player: {fileID: 5851743150533982304, guid: 63f2bf576879f9f4f8302b53790cfeb8, type: 3}
+  settings: {fileID: 432168967416705774, guid: 226a2b9040df4fd48acecfc08938126a, type: 3}
+  deathScreen: {fileID: 3114747763954554987, guid: 22fba1ca9dd04f7409e415db969a6104, type: 3}
+  completeScreen: {fileID: 7198648534274500097, guid: f3158f7efdad92a4195e50ff374d41ca, type: 3}
+  pauseMenu: {fileID: 4287594853262682778, guid: 33cff2e6d14440046b1d9b35e1646ab4, type: 3}
 --- !u!114 &3317861593415929550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,82 +188,3 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!1 &1059517044035065116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2345225710764840211}
-  - component: {fileID: 8003601364665204610}
-  - component: {fileID: 4005281155543707345}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2345225710764840211
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059517044035065116}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 230925199180292755}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8003601364665204610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059517044035065116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!114 &4005281155543707345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059517044035065116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
-  m_ScrollDeltaPerTick: 6
