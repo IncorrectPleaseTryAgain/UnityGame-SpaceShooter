@@ -241,7 +241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceships:
-  - {fileID: 11400000, guid: 719584bb8843f2d42bcf6e604936e654, type: 2}
+  - {fileID: 11400000, guid: dbe4db4bfe8de92458c4e5dbe99d8a25, type: 2}
+  - {fileID: 11400000, guid: 053edd5a2b428874285c78efafad3fef, type: 2}
+  - {fileID: 11400000, guid: c6c3e8a77f8692c4c971bd08c7131c9f, type: 2}
+  - {fileID: 11400000, guid: 795a4c64646a67d47a34a85aba16fd37, type: 2}
+  - {fileID: 11400000, guid: 3101862f665a18044a0b205e566ae82c, type: 2}
   levelsData:
   - {fileID: 11400000, guid: 9399b14521f7c404c8c46609ed15efcb, type: 2}
   - {fileID: 11400000, guid: b8b9acc976637554bae9d962f0f13c3d, type: 2}

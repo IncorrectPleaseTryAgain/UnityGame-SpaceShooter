@@ -15,9 +15,9 @@ MonoBehaviour:
   Chapter: 4
   Level: 3
   NumberOfEnemies: 0
-  NumberOfBosses: 0
   TimeLimit: 0
-  PlayerPrefab: {fileID: 0}
+  StaticEnemySpawnRate: 0
+  DynamicEnemies:
+  - {fileID: -5462669362221127444, guid: 3acb0f80723c22b4d8c14ce918550a50, type: 3}
   StaticEnemies: []
-  DynamicEnemies: []
-  Boss: {fileID: 0}
+  BossEnemy: {fileID: 0}

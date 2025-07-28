@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1fb7c07fa49a343bc489cef06acf3e, type: 3}
+  m_Name: Venus Spaceship
+  m_EditorClassIdentifier: 
+  Chapter: 2
+  Name: Venus
+  Description: 
+  Health: 100
+  MaxSpeed: 13
+  Acceleration: 2
+  Idle: {fileID: 7284256407386843032, guid: 72dfdd6768d6ce0489d7197f66bece03, type: 3}
+  AnimatorController: {fileID: 4732861750994394205, guid: 65357035f5c7ea94f96a6626a4c80f93, type: 3}
+  ACLP_Death: {fileID: 0}
+  ACLP_Attack: {fileID: 0}
+  ACLP_Hit: {fileID: 0}
+  ACLP_PlayerHit: {fileID: 0}
+  PrimaryWeapon: {fileID: 11400000, guid: 05d98a4bb6d57e042bb7413cccd32f15, type: 2}

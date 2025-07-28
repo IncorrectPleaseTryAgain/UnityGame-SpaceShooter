@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1fb7c07fa49a343bc489cef06acf3e, type: 3}
   m_Name: Earth Spaceship
   m_EditorClassIdentifier: 
-  chapter: 1
+  Chapter: 1
   Name: Earth
-  Description: ...
-  Sprite: {fileID: -7677329573996571659, guid: f85e0bbc5078ab84ebba80aec6e3a87a, type: 3}
-  AnimatorController: {fileID: 9100000, guid: 3f43353c1ba475d44af2212fbc36148e, type: 2}
-  MaxHealth: 100
-  MaxSpeed: 15
-  Acceleration: 1
-  SprintMultiplier: 1.2
-  GravityScale: 100
-  weapon: {fileID: 0}
+  Description: 
+  Health: 100
+  MaxSpeed: 13
+  Acceleration: 2
+  Idle: {fileID: 5076669055921564704, guid: 627762367609d9140947bda6cc835fec, type: 3}
+  AnimatorController: {fileID: 4835520686848292696, guid: 6bec93637fbd7074d8e7402650a02a6d, type: 3}
+  ACLP_Death: {fileID: 8300000, guid: ecb5019272a5bd74d9e0aa176628ef96, type: 3}
+  ACLP_Attack: {fileID: 0}
+  ACLP_Hit: {fileID: 0}
+  ACLP_PlayerHit: {fileID: 0}
+  PrimaryWeapon: {fileID: 11400000, guid: 5c13a492e5a5e2c489c69153d3b7804f, type: 2}

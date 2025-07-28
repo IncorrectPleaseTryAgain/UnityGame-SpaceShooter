@@ -14,12 +14,8 @@ public class LevelData : ScriptableObject
     [Tooltip("Seconds")]
     public float StaticEnemySpawnRate;
 
-    [Header("Spaceship")]
-    public Spaceship spaceship;
-
     [Header("Enemies")]
-    public GameObject[] DynamicEnemies;
+    public DynamicEnemyLogic[] DynamicEnemies;
     public GameObject[] StaticEnemies;
     public GameObject BossEnemy;
-
 }

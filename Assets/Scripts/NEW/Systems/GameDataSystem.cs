@@ -31,7 +31,7 @@ public class GameDataSystem : Singleton<GameDataSystem>, ISystem
     {
         foreach (Spaceship spaceship in spaceships) 
         {
-            if(spaceship.chapter == currentChapter) {  return spaceship; }
+            if(spaceship.Chapter == currentChapter) {  return spaceship; }
         }
         return spaceships[0];
     }

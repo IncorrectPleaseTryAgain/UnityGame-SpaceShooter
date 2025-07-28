@@ -1,29 +1,31 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Splines;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour, IDamageable, IRegenerative
 {
     private const string _logTag = "PlayerController";
     private Spaceship spaceship;
 
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private CircleCollider2D _circleCollider;
+    [Header("Components")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private PrimaryWeaponLogic primaryWeapon;
 
-    public bool _IsMoving { get; set; }
-    public bool _IsAttacking { get; set; }
-    public bool _IsAlive { get; set; }
-    public float _MaxHealth { get; set; }
-    public float _Health { get; set; }
-    public bool _IsSprinting { get; private set;}
-    public Vector2 _Direction { get; private set; }
+    public bool IsAlive { get; set; }
+
+    public bool IsMoving { get; private set; }
+    public bool IsAttacking { get; private set; }
+    public bool IsSprinting { get; private set;}
+
+    private float maxHealth;
+    private float health;
+    private Vector2 moveDirection;
     /*
     "shieldUnlocked": false,
     "secondaryUnlocked": false,
@@ -49,27 +51,26 @@ public class PlayerController : MonoBehaviour, IDamageable
     private float attackDelayTimer = 0;
 
     private InputAction moveAction;
-    private InputAction attackAction;
+    private InputAction primaryAttackAction;
+    private InputAction secondaryAttackAction;
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _animator = GetComponent<Animator>();
-        _rb = GetComponent<Rigidbody2D>();
-        _circleCollider = GetComponent<CircleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        //circleCollider = GetComponent<CircleCollider2D>();
 
-        _IsAlive = false;
-        _IsMoving = false;
-        _IsAttacking = false;
-        _IsSprinting = false;
-        _Direction = Vector2.up;
-
-        _MaxHealth = GameDataSystem.currentSave.maxHp;
+        IsAlive = false;
+        IsMoving = false;
+        IsAttacking = false;
+        IsSprinting = false;
+        moveDirection = Vector2.up;
     }
 
     private void Update()
     {
-        if (_IsAlive)
+        if (IsAlive)
         {
             RotateToMousePosition();
             HandleAttacking();
@@ -81,41 +82,37 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (moveAction.IsPressed())
         {
-            LogSystem.Instance.Log($"Moving: {moveAction.ReadValue<Vector2>()}", LogType.Debug, _logTag);
-            _IsMoving = true;
-            _Direction = moveAction.ReadValue<Vector2>();
+            IsMoving = true;
+            moveDirection = moveAction.ReadValue<Vector2>();
         }
 
         if (moveAction.WasReleasedThisFrame())
         {
-            LogSystem.Instance.Log($"Moving: {moveAction.ReadValue<Vector2>()}", LogType.Debug, _logTag);
-            _IsMoving = false;
-            _Direction = Vector2.zero;
+            IsMoving = false;
+            moveDirection = Vector2.zero;
         }
     }
 
     private void HandleAttacking()
     {
-        if (attackAction.IsPressed())
+        // Primary
+        if (primaryAttackAction.WasPressedThisFrame())
         {
-            if (spaceship.weapon.Automatic && attackDelayTimer <= 0)
-            {
-                //attackDelayTimer = spaceship.weapon.ReloadDelay;
-                Attack();
-            }
-            else if (!_IsAttacking)
-            {
-                Attack();
-            }
-            _IsAttacking = true;
+            Instantiate(primaryWeapon, transform.position, transform.rotation).Fire(rb.linearVelocity);
         }
+
+        // Secondary
+        //if(secondaryAttackAction.WasReleasedThisFrame())
+        //{
+
+        //}
     }
 
     private void FixedUpdate()
     {
-        if (_IsAlive && _IsMoving)
+        if (IsAlive && IsMoving)
         {
-            _rb.linearVelocity = Vector2.ClampMagnitude(_rb.linearVelocity + (_Direction * spaceship.Acceleration), spaceship.MaxSpeed);
+            rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity + (moveDirection * spaceship.Acceleration), spaceship.MaxSpeed);
         }
     }
 
@@ -124,15 +121,18 @@ public class PlayerController : MonoBehaviour, IDamageable
         this.spaceship = spaceship;
 
         moveAction = playerInput.actions["Move"];
-        attackAction = playerInput.actions["Attack"];
+        primaryAttackAction = playerInput.actions["Primary Attack"];
+        secondaryAttackAction = playerInput.actions["Secondary Attack"];
 
-        _spriteRenderer.sprite = spaceship.Sprite;
-        _animator.runtimeAnimatorController = spaceship.AnimatorController;
+        spriteRenderer.sprite = spaceship.Idle;
+        animator.runtimeAnimatorController = spaceship.AnimatorController;
 
-        _MaxHealth = spaceship.MaxHealth;
-        _Health = spaceship.MaxHealth;
+        primaryWeapon.Initialize(spaceship.PrimaryWeapon);
 
-        _IsAlive = true;
+        maxHealth = spaceship.Health * GameDataSystem.currentSave.maxHpMultiplier;
+        health = maxHealth;
+
+        IsAlive = true;
     }
 
     private void RotateToMousePosition()
@@ -146,10 +146,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         transform.up = direction;
     }
 
-    public void Attack()
+    public void ApplyDamage(float damage)
     {
-        LogSystem.Instance.Log("Attacking...");
-        
+        AudioSystem.Instance.PlaySfx(spaceship.ACLP_Hit);
+        Math.Clamp(health -= health, 0, maxHealth);
+        if (health <= 0) { DeathHandler(); }
+    }
+
+    public void ApplyHealth(float health)
+    {
+        Math.Clamp(health += health, 0, maxHealth);
     }
 
     public void DeathHandler()

@@ -609,7 +609,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -666,7 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc63743eeb8ed9f438aed42c7dc189a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 0}
 --- !u!1001 &2365901601470264170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -809,9 +808,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2203487019217023835, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 561510034303386085, guid: 6bfafd4c4cb92ba489e167178efbe8ad, type: 3}
     - target: {fileID: 4702939297560024402, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: m_Name
       value: Chapter Select 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8021251684039465206, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: id
@@ -851,9 +874,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2203487019217023835, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2939574145500833373, guid: 41fa44cde371d764cbd5a3042120d6a6, type: 3}
     - target: {fileID: 4702939297560024402, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: m_Name
       value: Chapter Select 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8021251684039465206, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: id
@@ -897,9 +944,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2203487019217023835, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7284256407386843032, guid: 72dfdd6768d6ce0489d7197f66bece03, type: 3}
     - target: {fileID: 4702939297560024402, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: m_Name
       value: Chapter Select 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8021251684039465206, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: id
@@ -943,9 +1014,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2203487019217023835, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2312152038487228834, guid: 5fb1b9e4631674042bdcb6d57f174748, type: 3}
     - target: {fileID: 4702939297560024402, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: m_Name
       value: Chapter Select 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8021251684039465206, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: id
@@ -989,9 +1084,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2203487019217023835, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5076669055921564704, guid: 627762367609d9140947bda6cc835fec, type: 3}
     - target: {fileID: 4702939297560024402, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: m_Name
       value: Chapter Select 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229092619504729529, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8021251684039465206, guid: 19ba644086aba9c479733df3019ccb2c, type: 3}
       propertyPath: id
